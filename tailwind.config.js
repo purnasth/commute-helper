@@ -11,7 +11,7 @@ module.exports = {
         body: [
           // 'purna_shrestha',
           // 'Syne',
-                                                                                                                                                                           'Bricolage Grotesque',
+          'Bricolage Grotesque',
           'ui-sans-serif',
           'system-ui',
           'sans-serif',

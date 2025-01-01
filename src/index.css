@@ -109,11 +109,15 @@
   }
 
   .navlink {
-    @apply transition-300 inline-flex w-full items-center justify-between pb-2 text-2xl font-bold capitalize text-dark group-hover:font-bold group-hover:tracking-wider;
+    @apply transition-300 inline-flex w-full items-center justify-between px-4 py-3 text-lg font-normal capitalize group-hover:bg-teal-300 group-hover:tracking-wide group-hover:text-teal-50;
   }
 
   .overlay {
     @apply pointer-events-none absolute inset-0 z-0 select-none bg-black/20;
+  }
+
+  .bg-teal-300:hover {
+    @apply bg-teal-500 shadow-lg transition-all duration-300 ease-linear;
   }
 }
 

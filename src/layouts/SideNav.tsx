@@ -10,7 +10,7 @@ const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav }) => {
   return (
     <div className="relative">
       <div
-        className={`transition-700 fixed inset-0 z-30 bg-black/50 backdrop-blur-sm ${
+        className={`transition-700 fixed inset-0 z-50 bg-black/30 backdrop-blur-sm ${
           isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
         onClick={closeNav}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import SideNav from './SideNav';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { TbMenu2, TbPlus, TbSearch } from 'react-icons/tb';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,13 +41,7 @@ const Navbar = () => {
       <nav
         className={`fixed top-0 z-40 w-full font-serif transition-all duration-[1s] ${window.scrollY > 0 ? 'py-6' : 'p-6'} ${visible ? '' : '-translate-y-full'}`}
       >
-        <div
-          className={`z-40 flex items-start justify-between ${
-            visible
-              ? 'bg-gradient-to-t from-[rgba(0,0,0,0)] to-[rgba(0,0,0,0)]'
-              : 'bg-transparent'
-          }${window.scrollY > 0 ? 'flex items-center justify-between' : ''} `}
-        >
+        <div className={`z-40 flex items-start justify-between`}>
           <a
             href="/"
             className="rounded-full bg-teal-300 px-6 py-2 font-semibold"
@@ -54,12 +49,33 @@ const Navbar = () => {
             Commute Helper
           </a>
 
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-end gap-8">
+            <Link to="#" className="inline-flex items-center gap-2">
+              <TbSearch className="text-lg" />
+              Find a Ride
+            </Link>
+            <Link to="#" className="inline-flex items-center gap-2">
+              <TbPlus className="text-lg" />
+              Post a Ride
+            </Link>
+            <Link
+              to="/login"
+              className="rounded-full bg-teal-300 px-6 py-2 font-semibold"
+            >
+              Login
+            </Link>
             <button
-              className="inline-flex items-center gap-2 text-lg font-bold text-teal-950"
+              className="inline-flex items-center justify-center gap-2 font-medium"
               onClick={toggleNav}
             >
-              <svg
+              <TbMenu2 className="scale-150 text-base" />
+              {/* <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="size-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="size-6"
                 fill="none"
@@ -81,15 +97,9 @@ const Navbar = () => {
                     d="M4 6h16M4 12h16m-7 6h7"
                   />
                 )}
-              </svg>
-              Menu
+              </svg> */}
+              {/* Menu */}
             </button>
-            <a
-              href="/login"
-              className="rounded-full bg-teal-300 px-6 py-2 font-semibold"
-            >
-              Login
-            </a>
           </div>
         </div>
       </nav>

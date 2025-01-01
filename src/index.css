@@ -78,8 +78,8 @@
     @apply font-body font-light;
   }
 
-    nav,
-    footer,
+  nav,
+  footer,
   main {
     @apply relative z-10 px-4 py-12 sm:py-24 md:px-12 md:py-32 lg:py-36 xl:px-16 xl:py-48;
   }
@@ -89,11 +89,13 @@
       } */
 
   .filter-white {
-    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%)
+      hue-rotate(288deg) brightness(102%) contrast(102%);
   }
 
   .filter-black {
-    filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7500%) hue-rotate(327deg) brightness(96%) contrast(104%);
+    filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7500%)
+      hue-rotate(327deg) brightness(96%) contrast(104%);
   }
 
   .transition-300 {
@@ -118,6 +120,21 @@
 
   .bg-teal-300:hover {
     @apply bg-teal-500 shadow-lg transition-all duration-300 ease-linear;
+  }
+  input:focus-visible,
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:focus-visible,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:focus-visible,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    /* @apply border-b-2 border-teal-300 transition-[background-color] delay-0 duration-[5000s] ease-in-out; */
+    @apply border-none outline-none transition-[background-color] delay-0 duration-[5000s] ease-in-out;
   }
 }
 

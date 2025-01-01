@@ -7,8 +7,8 @@ const Intro = () => {
       <main className="relative">
         <div className="container flex size-full max-w-4xl flex-col items-center justify-center gap-4 text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-teal-100 px-4 py-1 font-semibold uppercase text-teal-700">
-            <TbPlant2 className="text-teal-700" />
-            We care our planet
+            <TbPlant2 className="text-teal-700 text-lg" />
+            We care about our planet
           </span>
 
           <h1 className="mt-4 text-5xl font-bold capitalize leading-snug">

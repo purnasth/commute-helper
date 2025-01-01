@@ -8,6 +8,7 @@ import {
 import Home from './pages/Home';
 import RouterToTop from './utils/RouterToTop';
 import Navbar from './layouts/Navbar';
+import Footer from './layouts/Footer';
 
 const App: React.FC = () => {
   return (
@@ -79,6 +80,8 @@ const App: React.FC = () => {
           Sequi, delectus provident, deserunt quia sapiente voluptatem
           consequatur ipsum odio, illo error eligendi?
         </main>
+
+        <Footer />
       </Router>
     </>
   );

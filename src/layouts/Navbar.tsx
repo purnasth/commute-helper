@@ -38,10 +38,10 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 z-40 w-full font-serif transition-all duration-[1s] ${visible ? '' : '-translate-y-full'}`}
+        className={`fixed top-0 z-40 w-full font-serif transition-all duration-[1s] ${window.scrollY > 0 ? 'py-6' : 'p-6'} ${visible ? '' : '-translate-y-full'}`}
       >
         <div
-          className={`z-40 flex items-start justify-between px-4 py-6 md:px-8 ${
+          className={`z-40 flex items-start justify-between ${
             visible
               ? 'bg-gradient-to-t from-[rgba(0,0,0,0)] to-[rgba(0,0,0,0)]'
               : 'bg-transparent'

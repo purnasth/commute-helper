@@ -44,7 +44,7 @@
       } */
 
   body {
-    @apply font-body;
+    @apply font-body text-teal-950;
   }
 
   main,
@@ -70,14 +70,16 @@
   button,
   ul,
   li {
-    @apply font-body font-light;
+    @apply font-body font-normal;
   }
 
   p,
   span {
-    @apply font-body font-normal;
+    @apply font-body font-light;
   }
 
+    nav,
+    footer,
   main {
     @apply relative z-10 px-4 py-12 sm:py-24 md:px-12 md:py-32 lg:py-36 xl:px-16 xl:py-48;
   }
@@ -87,13 +89,11 @@
       } */
 
   .filter-white {
-    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%)
-      hue-rotate(288deg) brightness(102%) contrast(102%);
+    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
   }
 
   .filter-black {
-    filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7500%)
-      hue-rotate(327deg) brightness(96%) contrast(104%);
+    filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7500%) hue-rotate(327deg) brightness(96%) contrast(104%);
   }
 
   .transition-300 {

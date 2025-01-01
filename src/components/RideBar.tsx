@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TbMapPin, TbMessageChatbot, TbUser } from 'react-icons/tb';
+import { TbMapPin, TbBrandHipchat, TbUser } from 'react-icons/tb';
 
 const RideBar = () => {
   const [showRideBar, setShowRideBar] = useState(false);
@@ -63,7 +63,7 @@ const RideBar = () => {
             htmlFor="message"
             className="inline-flex items-center gap-2 pl-4"
           >
-            <TbMessageChatbot className="text-lg" />
+            <TbBrandHipchat className="text-lg" />
             Message
           </label>
           <input

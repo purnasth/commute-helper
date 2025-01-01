@@ -1,4 +1,4 @@
-import mobile from '../assets/mockups/mobile.png';
+import banner from '../assets/mockups/banner.png';
 import { TbPlant2 } from 'react-icons/tb';
 
 const Intro = () => {
@@ -7,7 +7,7 @@ const Intro = () => {
       <main className="relative">
         <div className="container flex size-full max-w-4xl flex-col items-center justify-center gap-4 text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-teal-100 px-4 py-1 font-semibold uppercase text-teal-700">
-            <TbPlant2 className="text-teal-700 text-lg" />
+            <TbPlant2 className="text-lg text-teal-700" />
             We care about our planet
           </span>
 
@@ -36,7 +36,7 @@ const Intro = () => {
             <h3 className="pt-10 text-6xl text-teal-400">Ride. Enjoy. Save.</h3>
           </div>
           <div className="flex-1">
-            <img src={mobile} alt="Commute Helper" />
+            <img src={banner} alt="Commute Helper" draggable="false" />
           </div>
           <div className="space-y-20">
             <h2 className="max-w-sm text-xl leading-snug">

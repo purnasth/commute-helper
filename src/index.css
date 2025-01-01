@@ -44,7 +44,7 @@
       } */
 
   body {
-    @apply font-body;
+    @apply font-body text-teal-950;
   }
 
   main,
@@ -70,14 +70,16 @@
   button,
   ul,
   li {
-    @apply font-body font-light;
+    @apply font-body font-normal;
   }
 
   p,
   span {
-    @apply font-body font-normal;
+    @apply font-body font-light;
   }
 
+  nav,
+  footer,
   main {
     @apply relative z-10 px-4 py-12 sm:py-24 md:px-12 md:py-32 lg:py-36 xl:px-16 xl:py-48;
   }
@@ -109,11 +111,30 @@
   }
 
   .navlink {
-    @apply transition-300 inline-flex w-full items-center justify-between pb-2 text-2xl font-bold capitalize text-dark group-hover:font-bold group-hover:tracking-wider;
+    @apply transition-300 inline-flex w-full items-center justify-between px-4 py-3 text-lg font-normal capitalize group-hover:bg-teal-300 group-hover:tracking-wide group-hover:text-teal-50;
   }
 
   .overlay {
     @apply pointer-events-none absolute inset-0 z-0 select-none bg-black/20;
+  }
+
+  .bg-teal-300:hover {
+    @apply bg-teal-500 shadow-lg transition-all duration-300 ease-linear;
+  }
+  input:focus-visible,
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:focus-visible,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:focus-visible,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    /* @apply border-b-2 border-teal-300 transition-[background-color] delay-0 duration-[5000s] ease-in-out; */
+    @apply border-none outline-none transition-[background-color] delay-0 duration-[5000s] ease-in-out;
   }
 }
 

@@ -39,7 +39,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 z-40 w-full font-serif transition-all duration-[1s] ${window.scrollY > 0 ? 'py-6' : 'p-6'} ${visible ? '' : '-translate-y-full'}`}
+        className={`fixed top-0 z-40 w-full font-serif transition-all duration-[1s] ${window.scrollY > 0 ? 'py-6 bg-white' : 'p-6'} ${visible ? '' : '-translate-y-full'}`}
       >
         <div className={`z-40 flex items-start justify-between`}>
           <a

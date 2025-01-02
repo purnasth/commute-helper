@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import RouterToTop from './utils/RouterToTop';
 import Navbar from './layouts/Navbar';
 import Footer from './layouts/Footer';
+import FAQPage from './pages/FAQPage';
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: React.FC = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/help" element={<FAQPage />} />
           {/* <Route path="*" element={<Navigate to="/" />} /> */}
         </Routes>
         <Footer />

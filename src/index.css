@@ -44,7 +44,7 @@
       } */
 
   body {
-    @apply font-body text-teal-950;
+    @apply font-body text-teal-950 bg-white;
   }
 
   main,

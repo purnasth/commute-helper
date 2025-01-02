@@ -10,6 +10,7 @@ import RouterToTop from './utils/RouterToTop';
 import Navbar from './layouts/Navbar';
 import Footer from './layouts/Footer';
 import FAQPage from './pages/FAQPage';
+import AboutPage from './pages/AboutPage';
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/help" element={<FAQPage />} />
+          <Route path="/about" element={<AboutPage />} />
           {/* <Route path="*" element={<Navigate to="/" />} /> */}
         </Routes>
         <Footer />

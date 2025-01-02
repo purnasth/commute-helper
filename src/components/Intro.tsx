@@ -1,24 +1,17 @@
 import banner from '../assets/mockups/banner.png';
-import CareOurEarth from './ui/CareOurEarth';
+import Title from './ui/Title';
 
 const Intro = () => {
   return (
     <>
       <main className="relative">
-        <div className="container flex size-full max-w-4xl flex-col items-center justify-center gap-4 text-center">
-          <CareOurEarth />
-
-          <h1 className="mt-4 text-5xl font-bold capitalize leading-snug">
-            Connecting Co-workers & Students sharing the same route
-          </h1>
-
-          <p className="max-w-2xl font-body">
-            We are a community of professionals and students who share the same
+        <Title
+          title="Connecting Co-workers & Students sharing the same route"
+          description="We are a community of professionals and students who share the same
             route to work or school. We help you find a ride or a passenger to
             share resources, greenuce your carbon footprint and step towards a
-            more sustainable future.
-          </p>
-        </div>
+            more sustainable future."
+        />
 
         <div className="mt-24 flex items-center gap-20">
           <div className="flex-1 flex-col space-y-5">

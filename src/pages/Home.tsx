@@ -6,7 +6,7 @@ const Home: React.FC = () => {
   return (
     <>
       <Intro />
-      <RideBar />
+      <RideBar fromHome/>
     </>
   );
 };

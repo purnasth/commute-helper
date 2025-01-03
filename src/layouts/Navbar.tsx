@@ -39,7 +39,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 z-40 w-full font-serif transition-all duration-[1s] ${window.scrollY > 0 ? 'py-6' : 'p-6'} ${visible ? '' : '-translate-y-full'}`}
+        className={`fixed top-0 z-40 w-full font-serif transition-all duration-[1s] ${window.scrollY > 0 ? 'py-6 bg-white' : 'p-6'} ${visible ? '' : '-translate-y-full'}`}
       >
         <div className={`z-40 flex items-start justify-between`}>
           <a
@@ -50,11 +50,11 @@ const Navbar = () => {
           </a>
 
           <div className="flex items-center justify-end gap-8">
-            <Link to="#" className="inline-flex items-center gap-2">
+            <Link to="/passenger" className="inline-flex items-center gap-2">
               <TbSearch className="text-lg" />
               Find a Ride
             </Link>
-            <Link to="#" className="inline-flex items-center gap-2">
+            <Link to="/hero" className="inline-flex items-center gap-2">
               <TbPlus className="text-lg" />
               Post a Ride
             </Link>

@@ -50,6 +50,16 @@ module.exports = {
           '2xl': '1600px',
         },
       },
+      keyframes: {
+        floating: {
+          '0%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(-20px)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+      },
+      animation: {
+        floating: 'floating 3s ease-in-out infinite',
+      },
     },
   },
   plugins: [],

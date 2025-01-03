@@ -50,11 +50,11 @@ const Navbar = () => {
           </a>
 
           <div className="flex items-center justify-end gap-8">
-            <Link to="#" className="inline-flex items-center gap-2">
+            <Link to="/passenger" className="inline-flex items-center gap-2">
               <TbSearch className="text-lg" />
               Find a Ride
             </Link>
-            <Link to="#" className="inline-flex items-center gap-2">
+            <Link to="/hero" className="inline-flex items-center gap-2">
               <TbPlus className="text-lg" />
               Post a Ride
             </Link>

@@ -11,6 +11,8 @@ import Navbar from './layouts/Navbar';
 import Footer from './layouts/Footer';
 import FAQPage from './pages/FAQPage';
 import AboutPage from './pages/AboutPage';
+import RiderPage from './pages/RiderPage';
+import Error404 from './pages/Error404';
 
 const App: React.FC = () => {
   return (
@@ -22,7 +24,8 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/help" element={<FAQPage />} />
           <Route path="/about" element={<AboutPage />} />
-          {/* <Route path="*" element={<Navigate to="/" />} /> */}
+          <Route path="/hero" element={<RiderPage />} />
+          <Route path="*" element={<Error404 />} />
         </Routes>
         <Footer />
       </Router>

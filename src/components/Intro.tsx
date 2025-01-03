@@ -25,7 +25,13 @@ const Intro = () => {
             </p>
             <h3 className="pt-10 text-6xl text-teal-400">Ride. Enjoy. Save.</h3>
           </div>
-          <div className="flex flex-1 justify-center">
+          <div className="relative flex flex-1 justify-center">
+            <img
+              src={banner}
+              alt="Commute Helper"
+              draggable="false"
+              className="absolute inset-0 scale-100 -z-10 filter-primary mix-blend-multiply opacity-40"
+            />
             <img src={banner} alt="Commute Helper" draggable="false" />
           </div>
           <div className="flex flex-1 flex-col items-end justify-end space-y-20">

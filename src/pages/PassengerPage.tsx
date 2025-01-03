@@ -5,30 +5,24 @@ import { TbBrandHipchat } from 'react-icons/tb';
 import { TbFileSmile } from 'react-icons/tb';
 import { TbUserShield } from 'react-icons/tb';
 
-const RiderPage = () => {
+const PassengerPage = () => {
   return (
     <main>
       <Title
-        title="Post a ride & Make an Impact"
-        description="Share your ride with your co-workers and students sharing the same route and utilize the resources and empty seats of your vehicle. Save money, time and the environment. Your ride can make a difference. Share your ride now & be a hero!"
+        title="Share a ride & Save the Environment"
+        description="Search for a hero who is going to the same destination as you and share a ride with them. Save money, time and the environment. Your ride can make an impact for an environment. Share the ride. Share the memories."
       />
       <RideBar />
 
       <section className="pt-24">
         <h3 className="mx-auto w-fit max-w-md rounded-full bg-teal-100 px-6 text-center text-2xl leading-snug text-teal-700">
-          Rules when posting a ride
+          Rules when finding a ride
         </h3>
         <ul className="mt-16 grid grid-cols-4 gap-8">
           <li className="font-light">
-            <TbFileSmile className="mb-6 text-5xl text-teal-400" />
-            <strong className="font-semibold">Carry Documents</strong> - Owning
-            a valid driving license is a must to post a ride & you should be
-            carrying them.
-          </li>
-          <li className="font-light">
             <TbClockPin className="mb-6 text-5xl text-teal-400" />
-            <strong className="font-semibold">Be Reliable</strong> - Only post a
-            ride if you are sure you're going to the destination and be on time.
+            <strong className="font-semibold">Be Accessible</strong> - Be on the
+            location on time and be ready for pickup when the hero arrives.
           </li>
           <li className="font-light">
             <TbBrandHipchat className="mb-6 text-5xl text-teal-400" />
@@ -36,10 +30,15 @@ const RiderPage = () => {
             to your passengers and respect their time and comfort.
           </li>
           <li className="font-light">
+            <TbFileSmile className="mb-6 text-5xl text-teal-400" />
+            <strong className="font-semibold">Be Friendly</strong> - Engage in
+            pleasant conversation and make the ride enjoyable for everyone.
+          </li>
+          <li className="font-light">
             <TbUserShield className="mb-6 text-5xl text-teal-400" />
-            <strong className="font-semibold">Drive Safely</strong> - Stick to
-            the speed limit and follow the traffic rules. Safety of you and your
-            passengers is important.
+            <strong className="font-semibold">Be Safe</strong> - Follow all
+            safety guidelines as a passenger and ensure the ride is safe for
+            everyone.
           </li>
         </ul>
       </section>
@@ -47,4 +46,4 @@ const RiderPage = () => {
   );
 };
 
-export default RiderPage;
+export default PassengerPage;

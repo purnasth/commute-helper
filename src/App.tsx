@@ -13,6 +13,7 @@ import FAQPage from './pages/FAQPage';
 import AboutPage from './pages/AboutPage';
 import RiderPage from './pages/RiderPage';
 import Error404 from './pages/Error404';
+import PassengerPage from './pages/PassengerPage';
 
 const App: React.FC = () => {
   return (
@@ -25,6 +26,7 @@ const App: React.FC = () => {
           <Route path="/help" element={<FAQPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/hero" element={<RiderPage />} />
+          <Route path="/passenger" element={<PassengerPage />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
         <Footer />

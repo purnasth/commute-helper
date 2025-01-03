@@ -44,7 +44,7 @@
       } */
 
   body {
-    @apply font-body text-teal-950 bg-white;
+    @apply bg-white font-body text-teal-950;
   }
 
   main,
@@ -96,6 +96,11 @@
   .filter-black {
     filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7500%)
       hue-rotate(327deg) brightness(96%) contrast(104%);
+  }
+
+  .filter-primary {
+    filter: brightness(0) saturate(100%) invert(81%) sepia(28%) saturate(783%)
+      hue-rotate(113deg) brightness(103%) contrast(84%) blur(120px);
   }
 
   .transition-300 {

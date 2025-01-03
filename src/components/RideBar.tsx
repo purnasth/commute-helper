@@ -32,7 +32,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false }) => {
 
   return (
     <main
-      className={`${fromHome ? `fixed bottom-0 z-40 w-full bg-none py-0 transition-all duration-500 ease-in-out ${window.scrollY > 0 ? 'py-0' : 'px-6'} ${showRideBar ? 'translate-y-0' : 'translate-y-20'} ` : `mt-24 p-0`}`}
+      className={`${fromHome ? `fixed bottom-0 z-40 w-full bg-none py-0 transition-all duration-500 ease-in-out ${window.scrollY > 0 ? 'py-0' : 'px-6'} ${showRideBar ? 'translate-y-0' : 'translate-y-20'} ` : `my-24 p-0`}`}
     >
       <form
         action=""
@@ -93,7 +93,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false }) => {
           </label>
           <select
             id="role"
-            className="mr-2 w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark ring-inset placeholder:text-dark/50 focus:ring-1 focus:ring-teal-600"
+            className="mr-2 w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark text-dark/50 ring-inset focus:ring-1 focus:ring-teal-600"
           >
             <option value="driver">Rider</option>
             <option value="passenger">Passenger</option>
@@ -107,6 +107,27 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false }) => {
           Confirm
         </button>
       </form>
+      {!fromHome && (
+        <p className="mt-3 bg-white text-center text-sm">
+          By confirming, I agree to the{' '}
+          <a href="/terms" className="text-teal-500 underline">
+            Ride Cancellation Policy
+          </a>
+          {',  '}
+          <a href="/terms" className="text-teal-500 underline">
+            Terms of Service
+          </a>{' '}
+          and{' '}
+          <a href="/privacy" className="text-teal-500 underline">
+            Privacy Policy
+          </a>{' '}
+          and{', '}
+          <strong className="font-semibold">
+            I understand breaking the rules will result in a ban from the
+            platform.
+          </strong>
+        </p>
+      )}
     </main>
   );
 };

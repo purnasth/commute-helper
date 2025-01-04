@@ -56,9 +56,15 @@ module.exports = {
           '50%': { transform: 'translateX(-20px)' },
           '100%': { transform: 'translateX(0)' },
         },
+        floatingY: {
+          '0%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+          '100%': { transform: 'translateY(0)' },
+        },
       },
       animation: {
         floating: 'floating 3s ease-in-out infinite',
+        'floating-up': 'floatingY 3s ease-in-out infinite',
       },
     },
   },

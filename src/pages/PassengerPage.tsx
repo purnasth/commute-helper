@@ -1,9 +1,11 @@
 import RideBar from '../components/RideBar';
 import Title from '../components/ui/Title';
-import { TbClockPin } from 'react-icons/tb';
-import { TbBrandHipchat } from 'react-icons/tb';
-import { TbFileSmile } from 'react-icons/tb';
-import { TbUserShield } from 'react-icons/tb';
+// import { TbClockPin } from 'react-icons/tb';
+// import { TbBrandHipchat } from 'react-icons/tb';
+// import { TbFileSmile } from 'react-icons/tb';
+// import { TbUserShield } from 'react-icons/tb';
+
+import rider from '../assets/vector/passenger.svg';
 
 const PassengerPage = () => {
   return (
@@ -18,29 +20,47 @@ const PassengerPage = () => {
         <h3 className="mx-auto w-fit max-w-md rounded-full bg-teal-100 px-4 py-1 text-center text-xl font-medium uppercase leading-snug text-teal-700">
           Rules when finding a ride
         </h3>
-        <ul className="mt-16 grid grid-cols-4 gap-8">
-          <li className="font-light">
-            <TbClockPin className="mb-6 text-5xl text-teal-400" />
-            <strong className="font-semibold">Be Accessible</strong> - Be on the
-            location on time and be ready for pickup when the hero arrives.
-          </li>
-          <li className="font-light">
-            <TbBrandHipchat className="mb-6 text-5xl text-teal-400" />
-            <strong className="font-semibold">Be Courteous</strong> - Be polite
-            to your passengers and respect their time and comfort.
-          </li>
-          <li className="font-light">
-            <TbFileSmile className="mb-6 text-5xl text-teal-400" />
-            <strong className="font-semibold">Be Friendly</strong> - Engage in
-            pleasant conversation and make the ride enjoyable for everyone.
-          </li>
-          <li className="font-light">
-            <TbUserShield className="mb-6 text-5xl text-teal-400" />
-            <strong className="font-semibold">Be Safe</strong> - Follow all
-            safety guidelines as a passenger and ensure the ride is safe for
-            everyone.
-          </li>
-        </ul>
+        <div className="mt-12 grid grid-cols-2 items-center gap-12">
+          <div className="relative">
+            <img
+              src={rider}
+              alt="Hero Vector"
+              className="animate-floating-up filter-primary absolute inset-0 -z-10 opacity-30"
+            />
+            <img
+              src={rider}
+              alt="Hero Vector"
+              className="animate-floating-up drop-shadow"
+            />
+          </div>
+          <ul className="list-inside list-decimal space-y-12">
+            <li className="text-pretty text-lg font-light">
+              <strong className="font-semibold text-teal-500">
+                Be Accessible
+              </strong>
+              - Be on the location on time and be ready for pickup when the hero
+              arrives.
+            </li>
+            <li className="text-pretty text-lg font-light">
+              <strong className="font-semibold text-teal-500">
+                Be Courteous
+              </strong>
+              - Be polite to your rider and respect their time and comfort.
+            </li>
+            <li className="text-pretty text-lg font-light">
+              <strong className="font-semibold text-teal-500">
+                Be Friendly
+              </strong>
+              - Engage in pleasant conversation and make the ride enjoyable for
+              everyone.
+            </li>
+            <li className="text-pretty text-lg font-light">
+              <strong className="font-semibold text-teal-500">Be Safe</strong> -
+              Follow all safety guidelines as a passenger and ensure the ride is
+              safe for everyone.
+            </li>
+          </ul>
+        </div>
       </section>
     </main>
   );

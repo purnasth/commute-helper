@@ -117,12 +117,32 @@ Commute Helper is a web application that helps users to find the mutual route to
 
 ---
 
+## Used pnpm for package management
+
+```bash
+pnpm i react-router-dom
+```
+
+```bash
+pnpm i react-icons
+```
+
+```bash
+pnpm i --save-dev @types/react-google-recaptcha
+```
+
+```bash
+pnpm i react-hook-form yup @hookform/resolvers react-toastify
+```
+
+---
+
 ## Team Members
 
-- **[Purna Shrestha](https://www.purnashrestha.com.np)** - _Frontend Developer_ - _Designer_
+- **[Purna Shrestha](https://www.purnashrestha.com.np)** - _Frontend Developer_ - _UI/UX Designer_
 
 ---
 
 ## License
 
-All the assets, and codes used in this project are the propety of `Longtail e-Media` and `Hotel Moonlight`. Use of any of the assets, codes, and designs without the permission of the owner is strictly prohibited.
+All the assets, and codes used in this project are the propety of `Commute Helper`. Use of any of the assets, codes, and designs without the permission of the owner is strictly prohibited.

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { TbMapPin, TbBrandHipchat, TbUser } from 'react-icons/tb';
+import { Link } from 'react-router-dom';
 
 interface RideBarProps {
   fromHome?: boolean;
@@ -99,13 +100,18 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false }) => {
             <option value="passenger">Passenger</option>
           </select>
         </div>
-        <button
+        {/* <button
           type="submit"
           className="inline-flex items-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm"
         >
-          {/* <TbSearch className="text-lg" /> */}
           Confirm
-        </button>
+        </button> */}
+        <Link
+          to="/no-rides-found"
+          className="inline-flex items-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm"
+        >
+          Confirm
+        </Link>
       </form>
       {!fromHome && (
         <p className="mt-3 bg-white text-center text-sm">

@@ -15,7 +15,7 @@ const RiderPage = () => {
       <RideBar />
 
       <section className="pt-24">
-        <h3 className="mx-auto w-fit max-w-md rounded-full bg-teal-100 px-6 text-center text-2xl leading-snug text-teal-700">
+        <h3 className="mx-auto w-fit max-w-md rounded-full bg-teal-100 px-4 py-1 text-center text-xl font-medium uppercase leading-snug text-teal-700">
           Rules when posting a ride
         </h3>
         <ul className="mt-16 grid grid-cols-4 gap-8">

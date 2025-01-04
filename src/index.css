@@ -9,7 +9,7 @@
 
 @layer components {
   ::selection {
-    @apply bg-dark text-light;
+    @apply bg-teal-950 text-teal-100;
   }
 
   /* * {
@@ -138,8 +138,7 @@
   select:-webkit-autofill,
   select:-webkit-autofill:hover,
   select:-webkit-autofill:focus {
-    /* @apply border-b-2 border-teal-300 transition-[background-color] delay-0 duration-[5000s] ease-in-out; */
-    @apply border-none outline-none transition-[background-color] delay-0 duration-[5000s] ease-in-out;
+    @apply border-none outline outline-1 outline-teal-400 transition-[background-color] delay-0 duration-[5000s] ease-in-out;
   }
 }
 

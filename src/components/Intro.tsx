@@ -9,7 +9,7 @@ const Intro = () => {
           title="Connecting Co-workers & Students sharing the same route"
           description="We are a community of professionals and students who share the same
             route to work or school. We help you find a ride or a passenger to
-            share resources, greenuce your carbon footprint and step towards a
+            share resources, reduce your carbon footprint and step towards a
             more sustainable future."
         />
 
@@ -20,7 +20,7 @@ const Intro = () => {
             </h2>
             <p className="max-w-md">
               We empower you to find a ride or a passenger to share resources,
-              greenuce your carbon footprint and step towards a more sustainable
+              reduce your carbon footprint and step towards a more sustainable
               future.
             </p>
             <h3 className="pt-10 text-6xl text-teal-400">Ride. Enjoy. Save.</h3>
@@ -30,7 +30,7 @@ const Intro = () => {
               src={banner}
               alt="Commute Helper"
               draggable="false"
-              className="absolute inset-0 scale-100 -z-10 filter-primary mix-blend-multiply opacity-40"
+              className="filter-primary absolute inset-0 -z-10 scale-100 opacity-40 mix-blend-multiply"
             />
             <img src={banner} alt="Commute Helper" draggable="false" />
           </div>

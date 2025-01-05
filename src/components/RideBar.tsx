@@ -1,10 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { TbMapPin, TbBrandHipchat, TbUser } from 'react-icons/tb';
-import { Link } from 'react-router-dom';
+import AgreeInfo from './ui/AgreeInfo';
 
 interface RideBarProps {
   fromHome?: boolean;
 }
+
+const findRideFormFields = [
+  {
+    name: 'from',
+    label: 'From',
+    type: 'text',
+    placeholder: 'Current Location',
+  },
+  {
+    name: 'to',
+    label: 'To',
+    type: 'text',
+    placeholder: 'Kathmandu BernHardt College',
+  },
+  {
+    name: 'message',
+    label: 'Message',
+    type: 'text',
+    placeholder: "I'm leaving in 5 minutes",
+  },
+  {
+    name: 'role',
+    label: "I'm a",
+    type: 'select',
+    options: ['Rider', 'Passenger'],
+  },
+];
 
 const RideBar: React.FC<RideBarProps> = ({ fromHome = false }) => {
   const [showRideBar, setShowRideBar] = useState(false);
@@ -39,101 +66,55 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false }) => {
         action=""
         className="flex items-center justify-between gap-2 rounded-full border bg-white p-2 shadow"
       >
-        <div className="inline-flex w-full items-center rounded-full bg-teal-100">
-          <label
-            htmlFor="from"
-            className="inline-flex items-center gap-2 pl-4 text-sm"
-          >
-            <TbMapPin className="text-lg" />
-            From
-          </label>
-          <input
-            type="text"
-            id="from"
-            className="w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark ring-inset placeholder:text-dark/50 focus:ring-1 focus:ring-teal-600"
-            placeholder="Current Location"
-          />
-        </div>
-        <div className="inline-flex w-full items-center rounded-full bg-teal-100">
-          <label
-            htmlFor="to"
-            className="inline-flex items-center gap-2 pl-4 text-sm"
-          >
-            <TbMapPin className="text-lg" />
-            To
-          </label>
-          <input
-            type="text"
-            id="to"
-            className="w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark ring-inset placeholder:text-dark/50 focus:ring-1 focus:ring-teal-600"
-            placeholder="Kathmandu BernHardt College"
-          />
-        </div>
-        <div className="inline-flex w-full items-center rounded-full bg-teal-100">
-          <label
-            htmlFor="message"
-            className="inline-flex items-center gap-2 pl-4 text-sm"
-          >
-            <TbBrandHipchat className="text-lg" />
-            Message
-          </label>
-          <input
-            type="text"
-            id="message"
-            className="w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark ring-inset placeholder:text-dark/50 focus:ring-1 focus:ring-teal-600"
-            placeholder="I'm leaving in 5 minutes"
-          />
-        </div>
-        <div className="inline-flex w-full items-center rounded-full bg-teal-100">
-          <label
-            htmlFor="role"
-            className="inline-flex min-w-20 items-center gap-2 pl-4 text-sm"
-          >
-            <TbUser className="text-lg" />
-            I'm a
-          </label>
-          <select
-            id="role"
-            className="mr-2 w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark text-dark/50 ring-inset focus:ring-1 focus:ring-teal-600"
-          >
-            <option value="driver">Rider</option>
-            <option value="passenger">Passenger</option>
-          </select>
-        </div>
-        {/* <button
+        {findRideFormFields.map(
+          ({ name, label, type, placeholder, options }) => (
+            <div
+              key={name}
+              className="inline-flex w-full items-center rounded-full bg-teal-100"
+            >
+              <label
+                htmlFor={name}
+                className="inline-flex min-w-fit items-center gap-2 pl-4 text-sm"
+              >
+                {name === 'from' || name === 'to' ? (
+                  <TbMapPin className="text-lg" />
+                ) : null}
+                {name === 'message' ? (
+                  <TbBrandHipchat className="text-lg" />
+                ) : null}
+                {name === 'role' ? <TbUser className="text-lg" /> : null}
+                {label}
+              </label>
+              {type === 'select' ? (
+                <select
+                  id={name}
+                  className="mr-2 w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark text-dark/50 ring-inset focus:ring-1 focus:ring-teal-600"
+                >
+                  {options?.map((option) => (
+                    <option key={option} value={option.toLowerCase()}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  type={type}
+                  id={name}
+                  className="w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark ring-inset placeholder:text-dark/50 focus:ring-1 focus:ring-teal-600"
+                  placeholder={placeholder}
+                />
+              )}
+            </div>
+          ),
+        )}
+        <button
           type="submit"
           className="inline-flex items-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm"
         >
           Confirm
-        </button> */}
-        <Link
-          to="/no-rides-found"
-          className="inline-flex items-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm"
-        >
-          Confirm
-        </Link>
+        </button>
       </form>
-      {!fromHome && (
-        <p className="mt-3 bg-white text-center text-sm">
-          By confirming, I agree to the{' '}
-          <a href="/terms" className="text-teal-500 underline">
-            Ride Cancellation Policy
-          </a>
-          {',  '}
-          <a href="/terms" className="text-teal-500 underline">
-            Terms of Service
-          </a>{' '}
-          and{' '}
-          <a href="/privacy" className="text-teal-500 underline">
-            Privacy Policy
-          </a>{' '}
-          and{', '}
-          <strong className="font-semibold">
-            I understand breaking the rules will result in a ban from the
-            platform.
-          </strong>
-        </p>
-      )}
+      {!fromHome && <AgreeInfo />}
     </main>
   );
 };

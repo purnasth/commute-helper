@@ -10,7 +10,6 @@ import {
   TbMessageCircle,
 } from 'react-icons/tb';
 import AgreeInfo from './ui/AgreeInfo';
-import { Link } from 'react-router-dom';
 
 interface RideBarProps {
   fromHome?: boolean;
@@ -245,18 +244,12 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false }) => {
             </div>
           ),
         )}
-        {/* <button
+        <button
           type="submit"
           className="inline-flex items-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm"
         >
           Confirm
-        </button> */}
-        <Link
-          to="no-rides"
-          className="inline-flex items-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm"
-        >
-          Confirm
-        </Link>
+        </button>
       </form>
       {!fromHome && <AgreeInfo />}
 
@@ -297,7 +290,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false }) => {
               >
                 <TbCurrentLocation className="text-xl text-teal-500" />
                 <div>
-                  <p className="font-medium">Current Location</p>
+                  <p className="font-medium">Use Current Location</p>
                   <p className="text-sm text-gray-500">Find your location</p>
                 </div>
               </div>

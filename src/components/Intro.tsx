@@ -13,7 +13,7 @@ const Intro = () => {
             more sustainable future."
         />
 
-        <div className="mt-24 flex items-center gap-20">
+        <div className="flex items-center gap-20">
           <div className="flex-1 flex-col space-y-5">
             <h2 className="max-w-sm text-3xl leading-snug">
               Share The Road. <br /> Share The Memories.

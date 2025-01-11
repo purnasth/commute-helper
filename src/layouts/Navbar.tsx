@@ -41,7 +41,7 @@ const Navbar = () => {
       <nav
         className={`sticky top-0 z-40 w-full font-serif transition-all duration-[1s] ${window.scrollY > 0 ? 'py-6 bg-white' : 'p-6'} ${visible ? '' : '-translate-y-full'}`}
       >
-        <div className={`z-40 flex items-start justify-between`}>
+        <div className={`flex items-start justify-between`}>
           <a
             href="/"
             className="rounded-full bg-teal-300 px-6 py-2 font-semibold"

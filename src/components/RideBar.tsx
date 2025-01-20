@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { TbMapPin, TbBrandHipchat, TbUser } from 'react-icons/tb';
 import AgreeInfo from './ui/AgreeInfo';
+import { Link } from 'react-router-dom';
+import MessagePopup from './MessagePopup';
+import LocationPopup from './LocationPopup';
 
 interface RideBarProps {
   fromHome?: boolean;
@@ -35,13 +38,22 @@ const findRideFormFields = [
 
 const RideBar: React.FC<RideBarProps> = ({ fromHome = false }) => {
   const [showRideBar, setShowRideBar] = useState(false);
+  const [showLocationPopup, setShowLocationPopup] = useState(false);
+  const [showMessagePopup, setShowMessagePopup] = useState(false);
+  const [activeInput, setActiveInput] = useState<'from' | 'to' | null>(null);
+  const [formValues, setFormValues] = useState({
+    from: '',
+    to: '',
+    message: '',
+    role: 'passenger',
+  });
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
       const documentHeight = document.body.scrollHeight;
-      const bottomThreshold = 100; // Adjust this value as needed
+      const bottomThreshold = 100;
 
       if (
         scrollPosition > 0 &&
@@ -54,23 +66,54 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false }) => {
     };
 
     window.addEventListener('scroll', handleScroll);
-
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleInputClick = (fieldName: string) => {
+    if (fieldName === 'from' || fieldName === 'to') {
+      setActiveInput(fieldName as 'from' | 'to');
+      setShowLocationPopup(true);
+      setShowMessagePopup(false);
+    } else if (fieldName === 'message') {
+      setShowMessagePopup(true);
+      setShowLocationPopup(false);
+    }
+  };
+
+  const handleLocationSelect = (location: string) => {
+    setFormValues((prev) => ({
+      ...prev,
+      [activeInput!]: location,
+    }));
+    setShowLocationPopup(false);
+  };
+
+  const handleMessageSelect = (message: string) => {
+    setFormValues((prev) => ({
+      ...prev,
+      message,
+    }));
+    setShowMessagePopup(false);
+  };
+
   return (
-    <main
-      className={`${fromHome ? `fixed bottom-0 z-40 w-full bg-none py-0 transition-all duration-500 ease-in-out ${window.scrollY > 0 ? 'py-0' : 'px-6'} ${showRideBar ? 'translate-y-0' : 'translate-y-20'} ` : `my-24 p-0`}`}
-    >
-      <form
-        action=""
-        className="flex items-center justify-between gap-2 rounded-full border bg-white p-2 shadow"
+    <>
+      <main
+        className={`${
+          fromHome
+            ? `fixed bottom-0 z-40 w-full bg-none py-0 transition-all duration-500 ease-in-out ${
+                window.scrollY > 0 ? 'py-0' : 'px-6'
+              } ${showRideBar ? 'translate-y-0' : 'translate-y-20'}`
+            : 'my-0 p-0'
+        }`}
       >
-        {findRideFormFields.map(
-          ({ name, label, type, placeholder, options }) => (
+        <form
+          className="flex items-center justify-between gap-2 rounded-full border bg-white p-2 shadow"
+        >
+          {findRideFormFields.map(({ name, label, type, placeholder, options }) => (
             <div
               key={name}
-              className="inline-flex w-full items-center rounded-full bg-teal-100"
+              className="relative inline-flex w-full items-center rounded-full bg-teal-100 focus-within:ring-1 focus-within:ring-teal-600"
             >
               <label
                 htmlFor={name}
@@ -88,7 +131,14 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false }) => {
               {type === 'select' ? (
                 <select
                   id={name}
-                  className="mr-2 w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark text-dark/50 ring-inset focus:ring-1 focus:ring-teal-600"
+                  value={formValues[name as keyof typeof formValues]}
+                  onChange={(e) =>
+                    setFormValues((prev) => ({
+                      ...prev,
+                      [name]: e.target.value,
+                    }))
+                  }
+                  className="mr-2 w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark ring-inset focus:outline-none"
                 >
                   {options?.map((option) => (
                     <option key={option} value={option.toLowerCase()}>
@@ -100,22 +150,45 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false }) => {
                 <input
                   type={type}
                   id={name}
-                  className="w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark ring-inset placeholder:text-dark/50 focus:ring-1 focus:ring-teal-600"
+                  value={formValues[name as keyof typeof formValues]}
+                  onChange={(e) =>
+                    setFormValues((prev) => ({
+                      ...prev,
+                      [name]: e.target.value,
+                    }))
+                  }
+                  onClick={() => handleInputClick(name)}
+                  readOnly={name === 'from' || name === 'to'}
+                  className="w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark ring-inset placeholder:text-dark/50 focus:outline-none"
                   placeholder={placeholder}
                 />
               )}
             </div>
-          ),
-        )}
-        <button
-          type="submit"
-          className="inline-flex items-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm"
-        >
-          Confirm
-        </button>
-      </form>
+          ))}
+          <Link
+            to="no-rides"
+            className="inline-flex items-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm"
+          >
+            Confirm
+          </Link>
+        </form>
+      </main>
       {!fromHome && <AgreeInfo />}
-    </main>
+
+      {showLocationPopup && (
+        <LocationPopup
+          activeInput={activeInput}
+          onClose={() => setShowLocationPopup(false)}
+          onSelect={handleLocationSelect}
+        />
+      )}
+      {showMessagePopup && (
+        <MessagePopup
+          onSelect={handleMessageSelect}
+          onClose={() => setShowMessagePopup(false)}
+        />
+      )}
+    </>
   );
 };
 

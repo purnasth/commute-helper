@@ -9,7 +9,7 @@ import rider from '../assets/vector/hero-rider.svg';
 
 const RiderPage = () => {
   return (
-    <main>
+    <main className='z-auto'>
       <Title
         title="Post a ride & Make an Impact"
         description="Share your ride with your co-workers and students sharing the same route and utilize the resources and empty seats of your vehicle. Save money, time and the environment. Your ride can make a difference. Share your ride now & be a hero!"

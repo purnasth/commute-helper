@@ -9,7 +9,7 @@ import rider from '../assets/vector/passenger.svg';
 
 const PassengerPage = () => {
   return (
-    <main>
+    <main className='z-auto'>
       <Title
         title="Share a ride & Save the Environment"
         description="Search for a hero who is going to the same destination as you and share a ride with them. Save money, time and the environment. Your ride can make an impact for an environment. Share the ride. Share the memories."

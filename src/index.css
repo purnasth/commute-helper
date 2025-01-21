@@ -12,10 +12,19 @@
     @apply bg-teal-950 text-teal-100;
   }
 
-  /* * {
-          scrollbar-width: thin;
-        } */
-  ::-webkit-scrollbar {
+  * {
+    scrollbar-width: none;
+    scrollbar-color: #5eead4 transparent;
+  }
+
+  .scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #5eead4 transparent;
+  }
+
+
+
+  /* ::-webkit-scrollbar {
     @apply w-0;
   }
 
@@ -25,7 +34,7 @@
 
   .scroll::-webkit-scrollbar-thumb {
     @apply rounded-full bg-orange-300;
-  }
+  } */
 
   /* ::-webkit-scrollbar {
         @apply w-2 rounded-full bg-transparent;

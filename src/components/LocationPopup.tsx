@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { TbCurrentLocation, TbMapPin, TbSearch, TbX } from 'react-icons/tb';
-import { PiMapPinAreaBold, PiMapPinSimpleAreaBold } from 'react-icons/pi';
+import { PiMapPinSimpleAreaBold } from 'react-icons/pi';
 import { mockLocations } from '../constants/data';
+import SearchedLocations from './SearchedLocations';
 
 interface LocationPopupProps {
   activeInput: 'from' | 'to' | null;
@@ -24,7 +25,7 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
         (loc) =>
           loc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           loc.address.toLowerCase().includes(searchQuery.toLowerCase()),
-      );  
+      );
       setSuggestions(filtered);
     } else {
       setSuggestions([]);
@@ -72,11 +73,11 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
               placeholder="Search for location"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg p-3 pl-4 text-base text-black outline outline-1 outline-teal-300 placeholder:text-base focus-visible:outline-2 focus-visible:outline-teal-300"
+              className="w-full rounded-lg p-3 pl-4 pr-11 text-base text-black outline outline-1 outline-teal-300 placeholder:text-base focus-visible:outline-2 focus-visible:outline-teal-300"
               id="searchLocation"
             />
             <label htmlFor="searchLocation">
-              <TbSearch className="pointer-events-none absolute right-3 top-3 text-xl text-dark/40" />
+              <TbSearch className="pointer-events-none absolute right-3 top-3 bg-white text-2xl text-dark/40" />
             </label>
 
             <p className="mt-2 text-xs">
@@ -128,30 +129,11 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
           {suggestions.length > 0 && (
             <>
               <hr />
-              <div className="space-y-2">
-                <p className="font-normal text-dark">Searched Locations</p>
-
-                <div className="scroll max-h-60 space-y-2 overflow-y-scroll">
-                  {suggestions.map((location) => (
-                    <div
-                      key={location.id}
-                      className="flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 transition-all duration-150 ease-in-out hover:bg-gray-100"
-                      onClick={() => {
-                        onSelect(location.name);
-                        onClose();
-                      }}
-                    >
-                      <PiMapPinAreaBold className="text-xl text-teal-500" />
-                      <div>
-                        <p className="text-sm font-medium">{location.name}</p>
-                        <p className="text-xs text-gray-500">
-                          {location.address}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <SearchedLocations
+                suggestions={suggestions}
+                onSelect={onSelect}
+                onClose={onClose}
+              />
             </>
           )}
         </div>

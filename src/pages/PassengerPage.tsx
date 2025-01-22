@@ -9,12 +9,12 @@ import rider from '../assets/vector/passenger.svg';
 
 const PassengerPage = () => {
   return (
-    <main className='z-auto'>
+    <main className="z-auto">
       <Title
         title="Share a ride & Save the Environment"
         description="Search for a hero who is going to the same destination as you and share a ride with them. Save money, time and the environment. Your ride can make an impact for an environment. Share the ride. Share the memories."
       />
-      <RideBar />
+      <RideBar role="passenger" />
 
       <section className="pt-24">
         <h3 className="mx-auto w-fit max-w-md rounded-full bg-teal-100 px-4 py-1 text-center text-xl font-medium uppercase leading-snug text-teal-700">
@@ -25,7 +25,7 @@ const PassengerPage = () => {
             <img
               src={rider}
               alt="Hero Vector"
-              className="animate-floating-up filter-primary absolute inset-0 -z-10 opacity-30"
+              className="filter-primary absolute inset-0 -z-10 animate-floating-up opacity-30"
             />
             <img
               src={rider}

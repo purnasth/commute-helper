@@ -7,6 +7,7 @@ import LocationPopup from './LocationPopup';
 
 interface RideBarProps {
   fromHome?: boolean;
+  role?: string;
 }
 
 const findRideFormFields = [
@@ -36,7 +37,7 @@ const findRideFormFields = [
   },
 ];
 
-const RideBar: React.FC<RideBarProps> = ({ fromHome = false }) => {
+const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
   const [showRideBar, setShowRideBar] = useState(false);
   const [showLocationPopup, setShowLocationPopup] = useState(false);
   const [showMessagePopup, setShowMessagePopup] = useState(false);
@@ -45,7 +46,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false }) => {
     from: '',
     to: '',
     message: '',
-    role: 'passenger',
+    role,
   });
 
   useEffect(() => {

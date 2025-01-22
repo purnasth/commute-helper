@@ -14,7 +14,7 @@ const RiderPage = () => {
         title="Post a ride & Make an Impact"
         description="Share your ride with your co-workers and students sharing the same route and utilize the resources and empty seats of your vehicle. Save money, time and the environment. Your ride can make a difference. Share your ride now & be a hero!"
       />
-      <RideBar />
+      <RideBar role="rider" />
 
       <section className="pt-24">
         <h3 className="mx-auto w-fit max-w-md rounded-full bg-teal-100 px-4 py-1 text-center text-xl font-medium uppercase leading-snug text-teal-700">

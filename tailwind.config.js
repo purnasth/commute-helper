@@ -61,10 +61,21 @@ module.exports = {
           '50%': { transform: 'translateY(-20px)' },
           '100%': { transform: 'translateY(0)' },
         },
+        'move-left-right': {
+          '0%': { transform: 'translateX(-50%)' },
+          '50%': { transform: 'translateX(50%)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        glitter: {
+          '0%, 100%': { opacity: 0 },
+          '50%': { opacity: 1, transform: 'scale(1.2)' },
+        },
       },
       animation: {
         floating: 'floating 3s ease-in-out infinite',
         'floating-up': 'floatingY 3s ease-in-out infinite',
+        'custom-pulse': 'pulse 2s infinite, move-left-right 5s infinite linear',
+        glitter: 'glitter 1.5s infinite ease-in-out',
       },
     },
   },

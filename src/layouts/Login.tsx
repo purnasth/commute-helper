@@ -5,17 +5,13 @@ import * as yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
 import ReCAPTCHA from 'react-google-recaptcha';
 import 'react-toastify/dist/ReactToastify.css';
+import { LoginFormData } from '../interfaces/types';
 
 // Validation schema
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
   password: yup.string().required('Password is required'),
 });
-
-interface FormData {
-  email: string;
-  password: string;
-}
 
 const Login = () => {
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
@@ -25,7 +21,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<FormData>({
+  } = useForm<LoginFormData>({
     resolver: yupResolver(schema),
   });
 
@@ -33,7 +29,7 @@ const Login = () => {
     setRecaptchaToken(token);
   };
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: LoginFormData) => {
     if (!recaptchaToken) {
       toast.error('Please complete the reCAPTCHA verification.');
       return;
@@ -50,7 +46,7 @@ const Login = () => {
   };
 
   const formInputs: {
-    name: keyof FormData;
+    name: keyof LoginFormData;
     label: string;
     placeholder: string;
     type: string;
@@ -118,7 +114,12 @@ const Login = () => {
 
           <div className="mb-6 flex items-center justify-between">
             <label htmlFor="remember" className="select-none text-gray-700">
-              <input type="checkbox" id="remember" className="mr-2 accent-teal-400" checked />
+              <input
+                type="checkbox"
+                id="remember"
+                className="mr-2 accent-teal-400"
+                checked
+              />
               Remember Me
             </label>
             <a

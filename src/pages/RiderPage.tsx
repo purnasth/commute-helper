@@ -6,6 +6,7 @@ import Title from '../components/ui/Title';
 // import { TbUserShield } from 'react-icons/tb';
 
 import rider from '../assets/vector/hero-rider.svg';
+import AvailableList from '../components/AvailableList';
 
 const RiderPage = () => {
   return (
@@ -15,6 +16,8 @@ const RiderPage = () => {
         description="Share your ride with your co-workers and students sharing the same route and utilize the resources and empty seats of your vehicle. Save money, time and the environment. Your ride can make a difference. Share your ride now & be a hero!"
       />
       <RideBar role="rider" />
+
+      <AvailableList role="rider" />
 
       <section className="pt-24">
         <h3 className="mx-auto w-fit max-w-md rounded-full bg-teal-100 px-4 py-1 text-center text-xl font-medium uppercase leading-snug text-teal-700">

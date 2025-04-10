@@ -1,16 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { TbMapPin, TbBrandHipchat, TbUser } from 'react-icons/tb';
 import AgreeInfo from './ui/AgreeInfo';
-import { Link } from 'react-router-dom';
-import MessagePopup from './MessagePopup';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LocationPopup from './LocationPopup';
+import MessagePopup from './MessagePopup';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { RideFormData, RideBarProps } from '../interfaces/types';
+import Modal from './ui/Modal';
+import BhaiyaJi from './BhaiyaJi'; // Component to show when no rides are found
 
-interface RideBarProps {
-  fromHome?: boolean;
-  role?: string;
-}
+// Validation schema using Yup
+const schema = yup.object().shape({
+  from: yup.string().required('From location is required'),
+  to: yup.string().required('To location is required'),
+  message: yup.string().required('Message is required'),
+  role: yup.string().required('Role is required'),
+});
 
-const findRideFormFields = [
+const findRideFormFields: Array<{
+  name: 'from' | 'to' | 'message' | 'role';
+  label: string;
+  type: string;
+  placeholder?: string;
+  options?: string[];
+}> = [
   {
     name: 'from',
     label: 'From',
@@ -42,11 +58,23 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
   const [showLocationPopup, setShowLocationPopup] = useState(false);
   const [showMessagePopup, setShowMessagePopup] = useState(false);
   const [activeInput, setActiveInput] = useState<'from' | 'to' | null>(null);
-  const [formValues, setFormValues] = useState({
-    from: '',
-    to: '',
-    message: '',
-    role,
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [ridesFound, setRidesFound] = useState<RideFormData[]>([]); // Tracks found rides
+  const [showModal, setShowModal] = useState(false); // Modal visibility state
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      from: '',
+      to: '',
+      message: '',
+      role: role || '',
+    },
+    resolver: yupResolver(schema),
   });
 
   useEffect(() => {
@@ -82,23 +110,52 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
   };
 
   const handleLocationSelect = (location: string) => {
-    setFormValues((prev) => ({
-      ...prev,
-      [activeInput!]: location,
-    }));
+    setValue(activeInput!, location);
     setShowLocationPopup(false);
   };
 
   const handleMessageSelect = (message: string) => {
-    setFormValues((prev) => ({
-      ...prev,
-      message,
-    }));
+    setValue('message', message);
     setShowMessagePopup(false);
   };
 
+  const onSubmit = (data: RideFormData) => {
+    // Save the submitted data to local storage
+    const existingRides = JSON.parse(localStorage.getItem('rides') || '[]');
+    localStorage.setItem('rides', JSON.stringify([...existingRides, data]));
+
+    toast.success('Form submitted successfully!');
+    console.log('Form Data:', data);
+
+    // Simulate loading and check for available rides
+    setIsLoading(true);
+    setTimeout(() => {
+      const availableRides = existingRides.filter(
+        (ride: RideFormData) => ride.role !== data.role // Find rides with the opposite role
+      );
+      setRidesFound(availableRides);
+      setIsLoading(false);
+      setShowModal(true); // Show the modal with the message
+    }, 2000); // Simulate a 2-second delay
+  };
+
+  const onError = () => {
+    Object.values(errors).forEach((error) => {
+      toast.error(error?.message || 'Invalid input');
+    });
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p className="text-lg font-medium text-gray-600">Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <>
+      <ToastContainer />
       <main
         className={`${
           fromHome
@@ -108,7 +165,10 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
             : 'my-0 p-0'
         }`}
       >
-        <form className="flex items-center justify-between gap-2 rounded-full border bg-white p-2 shadow">
+        <form
+          onSubmit={handleSubmit(onSubmit, onError)}
+          className="flex items-center justify-between gap-2 rounded-full border bg-white p-2 shadow"
+        >
           {findRideFormFields.map(
             ({ name, label, type, placeholder, options }) => (
               <div
@@ -131,15 +191,12 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                 {type === 'select' ? (
                   <select
                     id={name}
-                    value={formValues[name as keyof typeof formValues]}
-                    onChange={(e) =>
-                      setFormValues((prev) => ({
-                        ...prev,
-                        [name]: e.target.value,
-                      }))
-                    }
+                    {...register(name)}
                     className="mr-2 w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark ring-inset focus:outline-none"
                   >
+                    <option value="" disabled>
+                      Select your role
+                    </option>
                     {options?.map((option) => (
                       <option key={option} value={option.toLowerCase()}>
                         {option}
@@ -150,13 +207,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                   <input
                     type={type}
                     id={name}
-                    value={formValues[name as keyof typeof formValues]}
-                    onChange={(e) =>
-                      setFormValues((prev) => ({
-                        ...prev,
-                        [name]: e.target.value,
-                      }))
-                    }
+                    {...register(name)}
                     onClick={() => handleInputClick(name)}
                     readOnly={name === 'from' || name === 'to'}
                     className="w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark ring-inset placeholder:text-dark/50 focus:outline-none"
@@ -166,12 +217,12 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
               </div>
             ),
           )}
-          <Link
-            to="no-rides"
+          <button
+            type="submit"
             className="inline-flex items-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm"
           >
             Confirm
-          </Link>
+          </button>
         </form>
       </main>
       {!fromHome && <AgreeInfo />}
@@ -181,7 +232,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
           activeInput={activeInput}
           onClose={() => setShowLocationPopup(false)}
           onSelect={handleLocationSelect}
-          initialSearchQuery={formValues[activeInput!]}
+          initialSearchQuery={activeInput ? '' : ''}
         />
       )}
       {showMessagePopup && (
@@ -189,6 +240,39 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
           onSelect={handleMessageSelect}
           onClose={() => setShowMessagePopup(false)}
         />
+      )}
+
+      {/* Modal for showing messages */}
+      {showModal && (
+        <Modal onClose={() => setShowModal(false)}>
+          {ridesFound.length > 0 ? (
+            <div>
+              <h3 className="text-lg font-medium text-center">
+                Available Rides
+              </h3>
+              <ul className="mt-4 space-y-2">
+                {ridesFound.map((ride, index) => (
+                  <li
+                    key={index}
+                    className="rounded border p-2 text-sm text-gray-700"
+                  >
+                    <p>
+                      <strong>From:</strong> {ride.from}
+                    </p>
+                    <p>
+                      <strong>To:</strong> {ride.to}
+                    </p>
+                    <p>
+                      <strong>Message:</strong> {ride.message}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <BhaiyaJi />
+          )}
+        </Modal>
       )}
     </>
   );

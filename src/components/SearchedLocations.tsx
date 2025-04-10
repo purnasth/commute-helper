@@ -1,12 +1,6 @@
 import React from 'react';
 import { PiMapPinAreaBold } from 'react-icons/pi';
 
-// interface SearchedLocationsProps {
-//   suggestions: { id: number; name: string; address: string }[];
-//   onSelect: (location: string) => void;
-//   onClose: () => void;
-// }
-
 interface SearchedLocationsProps {
   suggestions: { id: string; name: string; address: string; type: string }[];
   onSelect: (location: string) => void;

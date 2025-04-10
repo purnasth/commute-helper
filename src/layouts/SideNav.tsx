@@ -1,10 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
-interface SideNavProps {
-  isOpen: boolean;
-  closeNav: () => void;
-}
+import { SideNavProps } from '../interfaces/types';
 
 const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav }) => {
   return (

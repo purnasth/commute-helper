@@ -10,20 +10,23 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import 'ol/ol.css';
 import { TbX } from 'react-icons/tb';
+import { MapPopupProps } from '../interfaces/types';
 
-interface MapPopupProps {
-  onClose: () => void;
-  onSelect: (location: string, coordinates: [number, number]) => void;
-  initialLocation?: string;
-}
-
-const MapPopup: React.FC<MapPopupProps> = ({ onClose, onSelect, initialLocation }) => {
+const MapPopup: React.FC<MapPopupProps> = ({
+  onClose,
+  onSelect,
+  initialLocation,
+}) => {
   const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<Map | null>(null); // Reference to the OpenLayers map instance
   const selectedCoordsRef = useRef<[number, number]>([85.324, 27.7172]); // Default Kathmandu
-  const [selectedCoords, setSelectedCoords] = useState<[number, number]>([85.324, 27.7172]);
+  const [selectedCoords, setSelectedCoords] = useState<[number, number]>([
+    85.324, 27.7172,
+  ]);
   const [address, setAddress] = useState<string>(initialLocation || '');
   const [isLoading, setIsLoading] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>(''); // Search query state
   const markerRef = useRef<Feature | null>(null);
 
   useEffect(() => {
@@ -39,7 +42,7 @@ const MapPopup: React.FC<MapPopupProps> = ({ onClose, onSelect, initialLocation 
           scale: 0.5,
           anchor: [0.5, 1],
         }),
-      })
+      }),
     );
     markerRef.current = marker;
 
@@ -47,7 +50,7 @@ const MapPopup: React.FC<MapPopupProps> = ({ onClose, onSelect, initialLocation 
       features: [marker],
     });
 
-    const newMap = new Map({
+    const map = new Map({
       target: mapRef.current,
       layers: [
         new TileLayer({ source: new OSM() }),
@@ -59,7 +62,7 @@ const MapPopup: React.FC<MapPopupProps> = ({ onClose, onSelect, initialLocation 
       }),
     });
 
-    newMap.on('click', (evt) => {
+    map.on('click', (evt) => {
       const coords = toLonLat(evt.coordinate) as [number, number];
       selectedCoordsRef.current = coords; // Update ref to avoid re-renders
       setSelectedCoords(coords);
@@ -68,7 +71,9 @@ const MapPopup: React.FC<MapPopupProps> = ({ onClose, onSelect, initialLocation 
       setIsConfirmed(false);
     });
 
-    return () => newMap.setTarget(undefined);
+    mapInstanceRef.current = map; // Store the map instance for later use
+
+    return () => map.setTarget(undefined);
   }, []); // No dependency array issues since selectedCoordsRef is used
 
   const updateMarkerPosition = (coords: [number, number]) => {
@@ -81,15 +86,53 @@ const MapPopup: React.FC<MapPopupProps> = ({ onClose, onSelect, initialLocation 
     setIsLoading(true);
     try {
       const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coords[1]}&lon=${coords[0]}`
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coords[1]}&lon=${coords[0]}`,
       );
       const data = await response.json();
-      const locationName = data.display_name || `${coords[1].toFixed(4)}, ${coords[0].toFixed(4)}`;
+      const locationName =
+        data.display_name || `${coords[1].toFixed(4)}, ${coords[0].toFixed(4)}`;
       setAddress(locationName);
     } catch (error) {
       console.error('Error fetching location details:', error);
       const fallbackName = `${coords[1].toFixed(4)}, ${coords[0].toFixed(4)}`;
       setAddress(fallbackName);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) return;
+
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+          searchQuery,
+        )}`,
+      );
+      const results = await response.json();
+      if (results.length > 0) {
+        const { lat, lon, display_name } = results[0];
+        const coords: [number, number] = [parseFloat(lon), parseFloat(lat)];
+        selectedCoordsRef.current = coords;
+        setSelectedCoords(coords);
+        updateMarkerPosition(coords);
+        setAddress(display_name);
+        setIsConfirmed(false);
+
+        // Center the map on the searched location and zoom in
+        if (mapInstanceRef.current) {
+          const view = mapInstanceRef.current.getView();
+          view.setCenter(fromLonLat(coords));
+          view.setZoom(16); // Zoom level for a closer view
+        }
+      } else {
+        alert('No results found for the search query.');
+      }
+    } catch (error) {
+      console.error('Error searching location:', error);
+      alert('Error searching location. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -106,10 +149,14 @@ const MapPopup: React.FC<MapPopupProps> = ({ onClose, onSelect, initialLocation 
         <div className="z-50 border-b bg-white/10 p-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1">
-              <p className="text-base font-medium text-gray-700">Selected Location</p>
+              <p className="text-base font-medium text-gray-700">
+                Selected Location
+              </p>
               <div className="flex items-center">
                 <p className="text-sm text-gray-500">
-                  {isLoading ? 'Loading address...' : address || 'Click on the map'}
+                  {isLoading
+                    ? 'Loading address...'
+                    : address || 'Click on the map'}
                 </p>
                 {isLoading && (
                   <svg
@@ -163,6 +210,22 @@ const MapPopup: React.FC<MapPopupProps> = ({ onClose, onSelect, initialLocation 
         </div>
 
         <div ref={mapRef} className="mt-auto h-[calc(100%-60px)] w-full" />
+      </div>
+
+      <div className="fixed bottom-5 left-1/2 flex h-fit w-full max-w-xl -translate-x-1/2 items-center gap-2 rounded-full bg-white p-2 shadow-lg">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search for a location"
+          className="w-full rounded bg-transparent px-4 py-2 text-base"
+        />
+        <button
+          onClick={handleSearch}
+          className="transition-300 rounded-full bg-teal-500 px-5 py-2 text-white hover:bg-teal-600"
+        >
+          Search
+        </button>
       </div>
     </div>
   );

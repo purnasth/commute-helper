@@ -1,17 +1,8 @@
 import React from 'react';
 import { MdOutlineMarkChatUnread } from 'react-icons/md';
 import { TbSend2, TbX } from 'react-icons/tb';
-
-interface MessagePopupProps {
-  onSelect: (message: string) => void;
-  onClose: () => void;
-}
-
-const quickMessages = [
-  "I'm leaving now",
-  "I'll be there in 5 minutes",
-  'See you at the location',
-];
+import { MessagePopupProps } from '../interfaces/types';
+import { quickMessages } from '../constants/data';
 
 const MessagePopup: React.FC<MessagePopupProps> = ({ onSelect, onClose }) => {
   const [customMessage, setCustomMessage] = React.useState('');

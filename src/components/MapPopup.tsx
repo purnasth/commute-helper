@@ -9,8 +9,13 @@ import { Style, Icon } from 'ol/style';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import 'ol/ol.css';
-import { TbX } from 'react-icons/tb';
 import { MapPopupProps } from '../interfaces/types';
+import { BiSearch } from 'react-icons/bi';
+import { toast, ToastContainer } from 'react-toastify';
+import { MdDoneAll } from 'react-icons/md';
+import { TbX } from 'react-icons/tb';
+import { IoClose } from 'react-icons/io5';
+import { truncateLocation } from '../utils/functions';
 
 const MapPopup: React.FC<MapPopupProps> = ({
   onClose,
@@ -18,7 +23,7 @@ const MapPopup: React.FC<MapPopupProps> = ({
   initialLocation,
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<Map | null>(null); // Reference to the OpenLayers map instance
+  const mapInstanceRef = useRef<Map | null>(null);
   const selectedCoordsRef = useRef<[number, number]>([85.324, 27.7172]); // Default Kathmandu
   const [selectedCoords, setSelectedCoords] = useState<[number, number]>([
     85.324, 27.7172,
@@ -26,7 +31,15 @@ const MapPopup: React.FC<MapPopupProps> = ({
   const [address, setAddress] = useState<string>(initialLocation || '');
   const [isLoading, setIsLoading] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
-  const [searchQuery, setSearchQuery] = useState<string>(''); // Search query state
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  interface Suggestion {
+    place_id: string;
+    display_name: string;
+    lat: string;
+    lon: string;
+  }
+
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const markerRef = useRef<Feature | null>(null);
 
   useEffect(() => {
@@ -64,22 +77,27 @@ const MapPopup: React.FC<MapPopupProps> = ({
 
     map.on('click', (evt) => {
       const coords = toLonLat(evt.coordinate) as [number, number];
-      selectedCoordsRef.current = coords; // Update ref to avoid re-renders
+      selectedCoordsRef.current = coords;
       setSelectedCoords(coords);
       updateMarkerPosition(coords);
       reverseGeocode(coords);
       setIsConfirmed(false);
     });
 
-    mapInstanceRef.current = map; // Store the map instance for later use
+    mapInstanceRef.current = map;
 
     return () => map.setTarget(undefined);
-  }, []); // No dependency array issues since selectedCoordsRef is used
+  }, []);
 
   const updateMarkerPosition = (coords: [number, number]) => {
     if (markerRef.current) {
       markerRef.current.setGeometry(new Point(fromLonLat(coords)));
     }
+  };
+
+  const isLocationAllowed = (locationName: string): boolean => {
+    const allowedAreas = ['Kathmandu', 'Lalitpur', 'Bhaktapur', 'Patan'];
+    return allowedAreas.some((area) => locationName.includes(area));
   };
 
   const reverseGeocode = async (coords: [number, number]) => {
@@ -91,18 +109,27 @@ const MapPopup: React.FC<MapPopupProps> = ({
       const data = await response.json();
       const locationName =
         data.display_name || `${coords[1].toFixed(4)}, ${coords[0].toFixed(4)}`;
-      setAddress(locationName);
+
+      if (isLocationAllowed(locationName)) {
+        setAddress(truncateLocation(locationName));
+      } else {
+        toast.error('The service is currently unavailable for this location.');
+        setAddress('');
+      }
     } catch (error) {
       console.error('Error fetching location details:', error);
       const fallbackName = `${coords[1].toFixed(4)}, ${coords[0].toFixed(4)}`;
-      setAddress(fallbackName);
+      setAddress(truncateLocation(fallbackName));
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleSearch = async () => {
-    if (!searchQuery.trim()) return;
+    if (!searchQuery.trim()) {
+      toast.error('Please enter a location to search.');
+      return;
+    }
 
     setIsLoading(true);
     try {
@@ -112,27 +139,25 @@ const MapPopup: React.FC<MapPopupProps> = ({
         )}`,
       );
       const results = await response.json();
-      if (results.length > 0) {
-        const { lat, lon, display_name } = results[0];
-        const coords: [number, number] = [parseFloat(lon), parseFloat(lat)];
-        selectedCoordsRef.current = coords;
-        setSelectedCoords(coords);
-        updateMarkerPosition(coords);
-        setAddress(display_name);
-        setIsConfirmed(false);
 
-        // Center the map on the searched location and zoom in
-        if (mapInstanceRef.current) {
-          const view = mapInstanceRef.current.getView();
-          view.setCenter(fromLonLat(coords));
-          view.setZoom(16); // Zoom level for a closer view
-        }
+      if (results.length === 0) {
+        toast.error('No location found. Please try a different search term.');
       } else {
-        alert('No results found for the search query.');
+        const filteredResults = results.filter((result: Suggestion) =>
+          isLocationAllowed(result.display_name),
+        );
+
+        if (filteredResults.length === 0) {
+          toast.error(
+            `The service is currently unavailable for "${searchQuery}".`,
+          );
+        } else {
+          setSuggestions(filteredResults);
+        }
       }
     } catch (error) {
       console.error('Error searching location:', error);
-      alert('Error searching location. Please try again.');
+      toast.error('Error searching location. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -141,93 +166,161 @@ const MapPopup: React.FC<MapPopupProps> = ({
   const handleConfirm = () => {
     setIsConfirmed(true);
     onSelect(address, selectedCoords);
+    toast.success(
+      `"${truncateLocation(address)}" has been successfully confirmed!`,
+    );
+  };
+
+  const handleSuggestionClick = (suggestion: Suggestion) => {
+    const { lat, lon, display_name } = suggestion;
+    const coords: [number, number] = [parseFloat(lon), parseFloat(lat)];
+
+    if (isLocationAllowed(display_name)) {
+      selectedCoordsRef.current = coords;
+      setSelectedCoords(coords);
+      updateMarkerPosition(coords);
+      setAddress(truncateLocation(display_name));
+      setIsConfirmed(false);
+
+      if (mapInstanceRef.current) {
+        const view = mapInstanceRef.current.getView();
+        view.setCenter(fromLonLat(coords));
+        view.setZoom(16);
+      }
+
+      setSuggestions([]);
+    } else {
+      toast.error(`The service is currently unavailable for "${searchQuery}".`);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (!searchQuery.trim()) {
+        toast.error('Please enter a location to search.');
+        return;
+      }
+      handleSearch();
+    }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="relative h-screen w-full overflow-y-hidden bg-white">
-        <div className="z-50 border-b bg-white/10 p-4">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex-1">
-              <p className="text-base font-medium text-gray-700">
-                Selected Location
-              </p>
-              <div className="flex items-center">
-                <p className="text-sm text-gray-500">
-                  {isLoading
-                    ? 'Loading address...'
-                    : address || 'Click on the map'}
-                </p>
-                {isLoading && (
-                  <svg
-                    className="ml-2 h-4 w-4 animate-spin text-teal-500"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                )}
-              </div>
-            </div>
-            <div className="flex flex-shrink-0 items-center space-x-2">
-              {!isConfirmed ? (
-                <button
-                  onClick={handleConfirm}
-                  className="transition-300 rounded-full bg-teal-500 px-6 py-2 text-white hover:bg-teal-600"
-                >
-                  Confirm Location
-                </button>
-              ) : (
-                <button
-                  onClick={onClose}
-                  className="rounded-full bg-teal-500 px-4 py-2 text-white hover:bg-teal-600"
-                >
-                  Done
-                </button>
-              )}
+    <>
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+        <div className="relative h-screen w-full overflow-y-hidden bg-white">
+          <button
+            onClick={onClose}
+            className="transition-300 absolute right-4 top-4 z-50 rounded-full bg-teal-50 p-2 text-teal-600 shadow-md outline outline-1 outline-teal-500 hover:bg-teal-100 hover:text-teal-700"
+          >
+            <TbX className="text-xl" />
+          </button>
 
+          <div ref={mapRef} className="mt-auto h-[calc(100%+15px)] w-full" />
+        </div>
+
+        <div className="fixed bottom-5 left-1/2 flex w-full max-w-xl -translate-x-1/2 flex-col gap-1">
+          {suggestions.length > 0 && (
+            <div className="scroll max-h-72 w-full overflow-y-auto rounded-3xl border border-dark/30 bg-white shadow-lg">
               <button
-                onClick={onClose}
-                className="transition-300 rounded-full bg-teal-50 p-2 text-teal-600 outline outline-1 outline-teal-500 hover:bg-teal-100 hover:text-gray-700"
+                onClick={() => setSuggestions([])}
+                className="transition-300 absolute right-2 top-2 rounded-full border border-teal-500/20 bg-teal-50 p-1 text-teal-500 shadow hover:bg-teal-100"
               >
                 <TbX className="text-xl" />
               </button>
+              <ul className="divide-y divide-teal-200">
+                {suggestions.map((suggestion) => (
+                  <li
+                    key={suggestion.place_id}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    className="cursor-pointer px-4 py-2 text-sm hover:bg-teal-100"
+                  >
+                    {suggestion.display_name}
+                  </li>
+                ))}
+              </ul>
             </div>
+          )}
+          <div className="flex items-center gap-1 rounded-full border border-dark/30 bg-white p-1.5">
+            <input
+              type="text"
+              value={address || searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setAddress('');
+              }}
+              placeholder={truncateLocation('Search or pick a location')}
+              className="w-full rounded bg-transparent px-4 py-2 text-sm"
+              onKeyDown={handleKeyDown}
+              disabled={isLoading}
+            />
+            {searchQuery || address ? (
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  setAddress('');
+                }}
+                className="rounded-full border border-teal-500/20 bg-teal-50 p-0.5 text-teal-500 shadow hover:bg-teal-100"
+              >
+                <IoClose />
+              </button>
+            ) : null}
+            {address ? (
+              <button
+                onClick={handleConfirm}
+                className="transition-300 inline-flex items-center justify-center gap-1 rounded-full border border-dark/10 bg-teal-500 px-4 py-2 text-sm text-white shadow hover:bg-teal-600"
+              >
+                Confirm
+                <MdDoneAll className="text-lg" />
+              </button>
+            ) : (
+              <button
+                onClick={handleSearch}
+                className={`transition-300 inline-flex items-center justify-center gap-1 rounded-full border border-dark/10 px-4 py-2 text-sm text-white shadow ${
+                  isLoading
+                    ? 'cursor-not-allowed bg-teal-500'
+                    : 'bg-teal-500 hover:bg-teal-600'
+                }`}
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    Loading
+                    <svg
+                      className="ml-2 h-4 w-4 animate-spin text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                  </>
+                ) : (
+                  <>
+                    Search
+                    <BiSearch className="text-lg" />
+                  </>
+                )}
+              </button>
+            )}
           </div>
         </div>
-
-        <div ref={mapRef} className="mt-auto h-[calc(100%-60px)] w-full" />
       </div>
 
-      <div className="fixed bottom-5 left-1/2 flex h-fit w-full max-w-xl -translate-x-1/2 items-center gap-2 rounded-full bg-white p-2 shadow-lg">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search for a location"
-          className="w-full rounded bg-transparent px-4 py-2 text-base"
-        />
-        <button
-          onClick={handleSearch}
-          className="transition-300 rounded-full bg-teal-500 px-5 py-2 text-white hover:bg-teal-600"
-        >
-          Search
-        </button>
-      </div>
-    </div>
+      {isConfirmed && <ToastContainer />}
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TbMapPin, TbBrandHipchat, TbUser } from 'react-icons/tb';
 import AgreeInfo from './ui/AgreeInfo';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LocationPopup from './LocationPopup';
 import MessagePopup from './MessagePopup';
@@ -10,7 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { RideFormData, RideBarProps } from '../interfaces/types';
 import Modal from './ui/Modal';
-import BhaiyaJi from './BhaiyaJi'; // Component to show when no rides are found
+import BhaiyaJi from './BhaiyaJi'; 
 
 // Validation schema using Yup
 const schema = yup.object().shape({
@@ -131,7 +131,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     setIsLoading(true);
     setTimeout(() => {
       const availableRides = existingRides.filter(
-        (ride: RideFormData) => ride.role !== data.role // Find rides with the opposite role
+        (ride: RideFormData) => ride.role !== data.role, // Find rides with the opposite role
       );
       setRidesFound(availableRides);
       setIsLoading(false);
@@ -155,7 +155,6 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
 
   return (
     <>
-      <ToastContainer />
       <main
         className={`${
           fromHome
@@ -194,9 +193,6 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                     {...register(name)}
                     className="mr-2 w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark ring-inset focus:outline-none"
                   >
-                    <option value="" disabled>
-                      Select your role
-                    </option>
                     {options?.map((option) => (
                       <option key={option} value={option.toLowerCase()}>
                         {option}
@@ -247,7 +243,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
         <Modal onClose={() => setShowModal(false)}>
           {ridesFound.length > 0 ? (
             <div>
-              <h3 className="text-lg font-medium text-center">
+              <h3 className="text-center text-lg font-medium">
                 Available Rides
               </h3>
               <ul className="mt-4 space-y-2">

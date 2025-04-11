@@ -1,4 +1,5 @@
 import React from 'react';
+import { TbX } from 'react-icons/tb';
 
 interface ModalProps {
   onClose: () => void;
@@ -12,9 +13,9 @@ const Modal: React.FC<ModalProps> = ({ onClose, children }) => {
         {children}
         <button
           onClick={onClose}
-          className="mt-4 w-full rounded bg-teal-500 px-4 py-2 text-white hover:bg-teal-600"
+          className="absolute right-5 top-5 text-gray-500 hover:text-gray-700"
         >
-          Close
+          <TbX className="text-3xl" />
         </button>
       </div>
     </div>

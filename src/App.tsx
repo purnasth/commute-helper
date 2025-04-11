@@ -15,6 +15,7 @@ import RiderPage from './pages/RiderPage';
 import Error404 from './pages/Error404';
 import PassengerPage from './pages/PassengerPage';
 import Login from './layouts/Login';
+import { ToastContainer } from 'react-toastify';
 
 const App: React.FC = () => {
   return (
@@ -33,6 +34,19 @@ const App: React.FC = () => {
         </Routes>
         <Footer />
       </Router>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 };

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import ReCAPTCHA from 'react-google-recaptcha';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoginFormData } from '../interfaces/types';
@@ -141,7 +141,6 @@ const Login = () => {
           </button>
         </form>
       </main>
-      <ToastContainer />
     </>
   );
 };

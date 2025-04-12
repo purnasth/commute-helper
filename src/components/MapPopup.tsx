@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
@@ -42,6 +42,40 @@ const MapPopup: React.FC<MapPopupProps> = ({
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const markerRef = useRef<Feature | null>(null);
 
+  const isLocationAllowed = useCallback((locationName: string): boolean => {
+    const allowedAreas = ['Kathmandu', 'Lalitpur', 'Bhaktapur', 'Patan'];
+    return allowedAreas.some((area) => locationName.includes(area));
+  }, []);
+
+  const reverseGeocode = useCallback(
+    async (coords: [number, number]) => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coords[1]}&lon=${coords[0]}`,
+        );
+        const data = await response.json();
+        const locationName =
+          data.display_name ||
+          `${coords[1].toFixed(4)}, ${coords[0].toFixed(4)}`;
+
+        if (isLocationAllowed(locationName)) {
+          setAddress(truncateLocation(locationName));
+        } else {
+          toast.error(`The service is currently unavailable for location.`);
+          setAddress('');
+        }
+      } catch (error) {
+        console.error('Error fetching location details:', error);
+        const fallbackName = `${coords[1].toFixed(4)}, ${coords[0].toFixed(4)}`;
+        setAddress(truncateLocation(fallbackName));
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [isLocationAllowed],
+  );
+
   useEffect(() => {
     if (!mapRef.current) return;
 
@@ -51,7 +85,8 @@ const MapPopup: React.FC<MapPopupProps> = ({
     marker.setStyle(
       new Style({
         image: new Icon({
-          src: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+          src:
+            'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
           scale: 0.5,
           anchor: [0.5, 1],
         }),
@@ -87,41 +122,11 @@ const MapPopup: React.FC<MapPopupProps> = ({
     mapInstanceRef.current = map;
 
     return () => map.setTarget(undefined);
-  }, []);
+  }, [reverseGeocode]);
 
   const updateMarkerPosition = (coords: [number, number]) => {
     if (markerRef.current) {
       markerRef.current.setGeometry(new Point(fromLonLat(coords)));
-    }
-  };
-
-  const isLocationAllowed = (locationName: string): boolean => {
-    const allowedAreas = ['Kathmandu', 'Lalitpur', 'Bhaktapur', 'Patan'];
-    return allowedAreas.some((area) => locationName.includes(area));
-  };
-
-  const reverseGeocode = async (coords: [number, number]) => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coords[1]}&lon=${coords[0]}`,
-      );
-      const data = await response.json();
-      const locationName =
-        data.display_name || `${coords[1].toFixed(4)}, ${coords[0].toFixed(4)}`;
-
-      if (isLocationAllowed(locationName)) {
-        setAddress(truncateLocation(locationName));
-      } else {
-        toast.error('The service is currently unavailable for this location.');
-        setAddress('');
-      }
-    } catch (error) {
-      console.error('Error fetching location details:', error);
-      const fallbackName = `${coords[1].toFixed(4)}, ${coords[0].toFixed(4)}`;
-      setAddress(truncateLocation(fallbackName));
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -141,7 +146,7 @@ const MapPopup: React.FC<MapPopupProps> = ({
       const results = await response.json();
 
       if (results.length === 0) {
-        toast.error('No location found. Please try a different search term.');
+        toast.error(`No location found for "${searchQuery}".`);
       } else {
         const filteredResults = results.filter((result: Suggestion) =>
           isLocationAllowed(result.display_name),

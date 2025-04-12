@@ -657,3 +657,36 @@ export const findRideFormFields = [
     options: ['Rider', 'Passenger'],
   },
 ];
+
+export const policies = [
+  {
+    id: 'ride-cancellation',
+    title: 'Ride Cancellation Policy',
+    link: '/policies/ride-cancellation',
+    content: [
+      'Cancellations made within 30 minutes of the ride start time may incur a penalty.',
+      'Repeated cancellations may result in temporary suspension of your account.',
+      'Contact support for emergencies or disputes regarding cancellations.',
+    ],
+  },
+  {
+    id: 'terms',
+    title: 'Terms of Service',
+    link: '/policies/terms',
+    content: [
+      'Provide accurate information when creating your account and booking rides.',
+      'Respect other users and adhere to community guidelines.',
+      'Any misuse of the platform may result in account suspension or termination.',
+    ],
+  },
+  {
+    id: 'privacy',
+    title: 'Privacy Policy',
+    link: '/policies/privacy',
+    content: [
+      'We collect only the necessary information to provide our services.',
+      'Your data is stored securely and is not shared with third parties without your consent.',
+      'You can request to delete your account and associated data at any time.',
+    ],
+  },
+];

@@ -6,7 +6,6 @@ import Title from '../components/ui/Title';
 // import { TbUserShield } from 'react-icons/tb';
 
 import rider from '../assets/vector/passenger.svg';
-import AvailableList from '../components/AvailableList';
 
 const PassengerPage = () => {
   return (
@@ -16,8 +15,6 @@ const PassengerPage = () => {
         description="Search for a hero who is going to the same destination as you and share a ride with them. Save money, time and the environment. Your ride can make an impact for an environment. Share the ride. Share the memories."
       />
       <RideBar role="passenger" />
-
-      <AvailableList role="passenger" />
 
       <section className="pt-24">
         <h3 className="mx-auto w-fit max-w-md rounded-full bg-teal-100 px-4 py-1 text-center text-xl font-medium uppercase leading-snug text-teal-700">

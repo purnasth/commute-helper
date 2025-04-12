@@ -1,23 +1,16 @@
 import RideBar from '../components/RideBar';
 import Title from '../components/ui/Title';
-// import { TbClockPin } from 'react-icons/tb';
-// import { TbBrandHipchat } from 'react-icons/tb';
-// import { TbFileSmile } from 'react-icons/tb';
-// import { TbUserShield } from 'react-icons/tb';
 
 import rider from '../assets/vector/hero-rider.svg';
-import AvailableList from '../components/AvailableList';
 
 const RiderPage = () => {
   return (
-    <main className='z-auto'>
+    <main className="z-auto">
       <Title
         title="Post a ride & Make an Impact"
         description="Share your ride with your co-workers and students sharing the same route and utilize the resources and empty seats of your vehicle. Save money, time and the environment. Your ride can make a difference. Share your ride now & be a hero!"
       />
       <RideBar role="rider" />
-
-      <AvailableList role="rider" />
 
       <section className="pt-24">
         <h3 className="mx-auto w-fit max-w-md rounded-full bg-teal-100 px-4 py-1 text-center text-xl font-medium uppercase leading-snug text-teal-700">
@@ -28,7 +21,7 @@ const RiderPage = () => {
             <img
               src={rider}
               alt="Hero Vector"
-              className="animate-floating-up filter-primary absolute inset-0 -z-10 opacity-30"
+              className="filter-primary absolute inset-0 -z-10 animate-floating-up opacity-30"
             />
             <img
               src={rider}

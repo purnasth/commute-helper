@@ -16,6 +16,7 @@ import Error404 from './pages/Error404';
 import PassengerPage from './pages/PassengerPage';
 import Login from './layouts/Login';
 import { ToastContainer } from 'react-toastify';
+import RideDetails from './pages/RideDetails';
 
 const App: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ const App: React.FC = () => {
           <Route path="/hero" element={<RiderPage />} />
           <Route path="/passenger" element={<PassengerPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/ride-details" element={<RideDetails />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
         <Footer />

@@ -23,3 +23,16 @@ export const highlightMatch = (text: string, query: string) => {
     (match) => `<span class="bg-teal-100 font-medium">${match}</span>`,
   );
 };
+
+export const formatFullDate = (timestamp: string | number | Date): string => {
+  const date = new Date(timestamp);
+  return date.toLocaleString('en-US', {
+    weekday: 'short', // e.g., Sat
+    month: 'short', // e.g., Apr
+    day: '2-digit', // e.g., 12
+    year: 'numeric', // e.g., 2025
+    hour: '2-digit', // e.g., 11
+    minute: '2-digit', // e.g., 25
+    hour12: true, // e.g., PM
+  });
+};

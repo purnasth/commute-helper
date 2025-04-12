@@ -110,6 +110,10 @@
       hue-rotate(113deg) brightness(103%) contrast(84%) blur(100px);
   }
 
+  .transition-150 {
+    @apply transition-all duration-150 ease-linear;
+  }
+
   .transition-300 {
     @apply transition-all duration-300 ease-linear;
   }
@@ -151,7 +155,7 @@
 }
 
 .Toastify__toast {
-  @apply !text-sm !min-w-[28rem];
+  @apply !min-w-[28rem] !text-sm;
 }
 
 .no-scroll {

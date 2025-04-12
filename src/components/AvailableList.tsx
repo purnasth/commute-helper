@@ -25,7 +25,7 @@ const AvailableList: React.FC<AvailableListProps> = ({ role }) => {
   return (
     <div className="mx-auto max-w-xl space-y-4 p-4">
       <h2 className="text-lg font-semibold">
-        {role === 'rider' ? 'Available Rides' : 'Available Passengers'}
+        Available {role === 'rider' ? 'Rides' : 'Passengers'}
       </h2>
       {items.length > 0 ? (
         items.map((item, index) => (

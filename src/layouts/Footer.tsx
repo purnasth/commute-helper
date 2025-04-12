@@ -3,7 +3,7 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="flex flex-col justify-between gap-10 bg-teal-300 py-16 text-base text-dark hover:bg-teal-400 md:flex-row md:items-end md:text-lg">
+      <footer className="flex flex-col justify-between gap-10 bg-teal-300 py-16 text-base text-dark hover:!bg-teal-300 md:flex-row md:items-end md:text-lg">
         <div className="space-y-3">
           <p className="">
             © Commute Helper {currentYear} | All rights reserved |

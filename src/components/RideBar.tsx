@@ -140,7 +140,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
       JSON.stringify([...existingRides, rideWithTimestamp]),
     );
 
-    const loadingToastId = toast.loading('Searching for available rides...');
+    const loadingToastId = toast.loading('Submitting your ride route...');
     setTimeout(() => {
       toast.dismiss(loadingToastId);
 
@@ -154,11 +154,15 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
         if (availableRides.length > 0) {
           // Case 1: Rides found
           setRidesFound(availableRides);
-          toast.success('Rides found!');
+          toast.success(
+            `Your ride route has been submitted! It will be visible to ${role === 'rider' ? 'passengers' : 'riders'} sharing the same route.`,
+          );
         } else {
           // Case 2: No rides found
           setRidesFound([]); // Clear ridesFound
-          toast.error('No rides found!');
+          toast.info(
+            `Your ride route has been submitted! Currently, no ${role === 'rider' ? 'passengers' : 'riders'} are sharing the same route.`,
+          );
         }
 
         setIsLoading(false);
@@ -181,6 +185,40 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
       </Modal>
     );
   }
+
+  const handleReject = (ride: RideFormData) => {
+    // Remove the ride from local storage
+    const existingRides = JSON.parse(localStorage.getItem('rides') || '[]');
+    const updatedRides = existingRides.filter(
+      (storedRide: RideFormData) => storedRide.timestamp !== ride.timestamp,
+    );
+    localStorage.setItem('rides', JSON.stringify(updatedRides));
+
+    // Update the ridesFound state
+    setRidesFound((prevRides) =>
+      prevRides.filter((foundRide) => foundRide.timestamp !== ride.timestamp),
+    );
+
+    toast.info('Ride has been rejected.');
+  };
+
+  const handleConfirm = (ride: RideFormData) => {
+    // Remove the ride from local storage
+    const existingRides = JSON.parse(localStorage.getItem('rides') || '[]');
+    const updatedRides = existingRides.filter(
+      (storedRide: RideFormData) => storedRide.timestamp !== ride.timestamp,
+    );
+    localStorage.setItem('rides', JSON.stringify(updatedRides));
+
+    // Navigate to the ride details page
+    window.location.href = `/ride-details?from=${encodeURIComponent(
+      ride.from,
+    )}&to=${encodeURIComponent(ride.to)}&message=${encodeURIComponent(
+      ride.message,
+    )}&role=${encodeURIComponent(ride.role)}&timestamp=${encodeURIComponent(
+      ride.timestamp ?? '',
+    )}`;
+  };
 
   return (
     <>
@@ -272,7 +310,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
           {ridesFound.length > 0 ? (
             <div className="relative w-full max-w-xl rounded-3xl bg-white p-5 shadow-lg">
               <h3 className="pb-4 text-base font-medium text-teal-500">
-                {role === 'rider' ? 'Available Passengers' : 'Available Rides'}
+                Available {role === 'rider' ? 'Passengers' : 'Rides'}
               </h3>
               <ul className="max-h-[50vh] space-y-2 overflow-y-auto">
                 {ridesFound.map((ride, index) => (
@@ -284,7 +322,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                       <div className="flex flex-col items-center">
                         <TbCircleDashed className="text-base text-teal-500" />
                         <div className="h-4 w-px border border-dashed border-teal-500"></div>
-                        <TbMapPin className="text-base text-green-500" />
+                        <TbMapPin className="text-base text-teal-500" />
                       </div>
                       <div className="flex-1 space-y-3">
                         <p className="text-sm font-normal text-dark">
@@ -311,6 +349,23 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                             : 'Invalid timestamp'}
                         </p>
                       </div>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <button
+                        onClick={() => handleConfirm(ride)}
+                        className="group relative w-full overflow-hidden rounded-lg border border-teal-200 bg-teal-400 px-4 py-1.5 text-sm text-white hover:bg-green-500"
+                      >
+                        <span className="animate-slide absolute inset-0 z-0 bg-gradient-to-r from-green-500 to-green-400 group-hover:animate-none"></span>
+                        <span className="relative z-10 font-medium tracking-wide">
+                          Confirm
+                        </span>
+                      </button>
+                      <button
+                        onClick={() => handleReject(ride)}
+                        className="transition-150 w-full rounded-lg border border-teal-400 bg-teal-50 px-4 py-1.5 text-sm font-medium tracking-wide text-teal-500 hover:border-red-500 hover:bg-red-500 hover:text-white"
+                      >
+                        Reject
+                      </button>
                     </div>
                   </li>
                 ))}

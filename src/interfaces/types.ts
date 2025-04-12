@@ -3,6 +3,7 @@ export interface RideFormData {
   to: string;
   message: string;
   role: string;
+  timestamp?: string;
 }
 
 export interface AvailableListProps {

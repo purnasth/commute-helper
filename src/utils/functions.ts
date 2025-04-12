@@ -8,8 +8,18 @@
 //   return location;
 // };
 
+// Function to truncate location string
 export const truncateLocation = (location: string): string => {
   const parts = location.split(',');
   const truncated = parts.slice(0, 3).join(',');
   return truncated.trim();
+};
+
+// Function to highlight the matched text
+export const highlightMatch = (text: string, query: string) => {
+  const regex = new RegExp(`(${query})`, 'gi'); // Create a regex to match the query
+  return text.replace(
+    regex,
+    (match) => `<span class="bg-teal-100 font-medium">${match}</span>`,
+  );
 };

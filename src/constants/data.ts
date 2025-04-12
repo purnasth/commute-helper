@@ -29,7 +29,7 @@ export const mockLocations = [
   {
     id: '5',
     name: 'Boudhanath Stupa',
-    address: '11 km from Kathmandu City Center',
+    address: 'Boudha, Kathmandu',
     type: 'UNESCO World Heritage Site',
   },
   {
@@ -55,7 +55,7 @@ export const mockLocations = [
   {
     id: '9',
     name: 'Kathmandu Durbar Square',
-    address: 'Heart of Kathmandu',
+    address: 'Kathmandu',
     type: 'Historical Square',
   },
   {
@@ -185,37 +185,37 @@ export const mockLocations = [
   {
     id: '29',
     name: 'Itum Bahal',
-    address: 'Kathmandu',
+    address: 'Thamel, Kathmandu',
     type: 'Historical Site',
   },
   {
     id: '30',
     name: 'Asan Bazaar',
-    address: 'Kathmandu',
+    address: 'Asan, Kathmandu',
     type: 'Traditional Market',
   },
   {
     id: '31',
     name: 'Taudaha Lake',
-    address: 'Kathmandu Valley',
+    address: 'Taudaha, Kathmandu Valley',
     type: 'Natural Site',
   },
   {
     id: '32',
     name: 'White Gumba (Seto Gumba)',
-    address: 'Kathmandu',
+    address: 'Boudha, Kathmandu',
     type: 'Buddhist Monastery',
   },
   {
     id: '33',
     name: 'Kirtipur',
-    address: 'Kathmandu Valley',
+    address: 'Kirtipur, Kathmandu',
     type: 'Historical Town',
   },
   {
     id: '34',
     name: 'Pharping',
-    address: 'Near Kathmandu',
+    address: 'Pharping, Kathmandu',
     type: 'Pilgrimage Site',
   },
 
@@ -249,19 +249,19 @@ export const mockLocations = [
   {
     id: '39',
     name: 'Kumari Ghar',
-    address: 'Kathmandu Durbar Square',
+    address: 'Kumari Ghar, Kathmandu',
     type: 'Cultural Landmark',
   },
   {
     id: '40',
     name: 'Hanuman Dhoka Palace',
-    address: 'Kathmandu Durbar Square',
+    address: 'Basantapur, Kathmandu',
     type: 'Historical Palace',
   },
   {
     id: '41',
     name: 'Kasthamandap',
-    address: 'Kathmandu',
+    address: 'Kasthamandap, Kathmandu',
     type: 'Historical Pavilion',
   },
   {
@@ -542,6 +542,38 @@ export const mockLocations = [
     name: 'Advanced College of Technology',
     address: 'Kathmandu',
     type: 'Technology College',
+  },
+
+  // Addition of Software companies
+  {
+    id: '86',
+    name: 'Leapfrog Technology',
+    address: 'Dilllibazar, Kathmandu',
+    type: 'Software Company',
+  },
+  {
+    id: '87',
+    name: 'Deerwalk Institute of Technology',
+    address: 'Jaya Bageshwori Road, Bhaktapur',
+    type: 'Software Company',
+  },
+  {
+    id: '88',
+    name: 'CloudFactory',
+    address: 'Lalitpur, Nepal',
+    type: 'Software Company',
+  },
+  {
+    id: '89',
+    name: 'Verisk Nepal',
+    address: 'Pulchowk, Kathmandu',
+    type: 'Software Company',
+  },
+  {
+    id: '90',
+    name: 'F1Soft International',
+    address: 'Group Tower, Lalitpur, Kathmandu',
+    type: 'Software Company',
   },
 ];
 

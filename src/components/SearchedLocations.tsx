@@ -1,16 +1,19 @@
 import React from 'react';
 import { PiMapPinAreaBold } from 'react-icons/pi';
+import { highlightMatch } from '../utils/functions';
 
 interface SearchedLocationsProps {
   suggestions: { id: string; name: string; address: string; type: string }[];
   onSelect: (location: string) => void;
   onClose: () => void;
+  searchQuery: string;
 }
 
 const SearchedLocations: React.FC<SearchedLocationsProps> = ({
   suggestions,
   onSelect,
   onClose,
+  searchQuery,
 }) => {
   return (
     <>
@@ -29,8 +32,18 @@ const SearchedLocations: React.FC<SearchedLocationsProps> = ({
             >
               <PiMapPinAreaBold className="text-xl text-teal-500" />
               <div>
-                <p className="text-sm font-medium">{location.name}</p>
-                <p className="text-xs text-gray-500">{location.address}</p>
+                <p
+                  className="text-sm font-medium"
+                  dangerouslySetInnerHTML={{
+                    __html: highlightMatch(location.name, searchQuery),
+                  }}
+                ></p>
+                <p
+                  className="text-xs text-gray-500"
+                  dangerouslySetInnerHTML={{
+                    __html: highlightMatch(location.address, searchQuery),
+                  }}
+                ></p>
               </div>
             </div>
           ))}

@@ -13,7 +13,7 @@
   }
 
   * {
-    scrollbar-width: none;
+    scrollbar-width: thin;
     scrollbar-color: #5eead4 transparent;
   }
 
@@ -152,4 +152,8 @@
 
 .Toastify__toast {
   @apply !text-sm !min-w-[28rem];
+}
+
+.no-scroll {
+  overflow: hidden;
 }

@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { TbMapPin, TbBrandHipchat, TbUser } from 'react-icons/tb';
+import {
+  TbMapPin,
+  TbBrandHipchat,
+  TbUser,
+  TbCircleDashed,
+  TbAlarm,
+} from 'react-icons/tb';
 import AgreeInfo from './ui/AgreeInfo';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,7 +16,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { RideFormData, RideBarProps } from '../interfaces/types';
 import Modal from './ui/Modal';
-import BhaiyaJi from './BhaiyaJi'; 
+import NoRideFound from './ui/NoRideFound';
+import SearchingRide from './ui/SearchingRide';
 
 // Validation schema using Yup
 const schema = yup.object().shape({
@@ -120,23 +127,45 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
   };
 
   const onSubmit = (data: RideFormData) => {
-    // Save the submitted data to local storage
+    // Add a timestamp to the ride data
+    const rideWithTimestamp = {
+      ...data,
+      timestamp: new Date().toISOString(), // Save the current time as ISO string
+    };
+
+    // Save the ride data to local storage
     const existingRides = JSON.parse(localStorage.getItem('rides') || '[]');
-    localStorage.setItem('rides', JSON.stringify([...existingRides, data]));
+    localStorage.setItem(
+      'rides',
+      JSON.stringify([...existingRides, rideWithTimestamp]),
+    );
 
-    toast.success('Form submitted successfully!');
-    console.log('Form Data:', data);
-
-    // Simulate loading and check for available rides
-    setIsLoading(true);
+    const loadingToastId = toast.loading('Searching for available rides...');
     setTimeout(() => {
-      const availableRides = existingRides.filter(
-        (ride: RideFormData) => ride.role !== data.role, // Find rides with the opposite role
-      );
-      setRidesFound(availableRides);
-      setIsLoading(false);
-      setShowModal(true); // Show the modal with the message
-    }, 2000); // Simulate a 2-second delay
+      toast.dismiss(loadingToastId);
+
+      // Simulate loading and check for available rides
+      setIsLoading(true);
+      setTimeout(() => {
+        const availableRides = existingRides.filter(
+          (ride: RideFormData) => ride.role !== data.role, // Find rides with the opposite role
+        );
+
+        if (availableRides.length > 0) {
+          // Case 1: Rides found
+          setRidesFound(availableRides);
+          toast.success('Rides found!');
+        } else {
+          // Case 2: No rides found
+          setRidesFound([]); // Clear ridesFound
+          toast.error('No rides found!');
+        }
+
+        setIsLoading(false);
+        setShowModal(true); // Show the modal with the message
+      }, 2000); // Simulate a 2-second delay
+    }, 2000);
+    console.log('Form Data:', rideWithTimestamp);
   };
 
   const onError = () => {
@@ -147,9 +176,9 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="text-lg font-medium text-gray-600">Loading...</p>
-      </div>
+      <Modal onClose={() => setIsLoading(false)}>
+        <SearchingRide />
+      </Modal>
     );
   }
 
@@ -238,35 +267,57 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
         />
       )}
 
-      {/* Modal for showing messages */}
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           {ridesFound.length > 0 ? (
-            <div>
-              <h3 className="text-center text-lg font-medium">
-                Available Rides
+            <div className="relative w-full max-w-xl rounded-3xl bg-white p-5 shadow-lg">
+              <h3 className="pb-4 text-base font-medium text-teal-500">
+                {role === 'rider' ? 'Available Passengers' : 'Available Rides'}
               </h3>
-              <ul className="mt-4 space-y-2">
+              <ul className="max-h-[50vh] space-y-2 overflow-y-auto">
                 {ridesFound.map((ride, index) => (
                   <li
                     key={index}
-                    className="rounded border p-2 text-sm text-gray-700"
+                    className="space-y-3 rounded-xl border border-gray-200/80 bg-teal-50 p-4 shadow-sm transition-shadow hover:shadow-md"
                   >
-                    <p>
-                      <strong>From:</strong> {ride.from}
-                    </p>
-                    <p>
-                      <strong>To:</strong> {ride.to}
-                    </p>
-                    <p>
-                      <strong>Message:</strong> {ride.message}
-                    </p>
+                    <div className="flex items-center gap-2">
+                      <div className="flex flex-col items-center">
+                        <TbCircleDashed className="text-base text-teal-500" />
+                        <div className="h-4 w-px border border-dashed border-teal-500"></div>
+                        <TbMapPin className="text-base text-green-500" />
+                      </div>
+                      <div className="flex-1 space-y-3">
+                        <p className="text-sm font-normal text-dark">
+                          {ride.from}
+                        </p>
+                        <p className="text-sm font-normal text-dark">
+                          {ride.to}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="relative rounded-xl bg-teal-200 p-3">
+                      <div className="absolute -top-2 right-5 size-0 origin-top rotate-90 scale-[2] border-l-[10px] border-r-[2px] border-t-[10px] border-l-transparent border-r-transparent border-t-teal-200"></div>
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="text-sm font-normal text-dark">
+                          {ride.message}
+                        </p>
+                        <p className="flex min-w-24 items-center justify-center gap-0.5 rounded-full bg-teal-50 py-1 text-sm font-normal lowercase text-teal-500 shadow">
+                          <TbAlarm className="text-lg" />
+                          {ride.timestamp
+                            ? new Date(ride.timestamp).toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })
+                            : 'Invalid timestamp'}
+                        </p>
+                      </div>
+                    </div>
                   </li>
                 ))}
               </ul>
             </div>
           ) : (
-            <BhaiyaJi />
+            <NoRideFound />
           )}
         </Modal>
       )}

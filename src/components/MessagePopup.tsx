@@ -3,8 +3,11 @@ import { MdOutlineMarkChatUnread } from 'react-icons/md';
 import { TbSend2, TbX } from 'react-icons/tb';
 import { MessagePopupProps } from '../interfaces/types';
 import { quickMessages } from '../constants/data';
+import useDisableScroll from '../hooks/useDisableScroll';
 
 const MessagePopup: React.FC<MessagePopupProps> = ({ onSelect, onClose }) => {
+  useDisableScroll();
+
   const [customMessage, setCustomMessage] = React.useState('');
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -18,9 +21,9 @@ const MessagePopup: React.FC<MessagePopupProps> = ({ onSelect, onClose }) => {
       <div className="relative flex size-full items-center justify-center space-y-4 bg-white p-6">
         <button
           onClick={onClose}
-          className="absolute right-5 top-5 text-gray-500 hover:text-gray-700"
+          className="absolute right-5 top-5 z-50 rounded-full border border-teal-500/20 bg-teal-50 p-1.5 text-teal-500 shadow hover:bg-teal-100"
         >
-          <TbX className="text-3xl" />
+          <TbX className="text-2xl" />
         </button>
 
         <div className="mx-auto h-fit w-full max-w-md space-y-4">

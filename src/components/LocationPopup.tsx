@@ -5,6 +5,8 @@ import { mockLocations } from '../constants/data';
 import SearchedLocations from './SearchedLocations';
 import MapPopup from './MapPopup';
 import { LocationPopupProps } from '../interfaces/types';
+import useDisableScroll from '../hooks/useDisableScroll';
+import { truncateLocation } from '../utils/functions';
 
 const LocationPopup: React.FC<LocationPopupProps> = ({
   onClose,
@@ -12,6 +14,8 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
   initialSearchQuery,
   // activeInput,
 }) => {
+  useDisableScroll();
+
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
   const [suggestions, setSuggestions] = useState<typeof mockLocations>([]);
   const [showMapPopup, setShowMapPopup] = useState(false);
@@ -38,7 +42,8 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`,
           );
           const data = await response.json();
-          onSelect(data.display_name);
+          const truncatedLocation = truncateLocation(data.display_name);
+          onSelect(truncatedLocation);
           onClose();
         },
         (error) => {
@@ -61,9 +66,9 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
         <div className="relative flex size-full items-center justify-center space-y-4 bg-white p-6">
           <button
             onClick={onClose}
-            className="absolute right-5 top-5 text-gray-500 hover:text-gray-700"
+            className="absolute right-5 top-5 z-50 rounded-full border border-teal-500/20 bg-teal-50 p-1.5 text-teal-500 shadow hover:bg-teal-100"
           >
-            <TbX className="text-3xl" />
+            <TbX className="text-2xl" />
           </button>
           <div className="mx-auto h-fit w-full max-w-md space-y-4">
             <div className="flex items-center justify-between">
@@ -84,7 +89,26 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
               </label>
 
               <p className="mt-2 text-xs">
-                Enter at least three characters to get started.
+                {searchQuery.length > 2 && suggestions.length === 0 ? (
+                  <>
+                    No results found?{' '}
+                    <button
+                      onClick={() => setShowMapPopup(true)}
+                      className="bg-teal-100 text-teal-500 underline hover:text-teal-600 font-medium"
+                    >
+                      Choose on Map
+                    </button>{' '}
+                    instead
+                  </>
+                ) : searchQuery.length > 2 && suggestions.length > 0 ? (
+                  <>
+                    Results matching{' '}
+                    <span className="font-semibold bg-teal-100">"{searchQuery}"</span> are
+                    shown below.
+                  </>
+                ) : (
+                  'Enter at least three characters to get started.'
+                )}
               </p>
             </div>
 
@@ -136,6 +160,7 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
                   suggestions={suggestions}
                   onSelect={onSelect}
                   onClose={onClose}
+                  searchQuery={searchQuery}
                 />
               </>
             )}

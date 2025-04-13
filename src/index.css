@@ -155,7 +155,7 @@
 }
 
 .Toastify__toast {
-  @apply !min-w-[28rem] !text-sm;
+  @apply w-[90%] !text-sm sm:w-full sm:!min-w-[28rem];
 }
 
 .no-scroll {

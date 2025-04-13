@@ -1,4 +1,4 @@
-import FAQ from '../components/FAQ';
+import Faq from '../components/Faq';
 import Title from '../components/ui/Title';
 
 const FAQPage = () => {
@@ -9,7 +9,7 @@ const FAQPage = () => {
           title="Frequently Asked Questions"
           description="Clear your doubts and get answers to the most frequently asked questions about our platform. If you have any other questions, feel free to contact us. We are here to help you."
         />
-        <FAQ />
+        <Faq />
       </main>
     </>
   );

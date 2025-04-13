@@ -40,7 +40,7 @@ const Login = () => {
       console.log(data);
       toast.success('Form submitted successfully!');
       reset();
-    } catch (error) {
+    } catch {
       toast.error('Failed to submit form. Please try again later.');
     }
   };
@@ -70,7 +70,7 @@ const Login = () => {
       <main>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="mx-auto max-w-lg rounded-xl border bg-white p-12 shadow"
+          className="mx-auto max-w-lg rounded-xl border bg-white p-6 shadow md:p-10 lg:p-12"
         >
           {formInputs.map((input) => (
             <div key={input.name} className="relative mb-4">
@@ -82,26 +82,15 @@ const Login = () => {
                   </span>
                 )}
               </label>
-              {input.type === 'textarea' ? (
-                <textarea
-                  {...register(input.name)}
-                  id={input.name}
-                  className={`errors[input.name] ? 'border outline-0' : 'outline-1 outline-teal-600/30' } h-32 w-full resize-none rounded border-red-500 px-4 py-2 outline`}
-                  placeholder={input.placeholder}
-                />
-              ) : (
-                <input
-                  {...register(input.name)}
-                  id={input.name}
-                  type={input.type}
-                  className={`w-full rounded px-4 py-2 outline outline-teal-100 ${
-                    errors[input.name]
-                      ? 'border border-red-500 outline-0'
-                      : 'outline-1 outline-teal-600/30'
-                  }`}
-                  placeholder={input.placeholder}
-                />
-              )}
+              <input
+                {...register(input.name)}
+                id={input.name}
+                type={input.type}
+                className={`block w-full rounded-md bg-transparent px-4 py-2.5 text-base font-normal text-dark outline outline-1 -outline-offset-1 outline-teal-500/50 placeholder:font-light placeholder:text-dark/40 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-teal-400 sm:text-lg ${
+                  errors[input.name] && 'outline-1 outline-red-500'
+                }`}
+                placeholder={input.placeholder}
+              />
             </div>
           ))}
 
@@ -132,7 +121,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className={`w-full rounded-full bg-teal-300 px-4 py-2 text-dark ${
+            className={`w-full rounded-full bg-teal-300 px-4 py-3 uppercase text-dark ${
               isSubmitting ? 'cursor-not-allowed opacity-75' : ''
             }`}
             disabled={isSubmitting}

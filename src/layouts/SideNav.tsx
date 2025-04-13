@@ -1,8 +1,26 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { SideNavProps } from '../interfaces/types';
 
-const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav }) => {
+const routeLinks = [
+  {
+    id: 1,
+    title: 'Home',
+    link: '/',
+  },
+  {
+    id: 2,
+    title: 'About',
+    link: '/about',
+  },
+  {
+    id: 3,
+    title: 'FAQ',
+    link: '/help',
+  },
+];
+
+const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav, navLinks }) => {
   return (
     <div className="relative">
       <div
@@ -37,38 +55,55 @@ const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav }) => {
               />
             </svg>
           </button>
-          <ul className="mt-16">
-            <li className="group">
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  `navlink ${isActive ? 'text-teal-300' : 'text-teal-50'}`
-                }
-              >
-                Home
-              </NavLink>
-            </li>
-            <li className="group">
-              <NavLink
-                to="/about"
-                className={({ isActive }) =>
-                  `navlink ${isActive ? 'text-teal-300' : 'text-teal-50'}`
-                }
-              >
-                About
-              </NavLink>
-            </li>
-            <li className="group">
-              <NavLink
-                to="/help"
-                className={({ isActive }) =>
-                  `navlink ${isActive ? 'text-teal-300' : 'text-teal-50'}`
-                }
-              >
-                FAQ
-              </NavLink>
-            </li>
+
+          <ul className="mt-14">
+            {routeLinks.map((link) => (
+              <li key={link.id} className="group">
+                <NavLink
+                  to={link.link}
+                  className={({ isActive }) =>
+                    `navlink ${
+                      isActive ? 'bg-teal-300 text-teal-950' : 'text-teal-50'
+                    }`
+                  }
+                >
+                  {link.title}
+                </NavLink>
+              </li>
+            ))}
           </ul>
+
+          <div className="md:hidden">
+            <ul className="flex flex-col gap-4 px-3 pt-8">
+              {navLinks.map((link) => (
+                <li key={link.id} className="group">
+                  <NavLink
+                    key={link.id}
+                    to={link.link}
+                    className={({ isActive }) =>
+                      `transition-150 flex items-center gap-2 rounded-md px-4 py-3 font-medium transition-colors duration-200 hover:bg-teal-400 hover:text-dark ${
+                        isActive
+                          ? 'bg-teal-300 text-teal-950'
+                          : 'bg-teal-100 text-teal-600'
+                      }`
+                    }
+                  >
+                    {link.icon}
+                    {link.title}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-5 flex flex-col gap-4 px-3">
+              <Link
+                to="/login"
+                className="rounded-full bg-teal-300 px-6 py-2 text-center font-semibold text-teal-950"
+              >
+                Login
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

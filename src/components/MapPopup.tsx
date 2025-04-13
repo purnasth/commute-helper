@@ -85,8 +85,7 @@ const MapPopup: React.FC<MapPopupProps> = ({
     marker.setStyle(
       new Style({
         image: new Icon({
-          src:
-            'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+          src: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
           scale: 0.5,
           anchor: [0.5, 1],
         }),
@@ -224,7 +223,7 @@ const MapPopup: React.FC<MapPopupProps> = ({
           <div ref={mapRef} className="mt-auto h-[calc(100%+15px)] w-full" />
         </div>
 
-        <div className="fixed bottom-5 left-1/2 flex w-full max-w-xl -translate-x-1/2 flex-col gap-1">
+        <div className="fixed bottom-5 left-1/2 flex w-[calc(100%-15px-15px)] max-w-xl -translate-x-1/2 flex-col gap-1 md:w-full">
           {suggestions.length > 0 && (
             <div className="scroll max-h-72 w-full overflow-y-auto rounded-3xl border border-dark/30 bg-white shadow-lg">
               <button

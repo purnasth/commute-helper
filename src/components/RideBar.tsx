@@ -227,13 +227,13 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
           fromHome
             ? `fixed bottom-0 z-40 w-full bg-none py-0 transition-all duration-500 ease-in-out ${
                 window.scrollY > 0 ? 'py-0' : 'px-6'
-              } ${showRideBar ? 'translate-y-0' : 'translate-y-20'}`
+              } ${showRideBar ? 'translate-y-0' : 'translate-y-full lg:translate-y-20'}`
             : 'my-0 p-0'
         }`}
       >
         <form
           onSubmit={handleSubmit(onSubmit, onError)}
-          className="flex items-center justify-between gap-2 rounded-full border bg-white p-2 shadow"
+          className="flex flex-col items-center justify-between gap-2 rounded-3xl border bg-white p-2 shadow lg:flex-row lg:rounded-full"
         >
           {findRideFormFields.map(
             ({ name, label, type, placeholder, options }) => (
@@ -282,7 +282,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
           )}
           <button
             type="submit"
-            className="inline-flex items-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm lg:w-fit"
           >
             Confirm
           </button>
@@ -308,11 +308,11 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           {ridesFound.length > 0 ? (
-            <div className="relative w-full max-w-xl rounded-3xl bg-white p-5 shadow-lg">
+            <div className="relative h-full w-full max-w-xl bg-white p-5 shadow-lg md:h-auto md:rounded-3xl">
               <h3 className="pb-4 text-base font-medium text-teal-500">
                 Available {role === 'rider' ? 'Passengers' : 'Rides'}
               </h3>
-              <ul className="max-h-[50vh] space-y-2 overflow-y-auto">
+              <ul className="max-h-[90vh] space-y-2 overflow-y-auto md:max-h-[50vh]">
                 {ridesFound.map((ride, index) => (
                   <li
                     key={index}

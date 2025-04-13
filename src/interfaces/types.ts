@@ -10,11 +10,11 @@ export interface AvailableListProps {
   role: 'rider' | 'passenger';
 }
 
-export interface FAQItemProps {
+export interface FaqItemProps {
   question: string;
   answer: string;
-  isOpen: boolean;
-  onClick: () => void;
+  isOpen?: boolean;
+  onClick?: () => void;
 }
 
 export interface LocationPopupProps {
@@ -43,6 +43,12 @@ export interface RideBarProps {
 export interface SideNavProps {
   isOpen: boolean;
   closeNav: () => void;
+  navLinks: {
+    id: number;
+    title: string;
+    link: string;
+    icon: JSX.Element;
+  }[];
 }
 
 export interface LoginFormData {

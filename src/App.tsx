@@ -9,7 +9,6 @@ import Home from './pages/Home';
 import RouterToTop from './utils/RouterToTop';
 import Navbar from './layouts/Navbar';
 import Footer from './layouts/Footer';
-import FAQPage from './pages/FAQPage';
 import AboutPage from './pages/AboutPage';
 import RiderPage from './pages/RiderPage';
 import Error404 from './pages/Error404';
@@ -18,6 +17,7 @@ import Login from './layouts/Login';
 import { ToastContainer } from 'react-toastify';
 import RideDetails from './pages/RideDetails';
 import Policies from './pages/Policies';
+import FAQPage from './pages/FAQPage';
 
 const App: React.FC = () => {
   return (

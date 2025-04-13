@@ -10,11 +10,11 @@ export interface AvailableListProps {
   role: 'rider' | 'passenger';
 }
 
-export interface FAQItemProps {
+export interface FaqItemProps {
   question: string;
   answer: string;
-  isOpen: boolean;
-  onClick: () => void;
+  isOpen?: boolean;
+  onClick?: () => void;
 }
 
 export interface LocationPopupProps {

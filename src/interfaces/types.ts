@@ -43,6 +43,12 @@ export interface RideBarProps {
 export interface SideNavProps {
   isOpen: boolean;
   closeNav: () => void;
+  navLinks: {
+    id: number;
+    title: string;
+    link: string;
+    icon: JSX.Element;
+  }[];
 }
 
 export interface LoginFormData {

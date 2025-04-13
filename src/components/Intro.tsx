@@ -13,19 +13,21 @@ const Intro = () => {
             more sustainable future."
       />
 
-      <div className="flex items-center gap-20">
-        <div className="flex-1 flex-col space-y-5">
-          <h2 className="max-w-sm text-3xl leading-snug">
+      <div className="flex flex-col items-center gap-10 md:gap-16 lg:flex-row lg:gap-20">
+        <div className="order-2 flex-1 flex-col space-y-2 text-center md:space-y-5 lg:order-1 lg:text-left">
+          <h2 className="mx-auto max-w-sm text-2xl leading-snug md:text-3xl lg:ml-0 lg:text-2xl xl:text-3xl xl:leading-snug">
             Share The Road. <br /> Share The Memories.
           </h2>
-          <p className="max-w-md">
+          <p className="max-w-md text-sm xl:text-base">
             We empower you to find a ride or a passenger to share resources,
             reduce your carbon footprint and step towards a more sustainable
             future.
           </p>
-          <h3 className="pt-10 text-6xl text-teal-400">Ride. Enjoy. Save.</h3>
+          <h3 className="pt-4 text-4xl text-teal-400 md:pt-10 md:text-5xl xl:text-6xl">
+            Ride. Enjoy. Save.
+          </h3>
         </div>
-        <div className="relative flex flex-1 justify-center">
+        <div className="relative order-1 flex flex-1 justify-center lg:order-2">
           {/* <img
             src={banner}
             alt="Commute Helper"
@@ -43,13 +45,13 @@ const Intro = () => {
             className="filter-white absolute -top-6 z-10 h-6 w-full animate-floating object-contain"
           />
         </div>
-        <div className="flex flex-1 flex-col items-end justify-end space-y-20">
-          <h2 className="max-w-sm text-xl leading-snug">
+        <div className="order-3 flex flex-1 flex-col items-end justify-end space-y-6 md:space-y-12 lg:space-y-20">
+          <h2 className="max-w-sm text-base leading-snug xl:text-xl">
             Our <strong className="text-teal-400">Vision</strong> is to live in
             a world where we all share resources to better preserve our economy
             and planet.
           </h2>
-          <h2 className="max-w-sm text-xl leading-snug">
+          <h2 className="max-w-sm text-base leading-snug xl:text-xl">
             Our <strong className="text-teal-400">Mission</strong> is to fill
             the empty seats in our ride and make our commute more affordable and
             sustainable.

@@ -3,6 +3,21 @@ import SideNav from './SideNav';
 import { Link, useLocation } from 'react-router-dom';
 import { TbMenu2, TbPlus, TbSearch } from 'react-icons/tb';
 
+const navLinks = [
+  {
+    id: 1,
+    title: 'Find a Ride',
+    link: '/passenger',
+    icon: <TbSearch className="text-lg" />,
+  },
+  {
+    id: 2,
+    title: 'Post a Ride',
+    link: '/hero',
+    icon: <TbPlus className="text-lg" />,
+  },
+];
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -39,72 +54,44 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`sticky top-0 z-40 w-full font-serif transition-all duration-[1s] ${window.scrollY > 0 ? 'py-6 bg-white' : 'p-6'} ${visible ? '' : '-translate-y-full'}`}
+        className={`sticky top-0 z-40 w-full font-serif transition-all duration-[1s] ${window.scrollY > 0 ? 'bg-white py-6' : 'p-6'} ${visible ? '' : '-translate-y-full'}`}
       >
-        <div className={`flex items-start justify-between`}>
+        <div className={`flex items-center justify-between md:items-start`}>
           <a
             href="/"
-            className="rounded-full bg-teal-300 px-6 py-2 font-semibold"
+            className="rounded-full bg-teal-300 px-6 py-2 text-sm font-semibold md:text-base"
           >
             Commute Helper
           </a>
 
           <div className="flex items-center justify-end gap-8">
-            <Link to="/passenger" className="inline-flex items-center gap-2">
-              <TbSearch className="text-lg" />
-              Find a Ride
-            </Link>
-            <Link to="/hero" className="inline-flex items-center gap-2">
-              <TbPlus className="text-lg" />
-              Post a Ride
-            </Link>
+            <ul className="hidden items-center gap-8 md:flex">
+              {navLinks.map((link) => (
+                <li key={link.title}>
+                  <Link
+                    to={link.link}
+                    className="inline-flex items-center gap-2"
+                  >
+                    {link.icon}
+                    {link.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
             <Link
               to="/login"
-              className="rounded-full bg-teal-300 px-6 py-2 font-semibold"
+              className="hidden rounded-full bg-teal-300 px-6 py-2 font-semibold md:flex"
             >
               Login
             </Link>
-            <button
-              className="inline-flex items-center justify-center gap-2 font-medium"
-              onClick={toggleNav}
-            >
+            <button type="button" onClick={toggleNav}>
               <TbMenu2 className="scale-150 text-base" />
-              {/* <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              {/* <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {isOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16m-7 6h7"
-                  />
-                )}
-              </svg> */}
-              {/* Menu */}
             </button>
           </div>
         </div>
       </nav>
 
-      <SideNav closeNav={closeNav} isOpen={isOpen} />
+      <SideNav closeNav={closeNav} isOpen={isOpen} navLinks={navLinks} />
     </>
   );
 };

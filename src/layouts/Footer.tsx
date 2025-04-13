@@ -6,7 +6,7 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="flex flex-col justify-between gap-10 bg-teal-300 py-16 text-base text-dark hover:!bg-teal-300 md:flex-row md:items-end md:text-lg">
+      <footer className="flex flex-col justify-between gap-8 bg-teal-300 py-16 text-base text-dark hover:!bg-teal-300 md:text-lg lg:flex-row lg:items-end lg:gap-10">
         <div className="space-y-3">
           <p className="">
             © Commute Helper {currentYear} | All rights reserved |
@@ -19,8 +19,8 @@ const Footer = () => {
           </p>
         </div>
 
-        <div className="flex flex-col items-end gap-4">
-          <ul className="policies flex flex-wrap gap-8 gap-x-6 gap-y-2">
+        <div className="flex flex-col items-start gap-4 lg:items-end">
+          <ul className="policies flex flex-wrap gap-8 gap-x-6 gap-y-0 lg:justify-end">
             {policies.map((policy, index) => (
               <li key={index}>
                 <Link

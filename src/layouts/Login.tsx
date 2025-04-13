@@ -67,7 +67,8 @@ const Login = () => {
 
       toast.success(`Login successful! Welcome, ${firstName}!`);
       reset();
-      navigate('/');
+      // navigate('/');
+      window.location.href = '/';
     } catch {
       toast.error('Failed to login. Please try again later.');
     }

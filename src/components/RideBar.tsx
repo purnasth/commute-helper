@@ -18,7 +18,7 @@ import { RideFormData, RideBarProps } from '../interfaces/types';
 import Modal from './ui/Modal';
 import NoRideFound from './ui/NoRideFound';
 import SearchingRide from './ui/SearchingRide';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // Validation schema using Yup
 const schema = yup.object().shape({
@@ -69,7 +69,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const [ridesFound, setRidesFound] = useState<RideFormData[]>([]); // Tracks found rides
   const [showModal, setShowModal] = useState(false); // Modal visibility state
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -228,14 +228,15 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     );
     localStorage.setItem('rides', JSON.stringify(updatedRides));
 
-    // Navigate to the ride details page
-    window.location.href = `/ride-details?from=${encodeURIComponent(
-      ride.from,
-    )}&to=${encodeURIComponent(ride.to)}&message=${encodeURIComponent(
-      ride.message,
-    )}&role=${encodeURIComponent(ride.role)}&timestamp=${encodeURIComponent(
-      ride.timestamp ?? '',
-    )}`;
+    toast.success('Congratulations! Your ride has been confirmed!');
+
+    navigate(
+      `/ride-details?from=${encodeURIComponent(ride.from)}&to=${encodeURIComponent(
+        ride.to,
+      )}&message=${encodeURIComponent(ride.message)}&role=${encodeURIComponent(
+        ride.role,
+      )}&timestamp=${encodeURIComponent(ride.timestamp ?? '')}`,
+    );
   };
 
   return (
@@ -286,7 +287,11 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                         : `Select your role`}
                     </option>
                     {options?.map((option) => (
-                      <option key={option} value={option.toLowerCase()} className='text-dark'>
+                      <option
+                        key={option}
+                        value={option.toLowerCase()}
+                        className="text-dark"
+                      >
                         {option}
                       </option>
                     ))}
@@ -303,9 +308,9 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                     }`}
                     placeholder={
                       errors[name]
-                       ? (errors[name]?.message as string)
-                          // 'is required*'
-                        : placeholder
+                        ? (errors[name]?.message as string)
+                        : // 'is required*'
+                          placeholder
                     }
                   />
                 )}
@@ -387,7 +392,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                         onClick={() => handleConfirm(ride)}
                         className="group relative w-full overflow-hidden rounded-lg border border-teal-200 bg-teal-400 px-4 py-1.5 text-sm text-white hover:bg-green-500"
                       >
-                        <span className="animate-slide absolute inset-0 z-0 bg-gradient-to-r from-green-500 to-green-400 group-hover:animate-none"></span>
+                        <span className="absolute inset-0 z-0 animate-slide bg-gradient-to-r from-green-500 to-green-400 group-hover:animate-none"></span>
                         <span className="relative z-10 font-medium tracking-wide">
                           Confirm
                         </span>

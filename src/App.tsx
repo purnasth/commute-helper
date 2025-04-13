@@ -15,6 +15,9 @@ import RiderPage from './pages/RiderPage';
 import Error404 from './pages/Error404';
 import PassengerPage from './pages/PassengerPage';
 import Login from './layouts/Login';
+import { ToastContainer } from 'react-toastify';
+import RideDetails from './pages/RideDetails';
+import Policies from './pages/Policies';
 
 const App: React.FC = () => {
   return (
@@ -29,10 +32,25 @@ const App: React.FC = () => {
           <Route path="/hero" element={<RiderPage />} />
           <Route path="/passenger" element={<PassengerPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/ride-details" element={<RideDetails />} />
+          <Route path="/policies/:policyId" element={<Policies />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
         <Footer />
       </Router>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 };

@@ -1,20 +1,20 @@
+import { Link } from 'react-router-dom';
+import { policies } from '../../constants/data';
+
 const AgreeInfo = () => {
   return (
     <>
       <p className="mt-3 bg-white text-center text-sm">
         By confirming, I agree to the{' '}
-        <a href="/terms" className="text-teal-500 underline">
-          Ride Cancellation Policy
-        </a>
-        {',  '}
-        <a href="/terms" className="text-teal-500 underline">
-          Terms of Service
-        </a>{' '}
+        {policies.map((policy, index) => (
+          <span key={index}>
+            <Link to={policy.link} className="text-teal-500 underline">
+              {policy.title}
+            </Link>
+            {index < policies.length - 1 ? ', ' : ' '}
+          </span>
+        ))}
         and{' '}
-        <a href="/privacy" className="text-teal-500 underline">
-          Privacy Policy
-        </a>{' '}
-        and{', '}
         <strong className="font-semibold">
           I understand breaking the rules will result in a ban from the
           platform.

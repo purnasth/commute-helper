@@ -12,10 +12,17 @@
     @apply bg-teal-950 text-teal-100;
   }
 
-  /* * {
-          scrollbar-width: thin;
-        } */
-  ::-webkit-scrollbar {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #5eead4 transparent;
+  }
+
+  .scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #5eead4 transparent;
+  }
+
+  /* ::-webkit-scrollbar {
     @apply w-0;
   }
 
@@ -25,7 +32,7 @@
 
   .scroll::-webkit-scrollbar-thumb {
     @apply rounded-full bg-orange-300;
-  }
+  } */
 
   /* ::-webkit-scrollbar {
         @apply w-2 rounded-full bg-transparent;
@@ -50,7 +57,7 @@
   main,
   section,
   div {
-    @apply font-body;
+    @apply !font-body;
   }
 
   .navlink,
@@ -89,15 +96,22 @@
       } */
 
   .filter-white {
-    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%)
+      hue-rotate(288deg) brightness(102%) contrast(102%);
   }
 
   .filter-black {
-    filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7500%) hue-rotate(327deg) brightness(96%) contrast(104%);
+    filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7500%)
+      hue-rotate(327deg) brightness(96%) contrast(104%);
   }
 
   .filter-primary {
-    filter: brightness(0) saturate(100%) invert(81%) sepia(28%) saturate(783%) hue-rotate(113deg) brightness(103%) contrast(84%) blur(100px);
+    filter: brightness(0) saturate(100%) invert(81%) sepia(28%) saturate(783%)
+      hue-rotate(113deg) brightness(103%) contrast(84%) blur(100px);
+  }
+
+  .transition-150 {
+    @apply transition-all duration-150 ease-linear;
   }
 
   .transition-300 {
@@ -140,24 +154,10 @@
   }
 }
 
-/* lenis */
-html.lenis,
-html.lenis body {
-  height: auto;
+.Toastify__toast {
+  @apply !min-w-[28rem] !text-sm;
 }
 
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
+.no-scroll {
   overflow: hidden;
-}
-
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
 }

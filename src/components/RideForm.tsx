@@ -1,39 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TbMapPin, TbBrandHipchat, TbUser } from 'react-icons/tb';
+import { findRideFormFields } from '../constants/data';
 
 interface RideFormProps {
   setShowLocationPopup: (show: boolean) => void;
   setShowMessagePopup: (show: boolean) => void;
   setActiveInput: (input: 'from' | 'to' | null) => void;
 }
-
-const findRideFormFields = [
-  {
-    name: 'from',
-    label: 'From',
-    type: 'text',
-    placeholder: 'Current Location',
-  },
-  {
-    name: 'to',
-    label: 'To',
-    type: 'text',
-    placeholder: 'Kathmandu BernHardt College',
-  },
-  {
-    name: 'message',
-    label: 'Message',
-    type: 'text',
-    placeholder: "I'm leaving in 5 minutes",
-  },
-  {
-    name: 'role',
-    label: "I'm a",
-    type: 'select',
-    options: ['Rider', 'Passenger'],
-  },
-];
 
 const RideForm: React.FC<RideFormProps> = ({
   setShowLocationPopup,

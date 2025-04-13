@@ -1,10 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
-interface SideNavProps {
-  isOpen: boolean;
-  closeNav: () => void;
-}
+import { SideNavProps } from '../interfaces/types';
 
 const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav }) => {
   return (
@@ -64,22 +60,12 @@ const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav }) => {
             </li>
             <li className="group">
               <NavLink
-                to="/contact"
-                className={({ isActive }) =>
-                  `navlink ${isActive ? 'text-teal-300' : 'text-teal-50'}`
-                }
-              >
-                Contact
-              </NavLink>
-            </li>
-            <li className="group">
-              <NavLink
                 to="/help"
                 className={({ isActive }) =>
                   `navlink ${isActive ? 'text-teal-300' : 'text-teal-50'}`
                 }
               >
-                Support
+                FAQ
               </NavLink>
             </li>
           </ul>

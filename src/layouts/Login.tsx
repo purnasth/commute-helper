@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import ReCAPTCHA from 'react-google-recaptcha';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoginFormData } from '../interfaces/types';
+import { useNavigate } from 'react-router-dom';
+import { getFirstNameFromEmail } from '../utils/functions';
 
 // Validation schema
 const schema = yup.object().shape({
@@ -15,6 +17,7 @@ const schema = yup.object().shape({
 
 const Login = () => {
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -35,14 +38,45 @@ const Login = () => {
       return;
     }
 
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log(data);
-      toast.success('Form submitted successfully!');
-      reset();
-    } catch {
-      toast.error('Failed to submit form. Please try again later.');
+    const allowedEmails = [
+      'purna@kbc.edu.np',
+      'purna@gov.np',
+      'mridani@kbc.edu.np',
+      'mridani@gov.np',
+      'priyanka@kbc.edu.np',
+      'priyanka@gov.np',
+    ];
+
+    if (!allowedEmails.includes(data.email)) {
+      toast.error('Access denied. Please use an authorized email address.');
+      return;
     }
+
+    try {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      const firstName = getFirstNameFromEmail(data.email);
+
+      // Store user info in localStorage
+      const userInfo = {
+        id: Date.now(), // Simulated user ID
+        email: data.email,
+      };
+      localStorage.setItem('user', JSON.stringify(userInfo));
+
+      toast.success(`Login successful! Welcome, ${firstName}!`);
+      reset();
+      navigate('/');
+    } catch {
+      toast.error('Failed to login. Please try again later.');
+    }
+  };
+
+  const handleLogout = (navigate: (path: string) => void) => {
+    localStorage.removeItem('user');
+    toast.success('Logged out successfully!');
+    navigate('/login');
   };
 
   const formInputs: {
@@ -70,7 +104,7 @@ const Login = () => {
       <main>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="mx-auto max-w-lg rounded-xl border bg-white p-6 shadow md:p-10 lg:p-12"
+          className="mx-auto max-w-lg rounded-xl bg-white p-3"
         >
           {formInputs.map((input) => (
             <div key={input.name} className="relative mb-4">
@@ -111,12 +145,19 @@ const Login = () => {
               />
               Remember Me
             </label>
-            <a
+            {/* <a
               href="#"
               className="text-sm font-light text-teal-500 underline hover:no-underline"
             >
               Forgot Password?
-            </a>
+            </a> */}
+            <button
+              type="button"
+              onClick={() => handleLogout(navigate)}
+              className="text-sm font-light uppercase text-teal-500 underline hover:no-underline"
+            >
+              logout
+            </button>
           </div>
 
           <button
@@ -129,6 +170,20 @@ const Login = () => {
             {isSubmitting ? 'Logging...' : 'Login'}
           </button>
         </form>
+
+        <div className="mx-auto mt-8 max-w-lg space-y-4 px-5 text-center">
+          <p className="text-sm">
+            To access this platform, you must use an{' '}
+            <strong>authorized email address</strong> of{' '}
+            <strong>Kathmandu BernHardt College</strong>.
+          </p>
+          <p className="text-xs">
+            This ensures that only verified users can access the platform. If
+            you encounter any issues or not a member of the organization,,
+            please contact the administrator of{' '}
+            <strong>Kathmandu BernHardt College</strong> for access.
+          </p>
+        </div>
       </main>
     </>
   );

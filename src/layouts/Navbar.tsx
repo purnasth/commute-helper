@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import SideNav from './SideNav';
 import { Link, useLocation } from 'react-router-dom';
 import { TbMenu2, TbPlus, TbSearch } from 'react-icons/tb';
+import { getUserGreeting } from '../utils/functions';
 
 const navLinks = [
   {
@@ -22,6 +23,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [userName, setUserName] = useState<string | null>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -42,6 +44,11 @@ const Navbar = () => {
     document.body.style.overflow = 'auto';
   }, [location]);
 
+  // Greet user
+  useEffect(() => {
+    setUserName(getUserGreeting());
+  }, []);
+
   const toggleNav = () => {
     setIsOpen(!isOpen);
     document.body.style.overflow = !isOpen ? 'hidden' : 'auto';
@@ -57,12 +64,12 @@ const Navbar = () => {
         className={`sticky top-0 z-40 w-full transition-all duration-[1s] ${window.scrollY > 0 ? 'bg-white py-3 md:py-6' : 'p-3 md:p-6'} ${visible ? '' : '-translate-y-full'}`}
       >
         <div className={`flex items-center justify-between md:items-start`}>
-          <a
-            href="/"
+          <Link
+            to="/"
             className="rounded-full bg-teal-300 px-6 py-2 text-sm font-semibold md:text-base"
           >
             Commute Helper
-          </a>
+          </Link>
 
           <div className="flex items-center justify-end gap-8">
             <ul className="hidden items-center gap-8 md:flex">
@@ -78,12 +85,19 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
-            <Link
-              to="/login"
-              className="hidden rounded-full bg-teal-300 px-6 py-2 font-semibold md:flex"
-            >
-              Login
-            </Link>
+            {userName ? (
+              <p className="hidden items-center justify-center gap-2 rounded-full bg-teal-100 py-2 pl-4 pr-5 font-semibold text-teal-600 md:flex">
+                <span className="animate-wave">&#128075;</span>
+                Hi, {userName}!
+              </p>
+            ) : (
+              <Link
+                to="/login"
+                className="hidden rounded-full bg-teal-300 px-6 py-2 font-semibold md:flex"
+              >
+                Login
+              </Link>
+            )}
             <button type="button" onClick={toggleNav}>
               <TbMenu2 className="scale-150 text-base" />
             </button>

@@ -50,7 +50,7 @@ const RideDetails: React.FC = () => {
           <div className="flex flex-col items-start justify-between gap-2 md:flex-row md:items-center">
             <p className="pl-2 text-base font-normal text-dark">{message}</p>
             <p className="flex items-center justify-center gap-0.5 rounded-full bg-teal-50 px-3 py-1 text-base font-normal capitalize text-teal-500 shadow">
-              <TbAlarm className="text-lg" />
+              <TbAlarm className="text-xl" />
               {timestamp ? formatFullDate(timestamp) : 'Just now'}
             </p>
           </div>

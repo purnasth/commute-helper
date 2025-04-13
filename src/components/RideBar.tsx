@@ -18,13 +18,14 @@ import { RideFormData, RideBarProps } from '../interfaces/types';
 import Modal from './ui/Modal';
 import NoRideFound from './ui/NoRideFound';
 import SearchingRide from './ui/SearchingRide';
+// import { useNavigate } from 'react-router-dom';
 
 // Validation schema using Yup
 const schema = yup.object().shape({
-  from: yup.string().required('From location is required'),
-  to: yup.string().required('To location is required'),
-  message: yup.string().required('Message is required'),
-  role: yup.string().required('Role is required'),
+  from: yup.string().required('From location is required*'),
+  to: yup.string().required('To location is required*'),
+  message: yup.string().required('Message is required*'),
+  role: yup.string().required('Role is required*'),
 });
 
 const findRideFormFields: Array<{
@@ -68,6 +69,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const [ridesFound, setRidesFound] = useState<RideFormData[]>([]); // Tracks found rides
   const [showModal, setShowModal] = useState(false); // Modal visibility state
+  // const navigate = useNavigate();
 
   const {
     register,
@@ -127,6 +129,14 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
   };
 
   const onSubmit = (data: RideFormData) => {
+    // Check if the user is logged in
+    const user = localStorage.getItem('user');
+    if (!user) {
+      toast.error('Please log in to confirm your ride route.');
+      // navigate('/login');
+      return;
+    }
+
     // Add a timestamp to the ride data
     const rideWithTimestamp = {
       ...data,
@@ -173,9 +183,17 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
   };
 
   const onError = () => {
-    Object.values(errors).forEach((error) => {
-      toast.error(error?.message || 'Invalid input');
-    });
+    // Aggregate all error messages into a single string
+    const errorMessages = Object.values(errors)
+      .map((error) => error?.message)
+      .filter(Boolean) // Remove undefined or null values
+      .join(', ');
+
+    // Show a single toast with all error messages
+    if (errorMessages) {
+      // toast.error(`Please fill out the following fields: ${errorMessages}`);
+      toast.error(`Please fill out all the fields:`);
+    }
   };
 
   if (isLoading) {
@@ -258,10 +276,17 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                   <select
                     id={name}
                     {...register(name)}
-                    className="mr-2 w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark ring-inset focus:outline-none"
+                    className={`mr-2 w-full rounded-full bg-transparent px-2 py-3 text-sm ring-inset focus:outline-none ${
+                      errors[name] ? 'text-red-600' : 'text-dark'
+                    }`}
                   >
+                    <option value="" disabled selected>
+                      {errors[name]
+                        ? (errors[name]?.message as string)
+                        : `Select your role`}
+                    </option>
                     {options?.map((option) => (
-                      <option key={option} value={option.toLowerCase()}>
+                      <option key={option} value={option.toLowerCase()} className='text-dark'>
                         {option}
                       </option>
                     ))}
@@ -273,8 +298,15 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                     {...register(name)}
                     onClick={() => handleInputClick(name)}
                     readOnly={name === 'from' || name === 'to'}
-                    className="w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark ring-inset placeholder:text-dark/50 focus:outline-none"
-                    placeholder={placeholder}
+                    className={`w-full rounded-full bg-transparent px-2 py-3 text-sm text-dark ring-inset focus:outline-none ${
+                      errors[name] ? 'placeholder:text-red-600' : ''
+                    }`}
+                    placeholder={
+                      errors[name]
+                       ? (errors[name]?.message as string)
+                          // 'is required*'
+                        : placeholder
+                    }
                   />
                 )}
               </div>

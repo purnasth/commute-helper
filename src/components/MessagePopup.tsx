@@ -18,7 +18,7 @@ const MessagePopup: React.FC<MessagePopupProps> = ({ onSelect, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="relative flex size-full items-center justify-center space-y-4 bg-white p-6">
+      <div className="relative flex size-full items-center justify-center space-y-4 bg-white p-4 md:p-6">
         <button
           onClick={onClose}
           className="absolute right-5 top-5 z-50 rounded-full border border-teal-500/20 bg-teal-50 p-1.5 text-teal-500 shadow hover:bg-teal-100"

@@ -3,14 +3,14 @@ import error from '../../assets/vector/passenger.svg';
 const SearchingRide = () => {
   return (
     <>
-      <main className="relative flex w-full max-w-xl flex-col items-center justify-center overflow-hidden rounded-3xl bg-white p-5 shadow-lg">
+      <main className="relative flex size-full flex-col items-center justify-center overflow-hidden bg-white p-5 shadow-lg">
         <img
           src={error}
           alt="Error 404"
           className="-mt-12 h-auto w-96 animate-floating-up select-none object-contain md:h-[60vh] md:w-auto"
           draggable="false"
         />
-        <p className="inline-flex items-center gap-2 font-light">
+        <p className="mt-4 inline-flex flex-wrap items-center justify-center gap-2 text-center font-light">
           Please wait while we search for available rides.
           <svg
             className="size-6 animate-spin text-teal-500"

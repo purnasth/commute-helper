@@ -23,11 +23,11 @@ const RideDetails: React.FC = () => {
 
   return (
     <main>
-      <h1 className="mb-5 text-center text-2xl font-semibold text-teal-500">
+      <h1 className="mb-5 text-center text-xl md:text-2xl font-semibold text-teal-500">
         Ride Details
       </h1>
 
-      <div className="mx-auto max-w-4xl space-y-6 rounded-xl border border-gray-200/80 bg-teal-50 p-6 shadow-sm transition-shadow hover:shadow-md">
+      <div className="mx-auto max-w-4xl space-y-6 rounded-xl border border-gray-200/80 bg-teal-50 p-4 shadow-sm transition-shadow hover:shadow-md md:p-6">
         <div>
           <p className="inline-flex w-fit items-center justify-center gap-2 rounded-full bg-teal-100 px-4 py-1 text-base font-medium text-teal-500">
             {role === 'rider' ? <MdOutlineDirectionsBike /> : <FaWalking />}
@@ -47,7 +47,7 @@ const RideDetails: React.FC = () => {
         </div>
         <div className="relative rounded-xl bg-teal-200 p-3">
           <div className="absolute -top-2 right-5 size-0 origin-top rotate-90 scale-[2] border-l-[10px] border-r-[2px] border-t-[10px] border-l-transparent border-r-transparent border-t-teal-200"></div>
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex flex-col items-start justify-between gap-2 md:flex-row md:items-center">
             <p className="pl-2 text-base font-normal text-dark">{message}</p>
             <p className="flex items-center justify-center gap-0.5 rounded-full bg-teal-50 px-3 py-1 text-base font-normal capitalize text-teal-500 shadow">
               <TbAlarm className="text-lg" />
@@ -85,7 +85,7 @@ const RideDetails: React.FC = () => {
                 />
               </div>
 
-              <p>
+              <p className="text-sm md:text-base">
                 Having trouble with the map?{' '}
                 <a
                   href={getDirectionsUrl()}

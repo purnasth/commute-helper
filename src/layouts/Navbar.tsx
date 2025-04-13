@@ -54,7 +54,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`sticky top-0 z-40 w-full font-serif transition-all duration-[1s] ${window.scrollY > 0 ? 'bg-white py-6' : 'p-6'} ${visible ? '' : '-translate-y-full'}`}
+        className={`sticky top-0 z-40 w-full transition-all duration-[1s] ${window.scrollY > 0 ? 'bg-white py-3 md:py-6' : 'p-3 md:p-6'} ${visible ? '' : '-translate-y-full'}`}
       >
         <div className={`flex items-center justify-between md:items-start`}>
           <a

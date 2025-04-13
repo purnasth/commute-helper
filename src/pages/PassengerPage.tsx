@@ -16,11 +16,11 @@ const PassengerPage = () => {
       />
       <RideBar role="passenger" />
 
-      <section className="pt-24">
-        <h3 className="mx-auto w-fit max-w-md rounded-full bg-teal-100 px-4 py-1 text-center text-xl font-medium uppercase leading-snug text-teal-700">
+      <section className="pt-12 md:pt-16 lg:pt-24">
+        <h3 className="mx-auto w-fit max-w-md rounded-full bg-teal-100 px-4 py-1 text-center text-sm font-medium uppercase leading-snug text-teal-700 sm:text-base md:text-xl">
           Rules when finding a ride
         </h3>
-        <div className="mt-12 grid grid-cols-2 items-center gap-12">
+        <div className="mt-3 grid items-center gap-6 sm:mt-5 lg:mt-12 lg:grid-cols-2 lg:gap-12">
           <div className="relative">
             <img
               src={rider}
@@ -33,28 +33,28 @@ const PassengerPage = () => {
               className="animate-floating-up drop-shadow"
             />
           </div>
-          <ul className="list-inside list-decimal space-y-12">
-            <li className="text-pretty text-lg font-light">
+          <ul className="list-inside list-decimal space-y-4 md:space-y-6 lg:space-y-12">
+            <li className="text-pretty text-sm font-light sm:text-base md:text-lg">
               <strong className="font-semibold text-teal-500">
                 Be Accessible
               </strong>
               - Be on the location on time and be ready for pickup when the hero
               arrives.
             </li>
-            <li className="text-pretty text-lg font-light">
+            <li className="text-pretty text-sm font-light sm:text-base md:text-lg">
               <strong className="font-semibold text-teal-500">
                 Be Courteous
               </strong>
               - Be polite to your rider and respect their time and comfort.
             </li>
-            <li className="text-pretty text-lg font-light">
+            <li className="text-pretty text-sm font-light sm:text-base md:text-lg">
               <strong className="font-semibold text-teal-500">
                 Be Friendly
               </strong>
               - Engage in pleasant conversation and make the ride enjoyable for
               everyone.
             </li>
-            <li className="text-pretty text-lg font-light">
+            <li className="text-pretty text-sm font-light sm:text-base md:text-lg">
               <strong className="font-semibold text-teal-500">Be Safe</strong> -
               Follow all safety guidelines as a passenger and ensure the ride is
               safe for everyone.

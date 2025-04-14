@@ -98,7 +98,11 @@ const Navbar = () => {
                 Login
               </Link>
             )}
-            <button type="button" onClick={toggleNav}>
+            <button
+              type="button"
+              onClick={toggleNav}
+              aria-label="Toggle Navigation"
+            >
               <TbMenu2 className="scale-150 text-base" />
             </button>
           </div>

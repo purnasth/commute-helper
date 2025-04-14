@@ -281,7 +281,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                       errors[name] ? 'text-red-600' : 'text-dark'
                     }`}
                   >
-                    <option value="" disabled selected>
+                    <option value="" disabled>
                       {errors[name]
                         ? (errors[name]?.message as string)
                         : `Select your role`}
@@ -389,6 +389,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                     </div>
                     <div className="flex items-center justify-between gap-3">
                       <button
+                        type="button"
                         onClick={() => handleConfirm(ride)}
                         className="group relative w-full overflow-hidden rounded-lg border border-teal-200 bg-teal-400 px-4 py-1.5 text-sm text-white hover:bg-green-500"
                       >
@@ -398,6 +399,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                         </span>
                       </button>
                       <button
+                        type="button"
                         onClick={() => handleReject(ride)}
                         className="transition-150 w-full rounded-lg border border-teal-400 bg-teal-50 px-4 py-1.5 text-sm font-medium tracking-wide text-teal-500 hover:border-red-500 hover:bg-red-500 hover:text-white"
                       >

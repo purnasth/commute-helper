@@ -3,6 +3,7 @@ import rideBuddy from '../assets/ride.webp';
 import introVideo from '../assets/videos/demo.mp4';
 import iPhoneMockup from '../assets/mockups/iPhone.png';
 import introPoster from '../assets/mockups/imagePoster.webp';
+import demoTrack from '../assets/tracks/demoTrack.vtt';
 
 const Intro = () => {
   return (
@@ -25,7 +26,7 @@ const Intro = () => {
             reduce your carbon footprint and step towards a more sustainable
             future.
           </p>
-          <h3 className="pt-4 text-4xl text-teal-400 md:pt-10 md:text-5xl xl:text-6xl">
+          <h3 className="bg-white/50 pt-4 text-4xl text-teal-400 drop-shadow-sm md:pt-10 md:text-5xl xl:text-6xl">
             Ride. Enjoy. Save.
           </h3>
         </div>
@@ -38,17 +39,27 @@ const Intro = () => {
           /> */}
           <div className="-translate-y-8">
             <video
+              playsInline
+              webkit-playsinline="true"
               src={introVideo}
               autoPlay
               loop
               muted
               poster={introPoster}
               className="scale-[0.9] rounded-[2rem] object-cover"
-            />
+            >
+              <track
+                src={demoTrack}
+                kind="captions"
+                srcLang="en"
+                label="English Captions"
+                default
+              />
+            </video>
             <img
               src={iPhoneMockup}
               alt="Commute Helper"
-              className="absolute inset-0 translate-y-8"
+              className="pointer-events-none absolute inset-0 translate-y-8"
             />
           </div>
           <div className="absolute -top-[3px] h-1 w-4/5 bg-gradient-to-r from-transparent via-white to-transparent"></div>
@@ -63,14 +74,14 @@ const Intro = () => {
         </div>
         <div className="order-3 flex flex-1 flex-col items-end justify-end space-y-6 md:space-y-12 lg:space-y-20">
           <h2 className="max-w-sm text-base leading-snug xl:text-xl">
-            Our <strong className="text-teal-400">Vision</strong> is to live in
-            a world where we all share resources to better preserve our economy
-            and planet.
+            Our <strong className="bg-teal-100 text-teal-700">Vision</strong> is
+            to live in a world where we all share resources to better preserve
+            our economy and planet.
           </h2>
           <h2 className="max-w-sm text-base leading-snug xl:text-xl">
-            Our <strong className="text-teal-400">Mission</strong> is to fill
-            the empty seats in our ride and make our commute more affordable and
-            sustainable.
+            Our <strong className="bg-teal-100 text-teal-700">Mission</strong>{' '}
+            is to fill the empty seats in our ride and make our commute more
+            affordable and sustainable.
           </h2>
         </div>
       </div>

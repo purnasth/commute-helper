@@ -22,7 +22,8 @@ const Faq: React.FC = () => {
                 : ''
             }`}
           >
-            <button
+            <div
+              aria-hidden="true"
               onClick={() => toggleFAQ(index)}
               className="flex w-full items-center justify-between pb-4 text-left focus:outline-none"
             >
@@ -34,7 +35,7 @@ const Faq: React.FC = () => {
                   openIndex === index ? 'rotate-45' : 'rotate-0'
                 }`}
               />
-            </button>
+            </div>
             <div
               className={`transition-max-height overflow-hidden overflow-y-auto duration-500 ${
                 openIndex === index ? 'max-h-40' : 'max-h-0'

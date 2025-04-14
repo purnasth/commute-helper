@@ -1,0 +1,32 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:00.850
+The ride posting page is displayed.
+
+00:00:00.851 --> 00:00:01.300
+The user selects the "From" location as "Kathmandu BernHardt College."
+
+00:00:01.301 --> 00:00:04.650
+The user selects the "To" location as "Leapfrog Technology" using the location options and the embedded map.
+
+00:00:04.651 --> 00:00:08.000
+The user selects a message from the quick messages provided.
+
+00:00:08.001 --> 00:00:09.000
+The user confirms and submits the ride request.
+
+00:00:09.001 --> 00:00:10.000
+The system searches for a ride and displays a progress/loading spinner.
+
+00:00:10.001 --> 00:00:11.300
+The system shows available passengers matching the "From" and "To" locations, along with ride details such as the message, time, and two options: confirm or reject the available rides.
+
+00:00:11.301 --> 00:00:12.930
+A ride confirmation message is displayed with the ride details:
+- Role: Passenger
+- From: Kathmandu BernHardt College
+- To: Leapfrog Technology
+- Message: "I'll be there in 5 minutes"
+- Time: "12:51 PM Mon, Apr 14, 2025"
+
+A "View Route" button is shown, allowing the user to see the embedded map or open it in a new tab.

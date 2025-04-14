@@ -1,6 +1,8 @@
-import banner from '../assets/mockups/banner.png';
 import Title from './ui/Title';
 import rideBuddy from '../assets/ride.webp';
+import introVideo from '../assets/videos/demo.mp4';
+import iPhoneMockup from '../assets/mockups/iphone14pro.png';
+import introPoster from '../assets/mockups/imagePoster.webp';
 
 const Intro = () => {
   return (
@@ -29,12 +31,26 @@ const Intro = () => {
         </div>
         <div className="relative order-1 flex flex-1 justify-center lg:order-2">
           {/* <img
-            src={banner}
+            src={iPhoneMockup}
             alt="Commute Helper"
             draggable="false"
             className="filter-primary absolute inset-0 -z-10 scale-100 animate-pulse opacity-60 mix-blend-multiply"
           /> */}
-          <img src={banner} alt="Commute Helper" draggable="false" />
+          <div className="-translate-y-8">
+            <video
+              src={introVideo}
+              autoPlay
+              loop
+              muted
+              poster={introPoster}
+              className="scale-[0.9] rounded-[2rem] object-cover"
+            />
+            <img
+              src={iPhoneMockup}
+              alt="Commute Helper"
+              className="absolute inset-0 translate-y-8"
+            />
+          </div>
           <div className="absolute -top-[3px] h-1 w-4/5 bg-gradient-to-r from-transparent via-white to-transparent"></div>
           <div className="glitter-effect absolute -top-3 -z-10 h-48 w-1/2 animate-custom-pulse rounded-full bg-teal-200 blur-2xl"></div>
           <div className="absolute -top-3 -z-10 h-64 w-1/2 animate-custom-pulse rounded-full bg-teal-400 blur-2xl"></div>

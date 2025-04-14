@@ -1,7 +1,7 @@
 import Title from './ui/Title';
 import rideBuddy from '../assets/ride.webp';
 import introVideo from '../assets/videos/demo.mp4';
-import iPhoneMockup from '../assets/mockups/iPhone.png';
+import iPhoneMockup from '../assets/mockups/iPhone.webp';
 import introPoster from '../assets/mockups/imagePoster.webp';
 import demoTrack from '../assets/tracks/demoTrack.vtt';
 
@@ -60,6 +60,9 @@ const Intro = () => {
               src={iPhoneMockup}
               alt="Commute Helper"
               className="pointer-events-none absolute inset-0 translate-y-8"
+              draggable="false"
+              width={750}
+              height={1514}
             />
           </div>
           <div className="absolute -top-[3px] h-1 w-4/5 bg-gradient-to-r from-transparent via-white to-transparent"></div>

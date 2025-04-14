@@ -21,11 +21,6 @@ const RiderPage = () => {
             <img
               src={rider}
               alt="Hero Vector"
-              className="filter-primary absolute inset-0 -z-10 animate-floating-up opacity-30"
-            />
-            <img
-              src={rider}
-              alt="Hero Vector"
               className="animate-floating-up drop-shadow"
             />
           </div>

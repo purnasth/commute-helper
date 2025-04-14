@@ -1,7 +1,7 @@
 import Title from './ui/Title';
 import rideBuddy from '../assets/ride.webp';
 import introVideo from '../assets/videos/demo.mp4';
-import iPhoneMockup from '../assets/mockups/iphone14pro.png';
+import iPhoneMockup from '../assets/mockups/iPhone.png';
 import introPoster from '../assets/mockups/imagePoster.webp';
 
 const Intro = () => {

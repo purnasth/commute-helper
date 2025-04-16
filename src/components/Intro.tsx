@@ -33,7 +33,7 @@ const Intro = () => {
         <div className="relative order-1 flex flex-1 justify-center lg:order-2">
           {/* <img
             src={iPhoneMockup}
-            alt="Commute Helper"
+            alt="Commute Connect"
             draggable="false"
             className="filter-primary absolute inset-0 -z-10 scale-100 animate-pulse opacity-60 mix-blend-multiply"
           /> */}
@@ -58,7 +58,7 @@ const Intro = () => {
             </video>
             <img
               src={iPhoneMockup}
-              alt="Commute Helper"
+              alt="Commute Connect"
               className="pointer-events-none absolute inset-0 translate-y-8"
               draggable="false"
               width={750}

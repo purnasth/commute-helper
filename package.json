@@ -12,6 +12,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "@types/ol": "^7.0.0",
+    "@vite-pwa/assets-generator": "^1.0.0",
     "formik": "^2.4.6",
     "ol": "^10.5.0",
     "react": "^18.3.1",
@@ -21,6 +22,8 @@
     "react-icons": "^5.4.0",
     "react-router-dom": "^7.0.2",
     "react-toastify": "^11.0.2",
+    "vite-plugin-pwa": "^1.0.0",
+    "workbox-window": "^7.3.0",
     "yup": "^1.6.1"
   },
   "devDependencies": {

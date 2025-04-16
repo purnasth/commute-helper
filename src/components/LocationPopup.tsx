@@ -65,6 +65,7 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
         <div className="relative flex size-full items-center justify-center space-y-4 bg-white p-4 md:p-6">
           <button
+            type="button"
             onClick={onClose}
             className="absolute right-5 top-5 z-50 rounded-full border border-teal-500/20 bg-teal-50 p-1.5 text-teal-500 shadow hover:bg-teal-100"
           >
@@ -93,6 +94,7 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
                   <>
                     No results found?{' '}
                     <button
+                      type="button"
                       onClick={() => setShowMapPopup(true)}
                       className="bg-teal-100 font-medium text-teal-500 underline hover:text-teal-600"
                     >
@@ -126,7 +128,7 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
               <button
                 type="button"
                 onClick={() => setShowMapPopup(true)}
-                className="transition-300 group inline-flex w-full items-start justify-center md:justify-start gap-2 rounded-lg border border-teal-300 bg-teal-300 p-3 text-sm font-semibold text-dark hover:bg-teal-50 hover:text-teal-500 hover:shadow-none md:gap-3"
+                className="transition-300 group inline-flex w-full items-start justify-center gap-2 rounded-lg border border-teal-300 bg-teal-300 p-3 text-sm font-semibold text-dark hover:bg-teal-50 hover:text-teal-500 hover:shadow-none md:justify-start md:gap-3"
               >
                 <PiMapPinSimpleAreaBold className="transition-300 text-lg text-dark/60 group-hover:text-teal-500 md:text-xl" />
                 <span className="font-medium">Choose on Map</span>

@@ -8,7 +8,7 @@ const AgreeInfo = () => {
         By confirming, I agree to the{' '}
         {policies.map((policy, index) => (
           <span key={index}>
-            <Link to={policy.link} className="text-teal-500 underline">
+            <Link to={policy.link} className="text-dark underline">
               {policy.title}
             </Link>
             {index < policies.length - 1 ? ', ' : ' '}

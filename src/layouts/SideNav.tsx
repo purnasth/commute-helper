@@ -37,6 +37,8 @@ const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav, navLinks }) => {
       >
         <div className="">
           <button
+            type="button"
+            aria-label="Close Menu"
             onClick={closeNav}
             className="absolute right-4 top-4 text-4xl text-teal-50"
           >

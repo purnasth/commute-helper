@@ -214,7 +214,9 @@ const MapPopup: React.FC<MapPopupProps> = ({
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
         <div className="relative h-screen w-full overflow-y-hidden bg-white">
           <button
+            type="button"
             onClick={onClose}
+            aria-label="Close Map"
             className="transition-300 absolute right-4 top-4 z-50 rounded-full bg-teal-50 p-2 text-teal-600 shadow-md outline outline-1 outline-teal-500 hover:bg-teal-100 hover:text-teal-700"
           >
             <TbX className="text-xl" />
@@ -227,6 +229,7 @@ const MapPopup: React.FC<MapPopupProps> = ({
           {suggestions.length > 0 && (
             <div className="scroll max-h-72 w-full overflow-y-auto rounded-3xl border border-dark/30 bg-white shadow-lg">
               <button
+                type="button"
                 onClick={() => setSuggestions([])}
                 className="transition-300 absolute right-2 top-2 rounded-full border border-teal-500/20 bg-teal-50 p-1 text-teal-500 shadow hover:bg-teal-100"
               >
@@ -260,6 +263,7 @@ const MapPopup: React.FC<MapPopupProps> = ({
             />
             {searchQuery || address ? (
               <button
+                type="button"
                 onClick={() => {
                   setSearchQuery('');
                   setAddress('');
@@ -271,6 +275,7 @@ const MapPopup: React.FC<MapPopupProps> = ({
             ) : null}
             {address ? (
               <button
+                type="button"
                 onClick={handleConfirm}
                 className="transition-300 inline-flex items-center justify-center gap-1 rounded-full border border-dark/10 bg-teal-500 px-4 py-2 text-sm text-white shadow hover:bg-teal-600"
               >
@@ -279,6 +284,7 @@ const MapPopup: React.FC<MapPopupProps> = ({
               </button>
             ) : (
               <button
+                type="button"
                 onClick={handleSearch}
                 className={`transition-300 inline-flex items-center justify-center gap-1 rounded-full border border-dark/10 px-4 py-2 text-sm text-white shadow ${
                   isLoading

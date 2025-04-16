@@ -142,7 +142,7 @@ const Login = () => {
                 type="checkbox"
                 id="remember"
                 className="mr-2 accent-teal-400"
-                checked
+                defaultChecked
               />
               Remember Me
             </label>
@@ -155,7 +155,7 @@ const Login = () => {
             <button
               type="button"
               onClick={() => handleLogout(navigate)}
-              className="text-sm font-light uppercase text-teal-500 underline hover:no-underline"
+              className="bg-white text-sm font-medium uppercase text-teal-700 underline hover:no-underline"
             >
               logout
             </button>

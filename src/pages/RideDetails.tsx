@@ -23,7 +23,7 @@ const RideDetails: React.FC = () => {
 
   return (
     <main>
-      <h1 className="mb-5 text-center text-xl md:text-2xl font-semibold text-teal-500">
+      <h1 className="mb-5 text-center text-xl font-semibold text-teal-500 md:text-2xl">
         Ride Details
       </h1>
 
@@ -57,6 +57,7 @@ const RideDetails: React.FC = () => {
         </div>
         <div className="space-y-4">
           <button
+            type="button"
             onClick={() => setShowMap(!showMap)}
             className={`flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-colors hover:bg-teal-200 ${
               showMap

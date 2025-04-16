@@ -3,6 +3,7 @@ import SideNav from './SideNav';
 import { Link, useLocation } from 'react-router-dom';
 import { TbMenu2, TbPlus, TbSearch } from 'react-icons/tb';
 import { getUserGreeting } from '../utils/functions';
+import logo from '../assets/logo.svg';
 
 const navLinks = [
   {
@@ -66,9 +67,14 @@ const Navbar = () => {
         <div className={`flex items-center justify-between md:items-start`}>
           <Link
             to="/"
-            className="rounded-full bg-teal-300 px-6 py-2 text-sm font-semibold md:text-base"
+            className="transition-150 inline-flex items-center gap-2 rounded-full bg-teal-800 px-6 py-3 text-sm font-semibold text-white hover:bg-teal-700 md:text-base"
           >
-            Commute Helper
+            <img
+              src={logo}
+              alt="Logo"
+              className="group-hover:filter-white transition-150 size-5 object-contain drop-shadow"
+            />
+            Commute Connect
           </Link>
 
           <div className="flex items-center justify-end gap-8">

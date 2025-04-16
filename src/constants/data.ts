@@ -609,19 +609,19 @@ export const faqContents = [
       'Yes, you can update your role anytime from your profile or while posting a ride.',
   },
   {
-    question: 'Why was Commute Helper developed?',
+    question: 'Why was Commute Connect developed?',
     answer:
-      'Commute Helper was developed to make daily commutes easier and more efficient by connecting riders and passengers.',
+      'Commute Connect was developed to make daily commutes easier and more efficient by connecting riders and passengers.',
   },
   {
-    question: 'What is the vision and mission of Commute Helper?',
+    question: 'What is the vision and mission of Commute Connect?',
     answer:
       'Our Vision is to live in a world where we all share resources to better preserve our economy and planet. Our Mission is to fill the empty seats in our ride and make our commute more affordable and sustainable.',
   },
   {
-    question: 'Is Commute Helper profit-oriented?',
+    question: 'Is Commute Connect profit-oriented?',
     answer:
-      "Commute Helper is non profit-oriented and aims to provide a free service to the community and help reduce carbon emissions. It doesn't generate any revenue from the platform.",
+      "Commute Connect is non profit-oriented and aims to provide a free service to the community and help reduce carbon emissions. It doesn't generate any revenue from the platform.",
   },
 ];
 

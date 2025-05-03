@@ -7,7 +7,7 @@ export const PWAInstallButton = () => {
   if (isAppInstalled || !installPrompt) return null;
 
   return (
-    <div className="flex w-fit items-center justify-start gap-1.5 rounded-full border border-teal-50 bg-teal-50 p-1 shadow">
+    <div className="flex w-fit items-center justify-start gap-1.5 rounded-full border border-teal-50 bg-teal-50 p-1 text-dark shadow dark:border-teal-600 dark:bg-teal-300">
       <button
         type="button"
         onClick={installApp}

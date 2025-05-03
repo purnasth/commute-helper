@@ -1,11 +1,26 @@
+import { useEffect, useState } from 'react';
 import Title from './ui/Title';
 import rideBuddy from '../assets/ride.webp';
 import introVideo from '../assets/videos/demo.mp4';
 import iPhoneMockup from '../assets/mockups/iPhone.webp';
 import introPoster from '../assets/mockups/imagePoster.webp';
-// import demoTrack from '../assets/tracks/demoTrack.vtt';
 
 const Intro = () => {
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const offset = 100;
+      const newScale =
+        scrollY > offset ? Math.max(0.75, 1 - (scrollY - offset) / 1500) : 1;
+      setScale(newScale);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <main className="relative pb-0">
       <Title
@@ -30,13 +45,12 @@ const Intro = () => {
             Ride. Enjoy. Save.
           </h3>
         </div>
-        <div className="relative order-1 flex flex-1 justify-center lg:order-2">
-          {/* <img
-            src={iPhoneMockup}
-            alt="Commute Connect"
-            draggable="false"
-            className="filter-primary absolute inset-0 -z-10 scale-100 animate-pulse opacity-60 mix-blend-multiply"
-          /> */}
+        <div
+          className={`relative order-1 flex flex-1 justify-center transition-transform duration-300 ease-out lg:order-2`}
+          style={{
+            transform: `scale(${scale})`,
+          }}
+        >
           <div className="-translate-y-8">
             <video
               playsInline
@@ -49,7 +63,6 @@ const Intro = () => {
               className="scale-[0.9] rounded-[2rem] object-cover"
             >
               <track
-                // src={demoTrack}
                 kind="captions"
                 srcLang="en"
                 label="English Captions"

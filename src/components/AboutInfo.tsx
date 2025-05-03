@@ -21,13 +21,13 @@ const AboutInfo = () => {
             src={nepal}
             className="absolute inset-0 -z-10 size-full scale-75 mix-blend-overlay"
           /> */}
-          <div className="order-1 flex size-full max-w-4xl flex-col items-center justify-center gap-4 px-6 pb-12 text-center sm:pb-0 md:order-2 xl:px-0">
+          <div className="order-1 flex size-full max-w-4xl flex-col items-center justify-center gap-4 px-6 pb-12 text-center sm:pb-0 md:order-2">
             <CareOurEarth />
 
-            <h1 className="mt-4 text-2xl font-bold capitalize leading-snug md:text-4xl md:leading-snug lg:text-5xl lg:leading-snug">
+            <h2 className="mt-4 text-2xl font-bold capitalize leading-snug md:text-4xl md:leading-snug lg:text-5xl lg:leading-snug">
               A world where we all share resources to better preserve our
               planet.
-            </h1>
+            </h2>
 
             <p className="max-w-2xl font-body text-xs sm:text-sm md:text-sm">
               Commute Connect is the platform that connects your co-workers
@@ -40,12 +40,12 @@ const AboutInfo = () => {
 
             <Link
               to="/about"
-              className="transition-150 group mt-4 flex items-center gap-2.5 rounded-full bg-dark px-4 py-3 pr-5 text-sm font-light text-light shadow-lg hover:bg-teal-700 sm:text-base md:mt-10"
+              className="transition-150 group mt-4 flex items-center gap-2.5 rounded-full bg-dark px-4 py-3 pr-5 text-sm font-light text-light shadow-lg hover:bg-teal-600 sm:text-sm md:mt-10"
             >
               <img
                 src={logo}
                 alt="Logo"
-                className="group-hover:filter-white transition-150 size-4 object-contain sm:size-6"
+                className="group-hover:filter-white transition-150 size-4 object-contain sm:size-5"
               />
               More About Commute Connect
             </Link>

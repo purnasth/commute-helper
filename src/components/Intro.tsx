@@ -1,24 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Title from './ui/Title';
 import rideBuddy from '../assets/ride.webp';
 import introVideo from '../assets/videos/demo.mp4';
 import iPhoneMockup from '../assets/mockups/iPhone.webp';
 import introPoster from '../assets/mockups/imagePoster.webp';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const Intro = () => {
-  const [scale, setScale] = useState(1);
+  const videoContainerRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const offset = 100;
-      const newScale =
-        scrollY > offset ? Math.max(0.75, 1 - (scrollY - offset) / 1500) : 1;
-      setScale(newScale);
-    };
+    const element = videoContainerRef.current;
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    gsap.fromTo(
+      element,
+      { scale: 1 }, // Start scale
+      {
+        scale: 0.75, // End scale
+        scrollTrigger: {
+          trigger: element, // Element to watch
+          start: 'top center', // Start animation when the element reaches the center of the viewport
+          end: '+=500', // End animation after scrolling 500px
+          scrub: true, // Smooth scrubbing effect
+        },
+        ease: 'power1.out', // Smooth easing
+      },
+    );
   }, []);
 
   return (
@@ -46,10 +56,8 @@ const Intro = () => {
           </h3>
         </div>
         <div
-          className={`relative order-1 flex flex-1 justify-center transition-transform duration-300 ease-out lg:order-2`}
-          style={{
-            transform: `scale(${scale})`,
-          }}
+          ref={videoContainerRef}
+          className="relative order-1 flex flex-1 justify-center lg:order-2"
         >
           <div className="-translate-y-8">
             <video

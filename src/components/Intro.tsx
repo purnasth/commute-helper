@@ -3,11 +3,11 @@ import rideBuddy from '../assets/ride.webp';
 import introVideo from '../assets/videos/demo.mp4';
 import iPhoneMockup from '../assets/mockups/iPhone.webp';
 import introPoster from '../assets/mockups/imagePoster.webp';
-import demoTrack from '../assets/tracks/demoTrack.vtt';
+// import demoTrack from '../assets/tracks/demoTrack.vtt';
 
 const Intro = () => {
   return (
-    <main className="relative">
+    <main className="relative pb-0">
       <Title
         title="Connecting Co-workers & Students sharing the same route"
         description="We are a community of professionals and students who share the same
@@ -26,7 +26,7 @@ const Intro = () => {
             reduce your carbon footprint and step towards a more sustainable
             future.
           </p>
-          <h3 className="bg-white/50 pt-4 text-4xl text-teal-400 drop-shadow-sm md:pt-10 md:text-5xl xl:text-6xl">
+          <h3 className="bg-white/50 pt-4 text-4xl text-teal-400 md:pt-10 md:text-5xl xl:text-6xl">
             Ride. Enjoy. Save.
           </h3>
         </div>
@@ -49,7 +49,7 @@ const Intro = () => {
               className="scale-[0.9] rounded-[2rem] object-cover"
             >
               <track
-                src={demoTrack}
+                // src={demoTrack}
                 kind="captions"
                 srcLang="en"
                 label="English Captions"

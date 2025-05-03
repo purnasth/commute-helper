@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { SideNavProps } from '../interfaces/types';
+import logo from '../assets/logo.svg';
 
 const routeLinks = [
   {
@@ -36,27 +37,39 @@ const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav, navLinks }) => {
         } z-50`}
       >
         <div className="">
-          <button
-            type="button"
-            aria-label="Close Menu"
-            onClick={closeNav}
-            className="absolute right-4 top-4 text-4xl text-teal-50"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="size-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          <div className="flex bg-red-600 items-center justify-be">
+            <Link
+              to="/"
+              className="transition-150 inline-flex items-center gap-3 text-sm font-semibold text-teal-950 md:text-xl"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
+              <img
+                src={logo}
+                alt="Logo"
+                className="group-hover:filter-white transition-150 size-6 object-contain sm:size-9"
               />
-            </svg>
-          </button>
+            </Link>
+            <button
+              type="button"
+              aria-label="Close Menu"
+              onClick={closeNav}
+              className="text-4xl text-teal-50"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="size-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
 
           <ul className="mt-14">
             {routeLinks.map((link) => (

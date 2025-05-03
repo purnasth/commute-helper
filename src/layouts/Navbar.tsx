@@ -3,7 +3,7 @@ import SideNav from './SideNav';
 import { Link, useLocation } from 'react-router-dom';
 import { TbMenu2, TbPlus, TbSearch } from 'react-icons/tb';
 import { getUserGreeting } from '../utils/functions';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo-alt.svg';
 
 const navLinks = [
   {
@@ -62,17 +62,17 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`sticky top-0 z-40 w-full transition-all duration-[1s] ${window.scrollY > 0 ? 'bg-white py-3 md:py-6' : 'p-3 md:p-6'} ${visible ? '' : '-translate-y-full'}`}
+        className={`sticky top-0 z-40 w-full transition-all duration-[1s] ${window.scrollY > 0 ? 'bg-white py-3 md:py-3' : 'p-3 md:p-6'} ${visible ? '' : '-translate-y-full'}`}
       >
         <div className={`flex items-center justify-between md:items-start`}>
           <Link
             to="/"
-            className="transition-150 inline-flex items-center gap-2 rounded-full bg-teal-800 px-6 py-3 text-sm font-semibold text-white hover:bg-teal-700 md:text-base"
+            className="transition-150 inline-flex items-center gap-3 text-sm font-semibold text-teal-950 md:text-xl"
           >
             <img
               src={logo}
               alt="Logo"
-              className="group-hover:filter-white transition-150 size-5 object-contain drop-shadow"
+              className="group-hover:filter-white transition-150 size-6 sm:size-9 object-contain"
             />
             Commute Connect
           </Link>

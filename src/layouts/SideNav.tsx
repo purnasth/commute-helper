@@ -37,7 +37,7 @@ const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav, navLinks }) => {
         } z-50`}
       >
         <div className="">
-          <div className="flex bg-red-600 items-center justify-be">
+          <div className="flex p-4 items-center justify-between">
             <Link
               to="/"
               className="transition-150 inline-flex items-center gap-3 text-sm font-semibold text-teal-950 md:text-xl"
@@ -45,7 +45,7 @@ const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav, navLinks }) => {
               <img
                 src={logo}
                 alt="Logo"
-                className="group-hover:filter-white transition-150 size-6 object-contain sm:size-9"
+                className="group-hover:filter-white transition-150 size-6 object-contain sm:size-10"
               />
             </Link>
             <button

@@ -63,7 +63,7 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-        <div className="relative flex size-full items-center justify-center space-y-4 bg-white p-4 md:p-6">
+        <div className="relative flex size-full items-center justify-center space-y-4 bg-white p-4 dark:bg-dark md:p-6">
           <button
             type="button"
             onClick={onClose}
@@ -105,7 +105,7 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
                 ) : searchQuery.length > 2 && suggestions.length > 0 ? (
                   <>
                     Results matching{' '}
-                    <span className="bg-teal-100 font-semibold">
+                    <span className="bg-teal-100 font-semibold dark:text-dark">
                       "{searchQuery}"
                     </span>{' '}
                     are shown below.
@@ -138,10 +138,12 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
             <hr />
 
             <div className="space-y-2">
-              <p className="font-normal text-dark">Suggested for you</p>
+              <p className="font-normal text-dark dark:text-light">
+                Suggested for you
+              </p>
               <button
                 type="button"
-                className="flex w-full cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 transition-all duration-150 ease-in-out hover:bg-gray-100"
+                className="group flex w-full cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 transition-all duration-150 ease-in-out hover:bg-teal-50"
                 onClick={() => {
                   onSelect('Kathmandu BernHardt College');
                   onClose();
@@ -149,7 +151,7 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
               >
                 <TbMapPin className="text-xl text-teal-500" />
                 <div className="text-start">
-                  <p className="text-sm font-medium">
+                  <p className="text-sm font-medium dark:group-hover:text-dark">
                     Kathmandu BernHardt College
                   </p>
                   <p className="text-xs text-gray-500">Bafal, Kathmandu</p>

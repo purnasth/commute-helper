@@ -1,3 +1,6 @@
+import rider from '../assets/vector/hero-rider.svg';
+import passenger from '../assets/vector/passenger.svg';
+
 export const mockLocations = [
   // Educational Institutions
   {
@@ -694,15 +697,65 @@ export const policies = [
 export const userRoles = [
   {
     id: 'rider',
-    name: 'Rider',
-    description: 'A person who is looking for a ride.',
     router: '/roles/rider',
+    title: 'Post a ride & Make an Impact',
+    description:
+      'Share your ride with your co-workers and students sharing the same route and utilize the resources and empty seats of your vehicle. Save money, time and the environment. Your ride can make a difference. Share your ride now & be a hero!',
+    rulesTitle: 'Rules when posting a ride',
+    heroImage: rider,
+    rules: [
+      {
+        title: 'Carry Documents',
+        description:
+          'Owning a valid driving license is a must to post a ride & you should be carrying them.',
+      },
+      {
+        title: 'Be Reliable',
+        description:
+          "Only post a ride if you are sure you're going to the destination and be on time.",
+      },
+      {
+        title: 'Be Courteous',
+        description:
+          'Be polite to your passengers and respect their time and comfort.',
+      },
+      {
+        title: 'Drive Safely',
+        description:
+          'Stick to the speed limit and follow the traffic rules. Safety of you and your passengers is important.',
+      },
+    ],
   },
   {
     id: 'passenger',
-    name: 'Passenger',
-    description: 'A person who is offering a ride.',
     router: '/roles/passenger',
+    title: 'Share a ride & Save the Environment',
+    description:
+      'Search for a hero who is going to the same destination as you and share a ride with them. Save money, time and the environment. Your ride can make an impact for an environment. Share the ride. Share the memories.',
+    rulesTitle: 'Rules when requesting a ride',
+    heroImage: passenger,
+    rules: [
+      {
+        title: 'Be Accessible',
+        description:
+          'Be on the location on time and be ready for pickup when the hero',
+      },
+      {
+        title: 'Be Courteous',
+        description:
+          'Be polite to your rider and respect their time and comfort.',
+      },
+      {
+        title: 'Be Friendly',
+        description:
+          'Engage in pleasant conversation and make the ride enjoyable for everyone.',
+      },
+      {
+        title: 'Be Safe',
+        description:
+          'Follow all safety guidelines as a passenger and ensure the ride is safe for everyone.',
+      },
+    ],
   },
 ];
 
@@ -720,6 +773,6 @@ export const navLinks = [
   {
     id: 3,
     title: 'Post a Ride',
-    link: '/role/hero',
+    link: '/role/rider',
   },
 ];

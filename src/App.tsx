@@ -18,6 +18,7 @@ import { ToastContainer } from 'react-toastify';
 import RideDetails from './pages/RideDetails';
 import Policies from './pages/Policies';
 import FAQPage from './pages/FAQPage';
+import RoleBasedPage from './pages/RoleBasedPage';
 
 const App: React.FC = () => {
   return (
@@ -34,6 +35,7 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/ride-details" element={<RideDetails />} />
           <Route path="/policies/:policyId" element={<Policies />} />
+          <Route path="/roles/:roleId" element={<RoleBasedPage />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
         <Footer />

@@ -64,22 +64,22 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`sticky top-0 z-40 w-full transition-all duration-[1s] ${window.scrollY > 0 ? 'bg-white py-3 md:py-3 dark:bg-dark' : 'p-3 md:p-6'} ${visible ? '' : '-translate-y-full'}`}
+        className={`sticky top-0 z-40 w-full transition-all duration-[1s] ${window.scrollY > 0 ? 'bg-white py-3 dark:bg-dark md:py-3' : 'p-3 md:p-6'} ${visible ? '' : '-translate-y-full'}`}
       >
         <div className={`flex items-center justify-between md:items-start`}>
           <Link
             to="/"
-            className="transition-150 inline-flex items-center gap-3 text-sm font-semibold text-teal-950 md:text-xl dark:text-teal-300"
+            className="transition-150 inline-flex items-center gap-3 text-sm font-semibold text-teal-950 dark:text-teal-300 md:text-xl"
           >
             <img
               src={logoAlt}
               alt="Logo"
-              className="group-hover:filter-white transition-150 size-6 object-contain sm:size-9 dark:hidden"
+              className="group-hover:filter-white transition-150 size-6 object-contain dark:hidden sm:size-9"
             />
             <img
               src={logo}
               alt="Logo"
-              className="group-hover:filter-white transition-150 hidden size-6 object-contain sm:size-9 dark:block"
+              className="group-hover:filter-white transition-150 hidden size-6 object-contain dark:block sm:size-9"
             />
             Commute Connect
           </Link>
@@ -107,7 +107,7 @@ const Navbar = () => {
               ) : (
                 <Link
                   to="/login"
-                  className="hidden rounded-full bg-teal-300 px-6 py-2 font-semibold md:flex"
+                  className="hidden rounded-full bg-teal-300 px-6 py-2 font-semibold dark:text-dark md:flex"
                 >
                   Login
                 </Link>

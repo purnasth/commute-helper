@@ -8,7 +8,7 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="flex flex-col justify-between gap-8 bg-teal-300 py-16 text-base text-dark hover:!bg-teal-300 md:text-lg lg:flex-row lg:items-center lg:gap-10 dark:bg-dark dark:text-teal-100 dark:hover:!bg-dark">
+      <footer className="flex flex-col justify-between gap-8 bg-teal-300 py-16 text-base text-dark hover:!bg-teal-300 md:text-lg lg:flex-row lg:items-center lg:gap-10 dark:bg-dark dark:text-teal-100 dark:hover:!bg-dark z-20">
         {/* <div className="absolute inset-0 h-px w-full bg-gradient-to-r from-transparent from-15% via-white/80 to-transparent to-85%"></div> */}
         <div className="space-y-10">
           <div className="space-y-2">

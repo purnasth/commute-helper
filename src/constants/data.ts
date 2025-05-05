@@ -690,3 +690,36 @@ export const policies = [
     ],
   },
 ];
+
+export const userRoles = [
+  {
+    id: 'rider',
+    name: 'Rider',
+    description: 'A person who is looking for a ride.',
+    router: '/roles/rider',
+  },
+  {
+    id: 'passenger',
+    name: 'Passenger',
+    description: 'A person who is offering a ride.',
+    router: '/roles/passenger',
+  },
+];
+
+export const navLinks = [
+  {
+    id: 1,
+    title: 'Get Home',
+    link: '/',
+  },
+  {
+    id: 2,
+    title: 'Find a Ride',
+    link: '/role/passenger',
+  },
+  {
+    id: 3,
+    title: 'Post a Ride',
+    link: '/role/hero',
+  },
+];

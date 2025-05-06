@@ -252,7 +252,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
       >
         <form
           onSubmit={handleSubmit(onSubmit, onError)}
-          className="flex flex-col items-center justify-between gap-2 rounded-3xl border bg-white p-2 shadow dark:bg-teal-500 lg:flex-row lg:rounded-full"
+          className="flex flex-col items-center justify-between gap-2 rounded-3xl border bg-white p-2 shadow dark:bg-teal-600 lg:flex-row lg:rounded-full dark:border-teal-300"
         >
           {findRideFormFields.map(
             ({ name, label, type, placeholder, options }) => (

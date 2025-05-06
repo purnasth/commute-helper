@@ -217,7 +217,7 @@ const MapPopup: React.FC<MapPopupProps> = ({
             type="button"
             onClick={onClose}
             aria-label="Close Map"
-            className="transition-300 absolute right-4 top-4 z-50 rounded-full bg-teal-50 p-2 text-teal-600 shadow-md outline outline-1 outline-teal-500 hover:bg-teal-100 hover:text-teal-700"
+            className="transition-300 absolute right-4 top-4 z-50 rounded-full bg-teal-50 p-2 text-teal-600 shadow-md outline outline-1 outline-teal-500 backdrop-blur-sm hover:bg-teal-100 hover:text-teal-700 dark:bg-teal-700 dark:text-teal-200 dark:hover:bg-teal-300/50 dark:hover:text-teal-700"
           >
             <TbX className="text-xl" />
           </button>
@@ -227,20 +227,20 @@ const MapPopup: React.FC<MapPopupProps> = ({
 
         <div className="fixed bottom-5 left-1/2 flex w-[calc(100%-15px-15px)] max-w-xl -translate-x-1/2 flex-col gap-1 md:w-full">
           {suggestions.length > 0 && (
-            <div className="scroll max-h-72 w-full overflow-y-auto rounded-3xl border border-dark/30 bg-white shadow-lg">
+            <div className="scroll max-h-72 w-full overflow-y-auto rounded-3xl border border-dark/30 bg-white shadow-lg backdrop-blur-sm dark:bg-dark/80">
               <button
                 type="button"
                 onClick={() => setSuggestions([])}
-                className="transition-300 absolute right-2 top-2 rounded-full border border-teal-500/20 bg-teal-50 p-1 text-teal-500 shadow hover:bg-teal-100"
+                className="transition-300 absolute right-2 top-2 rounded-full border border-teal-500/20 bg-teal-50 p-1 text-teal-500 shadow hover:bg-teal-100 dark:bg-teal-700 dark:text-teal-300 dark:hover:bg-teal-300/50"
               >
                 <TbX className="text-xl" />
               </button>
-              <ul className="divide-y divide-teal-200">
+              <ul className="divide-y divide-teal-200 dark:divide-teal-600">
                 {suggestions.map((suggestion) => (
                   <li
                     key={suggestion.place_id}
                     onClick={() => handleSuggestionClick(suggestion)}
-                    className="cursor-pointer px-4 py-2 text-sm hover:bg-teal-100"
+                    className="cursor-pointer px-4 py-2 text-sm hover:bg-teal-100 dark:text-light dark:hover:text-dark"
                   >
                     {suggestion.display_name}
                   </li>
@@ -248,7 +248,7 @@ const MapPopup: React.FC<MapPopupProps> = ({
               </ul>
             </div>
           )}
-          <div className="flex items-center gap-1 rounded-full border border-dark/30 bg-white p-1.5">
+          <div className="flex items-center gap-1 rounded-full border border-dark/30 bg-white p-1.5 dark:bg-dark">
             <input
               type="text"
               value={address || searchQuery}
@@ -257,7 +257,7 @@ const MapPopup: React.FC<MapPopupProps> = ({
                 setAddress('');
               }}
               placeholder={truncateLocation('Search or pick a location')}
-              className="w-full rounded bg-transparent px-4 py-2 text-sm"
+              className="w-full rounded bg-transparent px-4 py-2 text-sm dark:text-light"
               onKeyDown={handleKeyDown}
               disabled={isLoading}
             />
@@ -268,7 +268,7 @@ const MapPopup: React.FC<MapPopupProps> = ({
                   setSearchQuery('');
                   setAddress('');
                 }}
-                className="rounded-full border border-teal-500/20 bg-teal-50 p-0.5 text-teal-500 shadow hover:bg-teal-100"
+                className="rounded-full border border-teal-500/20 bg-teal-50 p-0.5 text-teal-500 shadow hover:bg-teal-100 dark:bg-teal-900"
               >
                 <IoClose />
               </button>
@@ -277,7 +277,7 @@ const MapPopup: React.FC<MapPopupProps> = ({
               <button
                 type="button"
                 onClick={handleConfirm}
-                className="transition-300 inline-flex items-center justify-center gap-1 rounded-full border border-dark/10 bg-teal-500 px-4 py-2 text-sm text-white shadow hover:bg-teal-600"
+                className="transition-300 inline-flex items-center justify-center gap-1 rounded-full border border-dark/10 bg-teal-500 px-4 py-2 text-sm text-white shadow hover:bg-teal-600 dark:bg-teal-400 dark:text-dark dark:hover:bg-teal-300"
               >
                 Confirm
                 <MdDoneAll className="text-lg" />
@@ -286,10 +286,10 @@ const MapPopup: React.FC<MapPopupProps> = ({
               <button
                 type="button"
                 onClick={handleSearch}
-                className={`transition-300 inline-flex items-center justify-center gap-1 rounded-full border border-dark/10 px-4 py-2 text-sm text-white shadow ${
+                className={`transition-300 inline-flex items-center justify-center gap-1 rounded-full border border-dark/10 px-4 py-2 text-sm text-white shadow dark:text-dark ${
                   isLoading
                     ? 'cursor-not-allowed bg-teal-500'
-                    : 'bg-teal-500 hover:bg-teal-600'
+                    : 'bg-teal-500 hover:bg-teal-600 dark:bg-teal-400 dark:hover:bg-teal-300'
                 }`}
                 disabled={isLoading}
               >

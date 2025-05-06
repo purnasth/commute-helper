@@ -26,7 +26,7 @@ const SearchedLocations: React.FC<SearchedLocationsProps> = ({
           {suggestions.map((location) => (
             <div
               key={location.id}
-              className="group flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 transition-all duration-150 ease-in-out hover:bg-gray-100 hover:text-dark dark:hover:bg-teal-50"
+              className="group flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 transition-all duration-150 ease-in-out hover:bg-gray-100 hover:text-dark dark:hover:bg-teal-50 dark:border-light/50 dark:bg-teal-50/5"
               onClick={() => {
                 onSelect(location.name);
                 onClose();

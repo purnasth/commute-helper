@@ -11,14 +11,14 @@ const Faq: React.FC = () => {
   };
 
   return (
-    <div className="rounded-3xl border border-teal-950/10 p-6 shadow-md sm:p-8 md:p-10 lg:p-12">
+    <div className="rounded-3xl border border-teal-950/10 p-6 shadow-md dark:border-teal-50/40 dark:bg-teal-950/30 sm:p-8 md:p-10 lg:p-12">
       <div className="space-y-4 sm:space-y-6 md:space-y-6">
         {faqContents.map((faq: FaqItemProps, index: number) => (
           <div
             key={index}
             className={`${
               index !== faqContents.length - 1
-                ? 'border-b border-teal-950/10'
+                ? 'border-b border-teal-950/10 dark:border-teal-50/40'
                 : ''
             }`}
           >
@@ -31,7 +31,7 @@ const Faq: React.FC = () => {
                 {faq.question}
               </h3>
               <TbCirclePlus
-                className={`text-xl text-teal-950 transition-transform sm:text-2xl ${
+                className={`text-xl text-teal-950 transition-transform dark:text-teal-400 sm:text-2xl ${
                   openIndex === index ? 'rotate-45' : 'rotate-0'
                 }`}
               />
@@ -41,7 +41,7 @@ const Faq: React.FC = () => {
                 openIndex === index ? 'max-h-40' : 'max-h-0'
               }`}
             >
-              <p className="rounded-md pb-6 text-sm text-gray-600 sm:text-base">
+              <p className="rounded-md pb-6 text-sm text-gray-600 dark:text-light/70 sm:text-base">
                 {faq.answer}
               </p>
             </div>

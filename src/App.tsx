@@ -6,6 +6,7 @@ import {
   // Navigate,
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import useTheme from './hooks/useTheme';
 import Home from './pages/Home';
 import RouterToTop from './utils/RouterToTop';
 import Navbar from './layouts/Navbar';
@@ -19,6 +20,8 @@ import FAQPage from './pages/FAQPage';
 import RoleBasedPage from './pages/RoleBasedPage';
 
 const App: React.FC = () => {
+  const theme = useTheme();
+
   return (
     <>
       <Router>
@@ -47,7 +50,7 @@ const App: React.FC = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
+        theme={theme}
       />
     </>
   );

@@ -51,7 +51,7 @@ const Intro = () => {
             reduce your carbon footprint and step towards a more sustainable
             future.
           </p>
-          <h3 className="bg-white/50 pt-4 text-4xl text-teal-400 md:pt-10 md:text-5xl xl:text-6xl">
+          <h3 className="bg-white/50 pt-4 text-4xl text-teal-400 md:pt-10 md:text-5xl xl:text-6xl dark:bg-dark/50">
             Ride. Enjoy. Save.
           </h3>
         </div>
@@ -86,14 +86,14 @@ const Intro = () => {
               height={1514}
             />
           </div>
-          <div className="absolute -top-[3px] h-1 w-4/5 bg-gradient-to-r from-transparent via-white to-transparent"></div>
+          <div className="absolute -top-[3px] h-1 w-3/4 bg-gradient-to-r from-transparent via-white to-transparent dark:via-dark"></div>
           <div className="glitter-effect absolute -top-3 -z-10 h-48 w-1/2 animate-custom-pulse rounded-full bg-teal-200 blur-2xl"></div>
           <div className="absolute -top-3 -z-10 h-64 w-1/2 animate-custom-pulse rounded-full bg-teal-400 blur-2xl"></div>
           <div className="absolute -top-0 -z-10 h-24 w-1/2 animate-custom-pulse rounded-full bg-teal-50 blur-xl"></div>
           <img
             src={rideBuddy}
             alt="Ride Buddy"
-            className="filter-white absolute -top-6 z-10 h-6 w-full animate-floating object-contain"
+            className="filter-white dark:filter-dark absolute -top-6 z-10 h-6 w-full animate-floating object-contain"
           />
         </div>
         <div className="order-3 flex flex-1 flex-col items-end justify-end space-y-6 md:space-y-12 lg:space-y-20">

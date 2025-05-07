@@ -18,11 +18,11 @@ const MessagePopup: React.FC<MessagePopupProps> = ({ onSelect, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="relative flex size-full items-center justify-center space-y-4 bg-white p-4 md:p-6">
+      <div className="relative flex size-full items-center justify-center space-y-4 bg-white p-4 dark:bg-dark md:p-6">
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-5 top-5 z-50 rounded-full border border-teal-500/20 bg-teal-50 p-1.5 text-teal-500 shadow hover:bg-teal-100"
+          className="absolute right-5 top-5 z-50 rounded-full border border-teal-500/20 bg-teal-50 p-1.5 text-teal-500 shadow hover:bg-teal-100 dark:bg-teal-300/10 dark:text-teal-500 dark:hover:bg-teal-300/20"
         >
           <TbX className="text-2xl" />
         </button>
@@ -34,7 +34,7 @@ const MessagePopup: React.FC<MessagePopupProps> = ({ onSelect, onClose }) => {
               placeholder="Write custom message..."
               value={customMessage}
               onChange={(e) => setCustomMessage(e.target.value)}
-              className="w-full rounded-lg p-3 pr-10 outline outline-1 outline-teal-200 focus-visible:outline-2 focus-visible:outline-teal-300"
+              className="w-full rounded-lg p-3 pr-10 outline outline-1 outline-teal-200 focus-visible:outline-2 focus-visible:outline-teal-300 dark:bg-dark"
               onKeyDown={handleKeyDown}
               rows={1}
             />
@@ -53,7 +53,7 @@ const MessagePopup: React.FC<MessagePopupProps> = ({ onSelect, onClose }) => {
             {quickMessages.map((msg, idx) => (
               <div
                 key={idx}
-                className="cursor-pointer rounded-lg border px-3 py-3 transition-all duration-200 ease-in-out hover:bg-gray-100"
+                className="cursor-pointer rounded-lg border px-3 py-3 transition-all duration-200 ease-in-out hover:bg-gray-100 dark:border-light/50 dark:bg-teal-300/10 dark:hover:bg-teal-300/30"
                 onClick={() => onSelect(msg)}
               >
                 <p className="flex items-center gap-3 font-normal">

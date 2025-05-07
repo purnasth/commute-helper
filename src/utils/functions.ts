@@ -20,7 +20,7 @@ export const highlightMatch = (text: string, query: string) => {
   const regex = new RegExp(`(${query})`, 'gi'); // Create a regex to match the query
   return text.replace(
     regex,
-    (match) => `<span class="bg-teal-100 font-medium">${match}</span>`,
+    (match) => `<span class="bg-teal-100 dark:bg-teal-600 font-medium">${match}</span>`,
   );
 };
 

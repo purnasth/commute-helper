@@ -3,19 +3,21 @@ import SideNav from './SideNav';
 import { Link, useLocation } from 'react-router-dom';
 import { TbMenu2, TbPlus, TbSearch } from 'react-icons/tb';
 import { getUserGreeting } from '../utils/functions';
-import logo from '../assets/logo-alt.svg';
+import logo from '../assets/logo.svg';
+import logoAlt from '../assets/logo-alt.svg';
+import ThemeToggle from '../components/ui/ThemeToggle';
 
 const navLinks = [
   {
     id: 1,
     title: 'Find a Ride',
-    link: '/passenger',
+    link: '/role/passenger',
     icon: <TbSearch className="text-lg" />,
   },
   {
     id: 2,
     title: 'Post a Ride',
-    link: '/hero',
+    link: '/role/rider',
     icon: <TbPlus className="text-lg" />,
   },
 ];
@@ -62,17 +64,22 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`sticky top-0 z-40 w-full transition-all duration-[1s] ${window.scrollY > 0 ? 'bg-white py-3 md:py-3' : 'p-3 md:p-6'} ${visible ? '' : '-translate-y-full'}`}
+        className={`sticky top-0 z-40 w-full transition-all duration-[1s] ${window.scrollY > 0 ? 'bg-white py-3 dark:bg-dark md:py-3' : 'p-3 md:p-6'} ${visible ? '' : '-translate-y-full'}`}
       >
         <div className={`flex items-center justify-between md:items-start`}>
           <Link
             to="/"
-            className="transition-150 inline-flex items-center gap-3 text-sm font-semibold text-teal-950 md:text-xl"
+            className="transition-150 inline-flex items-center gap-3 text-sm font-semibold text-teal-950 dark:text-teal-300 md:text-xl"
           >
+            <img
+              src={logoAlt}
+              alt="Logo"
+              className="group-hover:filter-white transition-150 size-6 object-contain dark:hidden sm:size-9"
+            />
             <img
               src={logo}
               alt="Logo"
-              className="group-hover:filter-white transition-150 size-6 sm:size-9 object-contain"
+              className="group-hover:filter-white transition-150 hidden size-6 object-contain dark:block sm:size-9"
             />
             Commute Connect
           </Link>
@@ -91,26 +98,32 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
-            {userName ? (
-              <p className="hidden items-center justify-center gap-2 rounded-full bg-teal-100 py-2 pl-4 pr-5 font-semibold text-teal-600 md:flex">
-                <span className="animate-wave">&#128075;</span>
-                Hi, {userName}!
-              </p>
-            ) : (
-              <Link
-                to="/login"
-                className="hidden rounded-full bg-teal-300 px-6 py-2 font-semibold md:flex"
-              >
-                Login
-              </Link>
-            )}
-            <button
-              type="button"
-              onClick={toggleNav}
-              aria-label="Toggle Navigation"
-            >
-              <TbMenu2 className="scale-150 text-base" />
-            </button>
+            <div className="flex items-center gap-6">
+              {userName ? (
+                <p className="hidden items-center justify-center gap-2 rounded-full bg-teal-100 py-2 pl-4 pr-5 font-semibold text-teal-600 md:flex">
+                  <span className="animate-wave">&#128075;</span>
+                  Hi, {userName}!
+                </p>
+              ) : (
+                <Link
+                  to="/login"
+                  className="hidden rounded-full bg-teal-300 px-6 py-2 font-semibold dark:text-dark md:flex"
+                >
+                  Login
+                </Link>
+              )}
+              <div className="group flex items-center gap-4 rounded-full py-1 pl-5 pr-1.5">
+                <button
+                  type="button"
+                  onClick={toggleNav}
+                  aria-label="Toggle Navigation"
+                >
+                  <TbMenu2 className="scale-150 text-base" />
+                </button>
+
+                <ThemeToggle />
+              </div>
+            </div>
           </div>
         </div>
       </nav>

@@ -5,21 +5,23 @@ import {
   Route,
   // Navigate,
 } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import useTheme from './hooks/useTheme';
 import Home from './pages/Home';
 import RouterToTop from './utils/RouterToTop';
 import Navbar from './layouts/Navbar';
 import Footer from './layouts/Footer';
 import AboutPage from './pages/AboutPage';
-import RiderPage from './pages/RiderPage';
 import Error404 from './pages/Error404';
-import PassengerPage from './pages/PassengerPage';
 import Login from './layouts/Login';
-import { ToastContainer } from 'react-toastify';
 import RideDetails from './pages/RideDetails';
 import Policies from './pages/Policies';
 import FAQPage from './pages/FAQPage';
+import RoleBasedPage from './pages/RoleBasedPage';
 
 const App: React.FC = () => {
+  const theme = useTheme();
+
   return (
     <>
       <Router>
@@ -29,11 +31,10 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/help" element={<FAQPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/hero" element={<RiderPage />} />
-          <Route path="/passenger" element={<PassengerPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/ride-details" element={<RideDetails />} />
           <Route path="/policies/:policyId" element={<Policies />} />
+          <Route path="/role/:roleId" element={<RoleBasedPage />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
         <Footer />
@@ -49,7 +50,7 @@ const App: React.FC = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
+        theme={theme}
       />
     </>
   );

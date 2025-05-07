@@ -105,11 +105,14 @@ const Login = () => {
       <main>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="mx-auto max-w-lg rounded-xl bg-white p-3"
+          className="mx-auto max-w-lg rounded-xl bg-white p-3 dark:bg-dark"
         >
           {formInputs.map((input) => (
             <div key={input.name} className="relative mb-4">
-              <label htmlFor={input.name} className="mb-2 block text-teal-800">
+              <label
+                htmlFor={input.name}
+                className="mb-2 block text-teal-800 dark:text-light"
+              >
                 {!errors[input.name] && input.label}
                 {errors[input.name] && (
                   <span className="text-red-500">
@@ -121,7 +124,7 @@ const Login = () => {
                 {...register(input.name)}
                 id={input.name}
                 type={input.type}
-                className={`block w-full rounded-md bg-transparent px-4 py-2.5 text-base font-normal text-dark outline outline-1 -outline-offset-1 outline-teal-500/50 placeholder:font-light placeholder:text-dark/40 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-teal-400 sm:text-lg ${
+                className={`block w-full rounded-md bg-transparent px-4 py-2.5 text-base font-normal text-dark outline outline-1 -outline-offset-1 outline-teal-500/50 placeholder:font-light placeholder:text-dark/40 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-teal-400 active:bg-teal-50 dark:text-light dark:placeholder:text-light/60 active:dark:bg-teal-950 sm:text-lg ${
                   errors[input.name] && 'outline-1 outline-red-500'
                 }`}
                 placeholder={input.placeholder}
@@ -137,7 +140,10 @@ const Login = () => {
           </div>
 
           <div className="mb-6 flex items-center justify-between">
-            <label htmlFor="remember" className="select-none text-gray-700">
+            <label
+              htmlFor="remember"
+              className="select-none text-gray-700 dark:text-light"
+            >
               <input
                 type="checkbox"
                 id="remember"
@@ -155,7 +161,7 @@ const Login = () => {
             <button
               type="button"
               onClick={() => handleLogout(navigate)}
-              className="bg-white text-sm font-medium uppercase text-teal-700 underline hover:no-underline"
+              className="bg-white text-sm font-medium uppercase text-teal-700 underline hover:no-underline dark:bg-dark dark:text-teal-300"
             >
               logout
             </button>

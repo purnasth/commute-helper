@@ -1,10 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        dark: '#111111',
+        dark: '#001312',
         light: '#f5f5f5',
         // 'teal-50': '#f0fdfa',
         // 'teal-100': '#ccfbf1',
@@ -27,6 +28,14 @@ module.exports = {
           'system-ui',
           'sans-serif',
         ],
+      },
+      textShadow: {
+        dark: '0px 0px 2px rgba(0, 0, 0, 1)',
+        light: '0px 0px 2px rgba(255, 255, 255, 1)',
+        red: '2px 2px 4px rgba(255, 0, 0, 0.5)',
+        'light-glow':
+          '1px 1px 2px #F8F8FF,  0 0 1em #F8F8FF, 0 0 0.2em #F8F8FF',
+        'dark-glow': '1px 1px 2px #000111,  0 0 1em #000111, 0 0 0.2em #000111',
       },
       fontSize: {
         inherit: 'inherit',
@@ -95,5 +104,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-textshadow')],
 };

@@ -252,7 +252,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
       >
         <form
           onSubmit={handleSubmit(onSubmit, onError)}
-          className="flex flex-col items-center justify-between gap-2 rounded-3xl border bg-white p-2 shadow lg:flex-row lg:rounded-full"
+          className="flex flex-col items-center justify-between gap-2 rounded-3xl border bg-white p-2 shadow dark:bg-teal-600 lg:flex-row lg:rounded-full dark:border-teal-300"
         >
           {findRideFormFields.map(
             ({ name, label, type, placeholder, options }) => (
@@ -262,7 +262,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
               >
                 <label
                   htmlFor={name}
-                  className="inline-flex min-w-fit items-center gap-2 pl-4 text-sm"
+                  className="inline-flex min-w-fit items-center gap-2 pl-4 text-sm text-dark"
                 >
                   {name === 'from' || name === 'to' ? (
                     <TbMapPin className="text-lg" />
@@ -319,7 +319,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
           )}
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm lg:w-fit"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm dark:text-dark lg:w-fit"
           >
             Confirm
           </button>
@@ -345,7 +345,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           {ridesFound.length > 0 ? (
-            <div className="relative h-full w-full max-w-xl bg-white p-5 shadow-lg md:h-auto md:rounded-3xl">
+            <div className="relative h-full w-full max-w-xl bg-white p-5 shadow-lg dark:bg-dark md:h-auto md:rounded-3xl">
               <h3 className="pb-4 text-base font-medium text-teal-500">
                 Available {role === 'rider' ? 'Passengers' : 'Rides'}
               </h3>

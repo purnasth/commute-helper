@@ -18,13 +18,15 @@ const SearchedLocations: React.FC<SearchedLocationsProps> = ({
   return (
     <>
       <div className="space-y-2">
-        <p className="font-normal text-dark">Searched Locations</p>
+        <p className="font-normal text-dark dark:text-light">
+          Searched Locations
+        </p>
 
         <div className="scroll max-h-60 space-y-2 overflow-y-scroll">
           {suggestions.map((location) => (
             <div
               key={location.id}
-              className="flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 transition-all duration-150 ease-in-out hover:bg-gray-100"
+              className="group flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2 transition-all duration-150 ease-in-out hover:bg-gray-100 hover:text-dark dark:hover:bg-teal-50 dark:border-light/50 dark:bg-teal-50/5"
               onClick={() => {
                 onSelect(location.name);
                 onClose();
@@ -39,7 +41,7 @@ const SearchedLocations: React.FC<SearchedLocationsProps> = ({
                   }}
                 ></p>
                 <p
-                  className="text-xs text-gray-500"
+                  className="text-xs text-gray-500 dark:text-gray-300 dark:group-hover:text-dark"
                   dangerouslySetInnerHTML={{
                     __html: highlightMatch(location.address, searchQuery),
                   }}

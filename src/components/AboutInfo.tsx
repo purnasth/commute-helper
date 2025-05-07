@@ -8,8 +8,8 @@ import branch2 from '../assets/images/about/branch2.svg';
 const AboutInfo = () => {
   return (
     <>
-      <section className="relative z-10 h-auto bg-teal-200 bg-[radial-gradient(circle,_#2dd4bf_10%,_transparent_10%),_radial-gradient(circle,_#f5f5f5_10%,_transparent_10%)] bg-[length:20px_20px] bg-[position:0_0,10px_10px] px-0 pb-0 pt-24 xl:h-screen xl:pt-32">
-        <div className="pointer-events-none absolute inset-0 -z-10 size-full select-none bg-gradient-to-b from-white via-transparent to-teal-300"></div>
+      <section className="relative z-10 h-auto bg-teal-200 bg-[radial-gradient(circle,_#2dd4bf_10%,_transparent_10%),_radial-gradient(circle,_#f5f5f5_10%,_transparent_10%)] bg-[length:20px_20px] bg-[position:0_0,10px_10px] px-0 pb-0 pt-24 xl:h-screen xl:pt-32 dark:bg-teal-600 dark:bg-[radial-gradient(circle,_#2dd4bf_10%,_transparent_10%),_radial-gradient(circle,_#001312_10%,_transparent_10%)]">
+        <div className="pointer-events-none absolute inset-0 -z-10 size-full select-none bg-gradient-to-b from-white via-transparent to-teal-300 dark:hidden"></div>
         <div className="flex h-full flex-col justify-between gap-0 sm:gap-16 md:items-center xl:flex-row xl:gap-0">
           <img
             src={branch1}
@@ -29,7 +29,7 @@ const AboutInfo = () => {
               planet.
             </h2>
 
-            <p className="max-w-2xl font-body text-xs sm:text-sm md:text-sm">
+            <p className="max-w-2xl font-body text-xs sm:text-sm md:text-sm dark:text-shadow-dark">
               Commute Connect is the platform that connects your co-workers
               sharing the same route to work. Share resources, reduce your
               carbon footprint, save money, and step towards a greener planet

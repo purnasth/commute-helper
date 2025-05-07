@@ -30,7 +30,7 @@ module.exports = {
         ],
       },
       textShadow: {
-        dark: '0 1px 1px rgba(0, 0, 0, 0.5)',
+        dark: '0px 0px 2px rgba(0, 0, 0, 1)',
         light: '0px 0px 2px rgba(255, 255, 255, 1)',
         red: '2px 2px 4px rgba(255, 0, 0, 0.5)',
         'light-glow':

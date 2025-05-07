@@ -29,7 +29,7 @@ const AboutInfo = () => {
               planet.
             </h2>
 
-            <p className="max-w-2xl font-body text-xs sm:text-sm md:text-sm">
+            <p className="max-w-2xl font-body text-xs sm:text-sm md:text-sm dark:text-shadow-dark">
               Commute Connect is the platform that connects your co-workers
               sharing the same route to work. Share resources, reduce your
               carbon footprint, save money, and step towards a greener planet

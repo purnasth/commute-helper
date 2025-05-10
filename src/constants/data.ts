@@ -776,3 +776,12 @@ export const navLinks = [
     link: '/role/rider',
   },
 ];
+
+export const allowedEmails = [
+  'purna@kbc.edu.np',
+  'purna@gov.np',
+  'mridani@kbc.edu.np',
+  'mridani@gov.np',
+  'priyanka@kbc.edu.np',
+  'priyanka@gov.np',
+];

@@ -132,18 +132,19 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     // Check if the user is logged in
     const user = localStorage.getItem('user');
     if (!user) {
+      localStorage.setItem('rideFormData', JSON.stringify(data));
+      localStorage.setItem('redirectAfterLogin', window.location.pathname);
+
       toast.error('Please log in to confirm your ride route.');
-      // navigate('/login');
+      navigate('/login');
       return;
     }
 
-    // Add a timestamp to the ride data
     const rideWithTimestamp = {
       ...data,
-      timestamp: new Date().toISOString(), // Save the current time as ISO string
+      timestamp: new Date().toISOString(),
     };
 
-    // Save the ride data to local storage
     const existingRides = JSON.parse(localStorage.getItem('rides') || '[]');
     localStorage.setItem(
       'rides',
@@ -154,11 +155,10 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     setTimeout(() => {
       toast.dismiss(loadingToastId);
 
-      // Simulate loading and check for available rides
       setIsLoading(true);
       setTimeout(() => {
         const availableRides = existingRides.filter(
-          (ride: RideFormData) => ride.role !== data.role, // Find rides with the opposite role
+          (ride: RideFormData) => ride.role !== data.role,
         );
 
         if (availableRides.length > 0) {
@@ -169,27 +169,43 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
           );
         } else {
           // Case 2: No rides found
-          setRidesFound([]); // Clear ridesFound
+          setRidesFound([]);
           toast.info(
             `Your ride route has been submitted! Currently, no ${role === 'rider' ? 'passengers' : 'riders'} are sharing the same route.`,
           );
         }
 
         setIsLoading(false);
-        setShowModal(true); // Show the modal with the message
-      }, 2000); // Simulate a 2-second delay
+        setShowModal(true);
+      }, 2000);
     }, 2000);
     console.log('Form Data:', rideWithTimestamp);
   };
 
+  useEffect(() => {
+    const savedFormData = localStorage.getItem('rideFormData');
+    if (savedFormData) {
+      const parsedData: Partial<RideFormData> = JSON.parse(savedFormData);
+
+      // Prefill the form fields
+      (Object.keys(parsedData) as (keyof RideFormData)[])
+        .filter((key) => key !== 'timestamp')
+        .forEach((key) => {
+          if (parsedData[key]) {
+            setValue(key, parsedData[key] as string);
+          }
+        });
+
+      localStorage.removeItem('rideFormData');
+    }
+  }, [setValue]);
+
   const onError = () => {
-    // Aggregate all error messages into a single string
     const errorMessages = Object.values(errors)
       .map((error) => error?.message)
-      .filter(Boolean) // Remove undefined or null values
+      .filter(Boolean)
       .join(', ');
 
-    // Show a single toast with all error messages
     if (errorMessages) {
       // toast.error(`Please fill out the following fields: ${errorMessages}`);
       toast.error(`Please fill out all the fields:`);
@@ -252,7 +268,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
       >
         <form
           onSubmit={handleSubmit(onSubmit, onError)}
-          className="flex flex-col items-center justify-between gap-2 rounded-3xl border bg-white p-2 shadow dark:bg-teal-600 lg:flex-row lg:rounded-full dark:border-teal-300"
+          className="flex flex-col items-center justify-between gap-2 rounded-3xl border bg-white p-2 shadow dark:border-teal-300 dark:bg-teal-600 lg:flex-row lg:rounded-full"
         >
           {findRideFormFields.map(
             ({ name, label, type, placeholder, options }) => (

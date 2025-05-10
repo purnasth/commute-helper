@@ -6,8 +6,9 @@ import { toast } from 'react-toastify';
 import ReCAPTCHA from 'react-google-recaptcha';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoginFormData } from '../interfaces/types';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { getFirstNameFromEmail } from '../utils/functions';
+import { allowedEmails } from '../constants/data';
 
 // Validation schema
 const schema = yup.object().shape({
@@ -17,13 +18,12 @@ const schema = yup.object().shape({
 
 const Login = () => {
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm<LoginFormData>({
     resolver: yupResolver(schema),
   });
@@ -37,15 +37,6 @@ const Login = () => {
       toast.error('Please complete the reCAPTCHA verification.');
       return;
     }
-
-    const allowedEmails = [
-      'purna@kbc.edu.np',
-      'purna@gov.np',
-      'mridani@kbc.edu.np',
-      'mridani@gov.np',
-      'priyanka@kbc.edu.np',
-      'priyanka@gov.np',
-    ];
 
     if (!allowedEmails.includes(data.email)) {
       toast.error('Access denied. Please use an authorized email address.');
@@ -66,18 +57,24 @@ const Login = () => {
       localStorage.setItem('user', JSON.stringify(userInfo));
 
       toast.success(`Login successful! Welcome, ${firstName}!`);
-      reset();
-      // navigate('/');
-      window.location.href = '/';
+
+      const redirectAfterLogin = localStorage.getItem('redirectAfterLogin');
+      if (redirectAfterLogin) {
+        localStorage.removeItem('redirectAfterLogin');
+        // navigate(redirectAfterLogin);
+        window.location.href = redirectAfterLogin;
+      } else {
+        window.location.href = '/';
+      }
     } catch {
       toast.error('Failed to login. Please try again later.');
     }
   };
 
-  const handleLogout = (navigate: (path: string) => void) => {
+  const handleLogout = () => {
     localStorage.removeItem('user');
     toast.success('Logged out successfully!');
-    navigate('/login');
+    window.location.href = '/login';
   };
 
   const formInputs: {
@@ -160,7 +157,7 @@ const Login = () => {
             </a> */}
             <button
               type="button"
-              onClick={() => handleLogout(navigate)}
+              onClick={handleLogout}
               className="bg-white text-sm font-medium uppercase text-teal-700 underline hover:no-underline dark:bg-dark dark:text-teal-300"
             >
               logout

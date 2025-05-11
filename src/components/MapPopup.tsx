@@ -41,6 +41,7 @@ const MapPopup: React.FC<MapPopupProps> = ({
 
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const markerRef = useRef<Feature | null>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
 
   const isLocationAllowed = useCallback((locationName: string): boolean => {
     const allowedAreas = ['Kathmandu', 'Lalitpur', 'Bhaktapur', 'Patan'];
@@ -122,6 +123,22 @@ const MapPopup: React.FC<MapPopupProps> = ({
 
     return () => map.setTarget(undefined);
   }, [reverseGeocode]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(event.target as Node)
+      ) {
+        setSuggestions([]); // Close suggestions if clicked outside
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const updateMarkerPosition = (coords: [number, number]) => {
     if (markerRef.current) {
@@ -227,7 +244,10 @@ const MapPopup: React.FC<MapPopupProps> = ({
 
         <div className="fixed bottom-5 left-1/2 flex w-[calc(100%-15px-15px)] max-w-xl -translate-x-1/2 flex-col gap-1 md:w-full">
           {suggestions.length > 0 && (
-            <div className="scroll max-h-72 w-full overflow-y-auto rounded-3xl border border-dark/30 bg-white shadow-lg backdrop-blur-sm dark:bg-dark/80">
+            <div
+              ref={suggestionsRef}
+              className="scroll max-h-72 w-full overflow-y-auto rounded-3xl border border-dark/30 bg-white shadow-lg backdrop-blur-sm dark:bg-dark/80"
+            >
               <button
                 type="button"
                 onClick={() => setSuggestions([])}

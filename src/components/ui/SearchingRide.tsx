@@ -3,7 +3,7 @@ import error from '../../assets/vector/passenger.svg';
 const SearchingRide = () => {
   return (
     <>
-      <main className="relative flex size-full flex-col items-center justify-center overflow-hidden bg-white p-5 shadow-lg">
+      <main className="relative flex size-full flex-col items-center justify-center overflow-hidden bg-white dark:bg-dark p-5 shadow-lg">
         <img
           src={error}
           alt="Error 404"

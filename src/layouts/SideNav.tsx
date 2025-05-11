@@ -21,7 +21,12 @@ const routeLinks = [
   },
 ];
 
-const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav, navLinks }) => {
+const SideNav: React.FC<SideNavProps> = ({
+  isOpen,
+  closeNav,
+  navLinks,
+  userName,
+}) => {
   return (
     <div className="relative">
       <div
@@ -37,7 +42,7 @@ const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav, navLinks }) => {
         } z-50`}
       >
         <div className="">
-          <div className="flex p-4 items-center justify-between">
+          <div className="flex items-center justify-between border-b border-light/40 bg-dark/50 p-4">
             <Link
               to="/"
               className="transition-150 inline-flex items-center gap-3 text-sm font-semibold text-teal-950 md:text-xl"
@@ -71,7 +76,7 @@ const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav, navLinks }) => {
             </button>
           </div>
 
-          <ul className="mt-14">
+          <ul className="mt-6">
             {routeLinks.map((link) => (
               <li key={link.id} className="group">
                 <NavLink
@@ -88,7 +93,9 @@ const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav, navLinks }) => {
             ))}
           </ul>
 
-          <ul className="flex flex-col gap-4 px-3 pt-8 md:hidden">
+          <hr className="border-teal-300/40 lg:hidden" />
+
+          <ul className="flex flex-col gap-4 px-3 py-8 lg:hidden">
             {navLinks.map((link) => (
               <li key={link.id} className="group">
                 <NavLink
@@ -109,13 +116,31 @@ const SideNav: React.FC<SideNavProps> = ({ isOpen, closeNav, navLinks }) => {
             ))}
           </ul>
 
+          <hr className="border-teal-300/40 md:hidden" />
+
           <div className="mt-5 px-3">
-            <Link
+            {/* <Link
               to="/login"
               className="inline-block w-full rounded-full bg-teal-300 px-6 py-2 text-center font-semibold text-teal-950"
             >
               Visit Login Page
-            </Link>
+            </Link> */}
+            {userName ? (
+              <Link
+                to="/profile"
+                className="flex items-center justify-center gap-2 rounded-full bg-teal-100 py-3 pl-4 pr-5 font-semibold text-teal-600 md:hidden"
+              >
+                <span className="animate-wave">&#128075;</span>
+                Hi, {userName}!
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="flex rounded-full bg-teal-300 px-6 py-3 font-semibold dark:text-dark md:hidden"
+              >
+                Login
+              </Link>
+            )}
           </div>
         </div>
       </div>

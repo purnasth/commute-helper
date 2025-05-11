@@ -49,9 +49,21 @@ export interface SideNavProps {
     link: string;
     icon: JSX.Element;
   }[];
+  userName: string | null;
 }
 
 export interface LoginFormData {
   email: string;
   password: string;
+}
+
+export interface UserDetails {
+  user_id?: number;
+  fullname?: string;
+  email?: string;
+  role?: string;
+  phone?: string;
+  address?: string;
+  profilePicture?: string;
+  ratings?: number;
 }

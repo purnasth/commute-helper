@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { SideNavProps } from '../interfaces/types';
-import logo from '../assets/logo.svg';
+// import logo from '../assets/logo.svg';
+import { IoClose } from 'react-icons/io5';
 
 const routeLinks = [
   {
@@ -37,13 +38,13 @@ const SideNav: React.FC<SideNavProps> = ({
       />
 
       <div
-        className={`fixed left-0 top-0 h-full w-64 bg-teal-950 text-teal-50 transition-all duration-500 ease-in-out ${
+        className={`fixed left-0 top-0 w-64 p-6 transition-all duration-500 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } z-50`}
       >
         <div className="">
-          <div className="flex items-center justify-between border-b border-light/40 bg-dark/50 p-4">
-            <Link
+          <div className="flex items-center justify-between">
+            {/* <Link
               to="/"
               className="transition-150 inline-flex items-center gap-3 text-sm font-semibold text-teal-950 md:text-xl"
             >
@@ -52,39 +53,24 @@ const SideNav: React.FC<SideNavProps> = ({
                 alt="Logo"
                 className="group-hover:filter-white transition-150 size-6 object-contain sm:size-10"
               />
-            </Link>
+            </Link> */}
             <button
               type="button"
               aria-label="Close Menu"
               onClick={closeNav}
-              className="text-4xl text-teal-50"
+              className="rounded-full bg-dark/50 p-0.5 text-lg text-teal-50 dark:bg-light/30 dark:text-light"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="size-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              <IoClose />
             </button>
           </div>
 
-          <ul className="mt-6">
+          <ul className="mt-4 space-y-3">
             {routeLinks.map((link) => (
-              <li key={link.id} className="group">
+              <li key={link.id} className="group w-fit">
                 <NavLink
                   to={link.link}
                   className={({ isActive }) =>
-                    `navlink ${
-                      isActive ? 'bg-teal-300 text-teal-950' : 'text-teal-50'
-                    }`
+                    `navlink ${isActive ? 'bg-teal-700 text-light dark:bg-teal-500 dark:text-dark' : 'bg-dark/50 text-light dark:bg-light/30 dark:text-light'}`
                   }
                 >
                   {link.title}
@@ -93,20 +79,16 @@ const SideNav: React.FC<SideNavProps> = ({
             ))}
           </ul>
 
-          <hr className="border-teal-300/40 lg:hidden" />
+          {/* <hr className="border-teal-50 lg:hidden" /> */}
 
-          <ul className="flex flex-col gap-4 px-3 py-8 lg:hidden">
+          <ul className="flex flex-col gap-4 py-8 lg:hidden">
             {navLinks.map((link) => (
               <li key={link.id} className="group">
                 <NavLink
                   key={link.id}
                   to={link.link}
                   className={({ isActive }) =>
-                    `transition-150 flex items-center gap-2 rounded-md px-4 py-3 font-medium transition-colors duration-200 hover:bg-teal-400 hover:text-dark ${
-                      isActive
-                        ? 'bg-teal-300 text-teal-950'
-                        : 'bg-teal-100 text-teal-600'
-                    }`
+                    `transition-150 inline-flex items-center gap-2 rounded-full py-3 pl-4 pr-5 text-xs font-normal transition-colors duration-200 hover:bg-teal-400 hover:text-dark ${isActive ? 'bg-teal-700 text-light dark:bg-teal-500 dark:text-dark' : 'bg-dark/50 text-light dark:bg-light/30 dark:text-light'}`
                   }
                 >
                   {link.icon}
@@ -116,9 +98,9 @@ const SideNav: React.FC<SideNavProps> = ({
             ))}
           </ul>
 
-          <hr className="border-teal-300/40 md:hidden" />
+          {/* <hr className="border-teal-300/40 md:hidden" /> */}
 
-          <div className="mt-5 px-3">
+          <div>
             {/* <Link
               to="/login"
               className="inline-block w-full rounded-full bg-teal-300 px-6 py-2 text-center font-semibold text-teal-950"
@@ -128,7 +110,7 @@ const SideNav: React.FC<SideNavProps> = ({
             {userName ? (
               <Link
                 to="/profile"
-                className="flex items-center justify-center gap-2 rounded-full bg-teal-100 py-3 pl-4 pr-5 font-semibold text-teal-600 md:hidden"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-teal-100 py-3 pl-4 pr-5 text-sm font-semibold text-teal-600 md:hidden md:text-base"
               >
                 <span className="animate-wave">&#128075;</span>
                 Hi, {userName}!
@@ -136,7 +118,7 @@ const SideNav: React.FC<SideNavProps> = ({
             ) : (
               <Link
                 to="/login"
-                className="flex rounded-full bg-teal-300 px-6 py-3 font-semibold dark:text-dark md:hidden"
+                className="inline-flex rounded-full bg-teal-300 px-6 py-2 font-semibold dark:text-dark md:hidden"
               >
                 Login
               </Link>

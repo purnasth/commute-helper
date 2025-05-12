@@ -12,13 +12,13 @@ const navLinks = [
     id: 1,
     title: 'Find a Ride',
     link: '/role/passenger',
-    icon: <TbSearch className="text-lg" />,
+    icon: <TbSearch className="text-sm md:text-lg" />,
   },
   {
     id: 2,
     title: 'Post a Ride',
     link: '/role/rider',
-    icon: <TbPlus className="text-lg" />,
+    icon: <TbPlus className="text-sm md:text-lg" />,
   },
 ];
 

@@ -127,7 +127,7 @@
   }
 
   .navlink {
-    @apply transition-300 inline-flex w-full items-center justify-between px-4 py-3 text-lg font-normal capitalize group-hover:bg-teal-300 group-hover:tracking-wide group-hover:text-teal-50;
+    @apply transition-all duration-100 inline-flex w-full items-center justify-between px-4 py-2.5 text-xs font-normal capitalize group-hover:bg-teal-300 group-hover:tracking-widest group-hover:uppercase group-hover:text-teal-50 rounded-full;
   }
 
   .overlay {

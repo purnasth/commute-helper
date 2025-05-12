@@ -12,13 +12,13 @@ const navLinks = [
     id: 1,
     title: 'Find a Ride',
     link: '/role/passenger',
-    icon: <TbSearch className="text-lg" />,
+    icon: <TbSearch className="text-sm md:text-lg" />,
   },
   {
     id: 2,
     title: 'Post a Ride',
     link: '/role/rider',
-    icon: <TbPlus className="text-lg" />,
+    icon: <TbPlus className="text-sm md:text-lg" />,
   },
 ];
 
@@ -69,7 +69,7 @@ const Navbar = () => {
         <div className={`flex items-center justify-between md:items-start`}>
           <Link
             to="/"
-            className="transition-150 inline-flex items-center gap-3 text-sm font-semibold text-teal-950 dark:text-teal-300 md:text-xl"
+            className="transition-150 inline-flex items-center gap-3 text-sm font-semibold text-teal-950 dark:text-teal-300 sm:text-xl"
           >
             <img
               src={logoAlt}
@@ -85,7 +85,7 @@ const Navbar = () => {
           </Link>
 
           <div className="flex items-center justify-end gap-8">
-            <ul className="hidden items-center gap-8 md:flex">
+            <ul className="hidden items-center gap-8 lg:flex">
               {navLinks.map((link) => (
                 <li key={link.title}>
                   <Link
@@ -100,10 +100,13 @@ const Navbar = () => {
             </ul>
             <div className="flex items-center gap-6">
               {userName ? (
-                <p className="hidden items-center justify-center gap-2 rounded-full bg-teal-100 py-2 pl-4 pr-5 font-semibold text-teal-600 md:flex">
+                <Link
+                  to="/profile"
+                  className="hidden items-center justify-center gap-2 rounded-full bg-teal-100 py-2 pl-4 pr-5 font-semibold text-teal-600 md:flex"
+                >
                   <span className="animate-wave">&#128075;</span>
                   Hi, {userName}!
-                </p>
+                </Link>
               ) : (
                 <Link
                   to="/login"
@@ -128,7 +131,12 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <SideNav closeNav={closeNav} isOpen={isOpen} navLinks={navLinks} />
+      <SideNav
+        closeNav={closeNav}
+        isOpen={isOpen}
+        navLinks={navLinks}
+        userName={userName}
+      />
     </>
   );
 };

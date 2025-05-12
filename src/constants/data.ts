@@ -634,33 +634,6 @@ export const quickMessages = [
   'See you at the location',
 ];
 
-export const findRideFormFields = [
-  {
-    name: 'from',
-    label: 'From',
-    type: 'text',
-    placeholder: 'Current Location',
-  },
-  {
-    name: 'to',
-    label: 'To',
-    type: 'text',
-    placeholder: 'Kathmandu BernHardt College',
-  },
-  {
-    name: 'message',
-    label: 'Message',
-    type: 'text',
-    placeholder: "I'm leaving in 5 minutes",
-  },
-  {
-    name: 'role',
-    label: "I'm a",
-    type: 'select',
-    options: ['Rider', 'Passenger'],
-  },
-];
-
 export const policies = [
   {
     id: 'ride-cancellation',
@@ -774,5 +747,71 @@ export const navLinks = [
     id: 3,
     title: 'Post a Ride',
     link: '/role/rider',
+  },
+];
+
+export const authorizedUsers = [
+  {
+    user_id: 1,
+    fullname: 'Purna Shrestha',
+    email: 'purna@kbc.edu.np',
+    role: 'Rider',
+    phone: '+9779808021753',
+    address: 'Kathmandu, Nepal',
+    profilePicture: 'https://www.purnashrestha.com.np/assets/hero-vz7SbapX.png',
+    ratings: 4,
+  },
+  {
+    user_id: 2,
+    fullname: 'Mridani Pandey',
+    email: 'mridani@kbc.edu.np',
+    role: 'User',
+    phone: '9847654321',
+    address: 'Lalitpur, Nepal',
+    profilePicture: '/assets/images/mridani.jpg',
+    ratings: 5,
+  },
+  {
+    user_id: 3,
+    fullname: 'Priyanka Luitel',
+    email: 'priyanka@kbc.edu.np',
+    role: 'User',
+    phone: '9801234567',
+    address: 'Bhaktapur, Nepal',
+    profilePicture: '/assets/images/priyanka.jpg',
+    ratings: 5,
+  },
+];
+
+export const findRideFormFields: Array<{
+  name: 'from' | 'to' | 'message' | 'role';
+  label: string;
+  type: string;
+  placeholder?: string;
+  options?: string[];
+}> = [
+  {
+    name: 'from',
+    label: 'From',
+    type: 'text',
+    placeholder: 'Current Location',
+  },
+  {
+    name: 'to',
+    label: 'To',
+    type: 'text',
+    placeholder: 'Kathmandu BernHardt College',
+  },
+  {
+    name: 'message',
+    label: 'Message',
+    type: 'text',
+    placeholder: "I'm leaving in 5 minutes",
+  },
+  {
+    name: 'role',
+    label: "I'm a",
+    type: 'select',
+    options: ['Rider', 'Passenger'],
   },
 ];

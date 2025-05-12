@@ -13,56 +13,17 @@ import LocationPopup from './LocationPopup';
 import MessagePopup from './MessagePopup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { RideFormData, RideBarProps } from '../interfaces/types';
 import Modal from './ui/Modal';
 import NoRideFound from './ui/NoRideFound';
 import SearchingRide from './ui/SearchingRide';
 import { useNavigate } from 'react-router-dom';
-
-// Validation schema using Yup
-const schema = yup.object().shape({
-  from: yup.string().required('From location is required*'),
-  to: yup.string().required('To location is required*'),
-  message: yup.string().required('Message is required*'),
-  role: yup.string().required('Role is required*'),
-});
-
-const findRideFormFields: Array<{
-  name: 'from' | 'to' | 'message' | 'role';
-  label: string;
-  type: string;
-  placeholder?: string;
-  options?: string[];
-}> = [
-  {
-    name: 'from',
-    label: 'From',
-    type: 'text',
-    placeholder: 'Current Location',
-  },
-  {
-    name: 'to',
-    label: 'To',
-    type: 'text',
-    placeholder: 'Kathmandu BernHardt College',
-  },
-  {
-    name: 'message',
-    label: 'Message',
-    type: 'text',
-    placeholder: "I'm leaving in 5 minutes",
-  },
-  {
-    name: 'role',
-    label: "I'm a",
-    type: 'select',
-    options: ['Rider', 'Passenger'],
-  },
-];
+import useScrollVisibility from '../hooks/useScrollVisibility';
+import { rideFormSchema } from '../schemas/formSchema';
+import useRideForm from '../hooks/useRideForm';
+import { findRideFormFields } from '../constants/data';
 
 const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
-  const [showRideBar, setShowRideBar] = useState(false);
   const [showLocationPopup, setShowLocationPopup] = useState(false);
   const [showMessagePopup, setShowMessagePopup] = useState(false);
   const [activeInput, setActiveInput] = useState<'from' | 'to' | null>(null);
@@ -70,42 +31,33 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
   const [ridesFound, setRidesFound] = useState<RideFormData[]>([]); // Tracks found rides
   const [showModal, setShowModal] = useState(false); // Modal visibility state
   const navigate = useNavigate();
+  const showRideBar = useScrollVisibility(100);
 
   const {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<RideFormData>({
     defaultValues: {
       from: '',
       to: '',
       message: '',
       role: role || '',
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(rideFormSchema),
   });
 
+  // Set the role to the provided role prop if it exists
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.body.scrollHeight;
-      const bottomThreshold = 100;
+    if (role) {
+      setValue('role', role);
+    }
+  }, [role, setValue]);
 
-      if (
-        scrollPosition > 0 &&
-        scrollPosition + windowHeight < documentHeight - bottomThreshold
-      ) {
-        setShowRideBar(true);
-      } else {
-        setShowRideBar(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Use the custom hook for pre-filling form data
+  useRideForm(setValue);
 
   const handleInputClick = (fieldName: string) => {
     if (fieldName === 'from' || fieldName === 'to') {
@@ -132,18 +84,19 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     // Check if the user is logged in
     const user = localStorage.getItem('user');
     if (!user) {
+      localStorage.setItem('rideFormData', JSON.stringify(data));
+      localStorage.setItem('redirectAfterLogin', window.location.pathname);
+
       toast.error('Please log in to confirm your ride route.');
-      // navigate('/login');
+      navigate('/login');
       return;
     }
 
-    // Add a timestamp to the ride data
     const rideWithTimestamp = {
       ...data,
-      timestamp: new Date().toISOString(), // Save the current time as ISO string
+      timestamp: new Date().toISOString(),
     };
 
-    // Save the ride data to local storage
     const existingRides = JSON.parse(localStorage.getItem('rides') || '[]');
     localStorage.setItem(
       'rides',
@@ -154,11 +107,10 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     setTimeout(() => {
       toast.dismiss(loadingToastId);
 
-      // Simulate loading and check for available rides
       setIsLoading(true);
       setTimeout(() => {
         const availableRides = existingRides.filter(
-          (ride: RideFormData) => ride.role !== data.role, // Find rides with the opposite role
+          (ride: RideFormData) => ride.role !== data.role,
         );
 
         if (availableRides.length > 0) {
@@ -169,27 +121,50 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
           );
         } else {
           // Case 2: No rides found
-          setRidesFound([]); // Clear ridesFound
+          setRidesFound([]);
           toast.info(
             `Your ride route has been submitted! Currently, no ${role === 'rider' ? 'passengers' : 'riders'} are sharing the same route.`,
           );
         }
 
         setIsLoading(false);
-        setShowModal(true); // Show the modal with the message
-      }, 2000); // Simulate a 2-second delay
+        setShowModal(true);
+
+        reset({
+          from: '',
+          to: '',
+          message: '',
+          role: role || '',
+        });
+      }, 2000);
     }, 2000);
     console.log('Form Data:', rideWithTimestamp);
   };
 
+  useEffect(() => {
+    const savedFormData = localStorage.getItem('rideFormData');
+    if (savedFormData) {
+      const parsedData: Partial<RideFormData> = JSON.parse(savedFormData);
+
+      // Prefill the form fields
+      (Object.keys(parsedData) as (keyof RideFormData)[])
+        .filter((key) => key !== 'timestamp')
+        .forEach((key) => {
+          if (parsedData[key]) {
+            setValue(key, parsedData[key] as string);
+          }
+        });
+
+      localStorage.removeItem('rideFormData');
+    }
+  }, [setValue]);
+
   const onError = () => {
-    // Aggregate all error messages into a single string
     const errorMessages = Object.values(errors)
       .map((error) => error?.message)
-      .filter(Boolean) // Remove undefined or null values
+      .filter(Boolean)
       .join(', ');
 
-    // Show a single toast with all error messages
     if (errorMessages) {
       // toast.error(`Please fill out the following fields: ${errorMessages}`);
       toast.error(`Please fill out all the fields:`);
@@ -205,38 +180,42 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
   }
 
   const handleReject = (ride: RideFormData) => {
-    // Remove the ride from local storage
-    const existingRides = JSON.parse(localStorage.getItem('rides') || '[]');
-    const updatedRides = existingRides.filter(
-      (storedRide: RideFormData) => storedRide.timestamp !== ride.timestamp,
-    );
-    localStorage.setItem('rides', JSON.stringify(updatedRides));
+    if (window.confirm('Are you sure you want to reject this ride?')) {
+      // Remove the ride from local storage
+      const existingRides = JSON.parse(localStorage.getItem('rides') || '[]');
+      const updatedRides = existingRides.filter(
+        (storedRide: RideFormData) => storedRide.timestamp !== ride.timestamp,
+      );
+      localStorage.setItem('rides', JSON.stringify(updatedRides));
 
-    // Update the ridesFound state
-    setRidesFound((prevRides) =>
-      prevRides.filter((foundRide) => foundRide.timestamp !== ride.timestamp),
-    );
+      // Update the ridesFound state
+      setRidesFound((prevRides) =>
+        prevRides.filter((foundRide) => foundRide.timestamp !== ride.timestamp),
+      );
 
-    toast.info('Ride has been rejected.');
+      toast.info('Ride has been rejected.');
+    }
   };
 
   const handleConfirm = (ride: RideFormData) => {
-    // Remove the ride from local storage
-    const existingRides = JSON.parse(localStorage.getItem('rides') || '[]');
-    const updatedRides = existingRides.filter(
-      (storedRide: RideFormData) => storedRide.timestamp !== ride.timestamp,
-    );
-    localStorage.setItem('rides', JSON.stringify(updatedRides));
+    if (window.confirm('Are you sure you want to confirm this ride?')) {
+      // Remove the ride from local storage
+      const existingRides = JSON.parse(localStorage.getItem('rides') || '[]');
+      const updatedRides = existingRides.filter(
+        (storedRide: RideFormData) => storedRide.timestamp !== ride.timestamp,
+      );
+      localStorage.setItem('rides', JSON.stringify(updatedRides));
 
-    toast.success('Congratulations! Your ride has been confirmed!');
+      toast.success('Congratulations! Your ride has been confirmed!');
 
-    navigate(
-      `/ride-details?from=${encodeURIComponent(ride.from)}&to=${encodeURIComponent(
-        ride.to,
-      )}&message=${encodeURIComponent(ride.message)}&role=${encodeURIComponent(
-        ride.role,
-      )}&timestamp=${encodeURIComponent(ride.timestamp ?? '')}`,
-    );
+      navigate(
+        `/ride-details?from=${encodeURIComponent(ride.from)}&to=${encodeURIComponent(
+          ride.to,
+        )}&message=${encodeURIComponent(ride.message)}&role=${encodeURIComponent(
+          ride.role,
+        )}&timestamp=${encodeURIComponent(ride.timestamp ?? '')}`,
+      );
+    }
   };
 
   return (
@@ -252,7 +231,8 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
       >
         <form
           onSubmit={handleSubmit(onSubmit, onError)}
-          className="flex flex-col items-center justify-between gap-2 rounded-3xl border bg-white p-2 shadow dark:bg-teal-600 lg:flex-row lg:rounded-full dark:border-teal-300"
+          className="flex flex-col items-center justify-between gap-2 rounded-3xl border bg-white p-2 shadow dark:border-teal-300 dark:bg-teal-600 lg:flex-row lg:rounded-full"
+          aria-labelledby="ride-form-title"
         >
           {findRideFormFields.map(
             ({ name, label, type, placeholder, options }) => (
@@ -262,7 +242,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
               >
                 <label
                   htmlFor={name}
-                  className="inline-flex min-w-fit items-center gap-2 pl-4 text-sm text-dark"
+                  className="inline-flex min-w-fit items-center gap-2 py-3 pl-4 text-sm text-dark"
                 >
                   {name === 'from' || name === 'to' ? (
                     <TbMapPin className="text-lg" />
@@ -273,7 +253,11 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                   {name === 'role' ? <TbUser className="text-lg" /> : null}
                   {label}
                 </label>
-                {type === 'select' ? (
+                {name === 'role' && role ? (
+                  <span className="mr-2 w-full rounded-full bg-transparent px-2 py-3 text-sm font-normal text-dark">
+                    {role}
+                  </span>
+                ) : type === 'select' ? (
                   <select
                     id={name}
                     {...register(name)}
@@ -343,17 +327,23 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
       )}
 
       {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
+        <Modal
+          onClose={() => setShowModal(false)}
+          aria-labelledby="modal-title"
+        >
           {ridesFound.length > 0 ? (
-            <div className="relative h-full w-full max-w-xl bg-white p-5 shadow-lg dark:bg-dark md:h-auto md:rounded-3xl">
-              <h3 className="pb-4 text-base font-medium text-teal-500">
+            <div className="relative h-full w-full max-w-xl bg-light p-5 shadow-lg dark:bg-teal-900 md:h-auto md:rounded-3xl">
+              <h3
+                id="modal-title"
+                className="pb-4 text-base font-medium text-teal-500 dark:text-teal-300"
+              >
                 Available {role === 'rider' ? 'Passengers' : 'Rides'}
               </h3>
               <ul className="max-h-[90vh] space-y-2 overflow-y-auto md:max-h-[50vh]">
                 {ridesFound.map((ride, index) => (
                   <li
                     key={index}
-                    className="space-y-3 rounded-xl border border-gray-200/80 bg-teal-50 p-4 shadow-sm transition-shadow hover:shadow-md"
+                    className="space-y-3 rounded-xl border border-gray-200/80 bg-teal-50 p-4 shadow-sm transition-shadow hover:shadow-md dark:border-teal-300/50 dark:bg-dark"
                   >
                     <div className="flex items-center gap-2">
                       <div className="flex flex-col items-center">
@@ -361,13 +351,9 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                         <div className="h-4 w-px border border-dashed border-teal-500"></div>
                         <TbMapPin className="text-base text-teal-500" />
                       </div>
-                      <div className="flex-1 space-y-3">
-                        <p className="text-sm font-normal text-dark">
-                          {ride.from}
-                        </p>
-                        <p className="text-sm font-normal text-dark">
-                          {ride.to}
-                        </p>
+                      <div className="flex-1 space-y-3 text-sm font-normal text-dark dark:text-light">
+                        <p>{ride.from}</p>
+                        <p>{ride.to}</p>
                       </div>
                     </div>
                     <div className="relative rounded-xl bg-teal-200 p-3">
@@ -376,7 +362,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                         <p className="text-sm font-normal text-dark">
                           {ride.message}
                         </p>
-                        <p className="flex min-w-24 items-center justify-center gap-0.5 rounded-full bg-teal-50 py-1 text-sm font-normal lowercase text-teal-500 shadow">
+                        <p className="flex min-w-24 items-center justify-center gap-0.5 rounded-full bg-teal-50 py-1 text-sm font-normal lowercase text-teal-500 shadow dark:bg-teal-950 dark:text-teal-300">
                           <TbAlarm className="text-lg" />
                           {ride.timestamp
                             ? new Date(ride.timestamp).toLocaleTimeString([], {
@@ -391,7 +377,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                       <button
                         type="button"
                         onClick={() => handleConfirm(ride)}
-                        className="group relative w-full overflow-hidden rounded-lg border border-teal-200 bg-teal-400 px-4 py-1.5 text-sm text-white hover:bg-green-500"
+                        className="group relative w-full overflow-hidden rounded-lg border border-teal-200 bg-teal-400 px-4 py-1.5 text-sm text-light hover:bg-green-500 dark:text-dark"
                       >
                         <span className="absolute inset-0 z-0 animate-slide bg-gradient-to-r from-green-500 to-green-400 group-hover:animate-none"></span>
                         <span className="relative z-10 font-medium tracking-wide">
@@ -401,7 +387,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
                       <button
                         type="button"
                         onClick={() => handleReject(ride)}
-                        className="transition-150 w-full rounded-lg border border-teal-400 bg-teal-50 px-4 py-1.5 text-sm font-medium tracking-wide text-teal-500 hover:border-red-500 hover:bg-red-500 hover:text-white"
+                        className="transition-150 w-full rounded-lg border border-teal-400 bg-teal-50 px-4 py-1.5 text-sm font-medium tracking-wide text-teal-500 hover:border-red-500 hover:bg-red-500 hover:text-light dark:bg-teal-900 dark:hover:bg-red-500"
                       >
                         Reject
                       </button>

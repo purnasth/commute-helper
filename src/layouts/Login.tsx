@@ -1,12 +1,14 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
 import ReCAPTCHA from 'react-google-recaptcha';
 import 'react-toastify/dist/ReactToastify.css';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 import { LoginFormData } from '../interfaces/types';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+import { authorizedUsers } from '../constants/data';
 import { getFirstNameFromEmail } from '../utils/functions';
 
 // Validation schema
@@ -17,13 +19,12 @@ const schema = yup.object().shape({
 
 const Login = () => {
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm<LoginFormData>({
     resolver: yupResolver(schema),
   });
@@ -38,16 +39,8 @@ const Login = () => {
       return;
     }
 
-    const allowedEmails = [
-      'purna@kbc.edu.np',
-      'purna@gov.np',
-      'mridani@kbc.edu.np',
-      'mridani@gov.np',
-      'priyanka@kbc.edu.np',
-      'priyanka@gov.np',
-    ];
-
-    if (!allowedEmails.includes(data.email)) {
+    const user = authorizedUsers.find((user) => user.email === data.email);
+    if (!user) {
       toast.error('Access denied. Please use an authorized email address.');
       return;
     }
@@ -59,25 +52,25 @@ const Login = () => {
       const firstName = getFirstNameFromEmail(data.email);
 
       // Store user info in localStorage
-      const userInfo = {
-        id: Date.now(), // Simulated user ID
-        email: data.email,
+      const userWithTimestamp = {
+        ...user,
+        loginTimestamp: Date.now(),
       };
-      localStorage.setItem('user', JSON.stringify(userInfo));
+      localStorage.setItem('user', JSON.stringify(userWithTimestamp));
 
       toast.success(`Login successful! Welcome, ${firstName}!`);
-      reset();
-      // navigate('/');
-      window.location.href = '/';
+
+      const redirectAfterLogin = localStorage.getItem('redirectAfterLogin');
+      if (redirectAfterLogin) {
+        localStorage.removeItem('redirectAfterLogin');
+        // navigate(redirectAfterLogin);
+        window.location.href = redirectAfterLogin;
+      } else {
+        window.location.href = '/';
+      }
     } catch {
       toast.error('Failed to login. Please try again later.');
     }
-  };
-
-  const handleLogout = (navigate: (path: string) => void) => {
-    localStorage.removeItem('user');
-    toast.success('Logged out successfully!');
-    navigate('/login');
   };
 
   const formInputs: {
@@ -158,13 +151,6 @@ const Login = () => {
             >
               Forgot Password?
             </a> */}
-            <button
-              type="button"
-              onClick={() => handleLogout(navigate)}
-              className="bg-white text-sm font-medium uppercase text-teal-700 underline hover:no-underline dark:bg-dark dark:text-teal-300"
-            >
-              logout
-            </button>
           </div>
 
           <button

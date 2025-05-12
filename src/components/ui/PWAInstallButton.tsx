@@ -11,16 +11,16 @@ export const PWAInstallButton = () => {
       <button
         type="button"
         onClick={installApp}
-        className="transition-150 group flex items-center gap-2 rounded-full bg-teal-950 px-5 py-3 text-sm text-white shadow-lg hover:bg-teal-700"
+        className="transition-150 group flex items-center gap-2 rounded-full bg-teal-950 py-3 pl-4 pr-5 text-xs text-white shadow-lg hover:bg-teal-700 sm:text-sm"
       >
         <img
           src={logo}
           alt="Logo"
-          className="group-hover:filter-white transition-150 size-5 object-contain"
+          className="group-hover:filter-white transition-150 size-4 scale-125 object-contain sm:size-5 sm:scale-110"
         />
         Install App
       </button>
-      <p className="max-w-xs text-xs font-extralight">
+      <p className="max-w-xs flex-1 text-xs font-extralight">
         Install our Progressive Web App (PWA) for quick access and a seamless
         experience.
         {/* Install our Progressive Web App (PWA) for quick access and a

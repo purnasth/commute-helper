@@ -21,12 +21,14 @@ const Error404 = () => {
             destination. Whether it's to home, work, or a greener future, we'll
             get you back on track.
           </p>
-          <img
-            src={error}
-            alt="Error 404"
-            className="left-1/2 top-1/2 -z-10 h-[60vh] object-contain md:absolute md:-mt-4 md:h-[85vh] md:-translate-x-1/2 md:-translate-y-1/2 md:opacity-30 md:dark:opacity-20"
-            draggable="false"
-          />
+          <div className="flex items-center justify-center">
+            <img
+              src={error}
+              alt="Error 404"
+              className="inset-0 -z-10 mx-auto h-[60vh] animate-floating-up object-contain drop-shadow md:absolute md:-mt-4 md:h-[85vh] md:opacity-30 md:dark:opacity-20"
+              draggable="false"
+            />
+          </div>
         </div>
       </main>
 

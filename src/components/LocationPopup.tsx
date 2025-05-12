@@ -7,6 +7,7 @@ import MapPopup from './MapPopup';
 import { LocationPopupProps } from '../interfaces/types';
 import useDisableScroll from '../hooks/useDisableScroll';
 import { truncateLocation } from '../utils/functions';
+import useAutoFocus from '../hooks/useAutoFocus';
 
 const LocationPopup: React.FC<LocationPopupProps> = ({
   onClose,
@@ -19,6 +20,9 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
   const [suggestions, setSuggestions] = useState<typeof mockLocations>([]);
   const [showMapPopup, setShowMapPopup] = useState(false);
+  const [mapSearchQuery, setMapSearchQuery] = useState<string | null>(null);
+
+  const inputRef = useAutoFocus<HTMLInputElement>();
 
   useEffect(() => {
     if (searchQuery.length > 2) {
@@ -55,6 +59,11 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
     }
   };
 
+  const handleChooseOnMap = () => {
+    setMapSearchQuery(searchQuery); // Pass the current search query to the map
+    setShowMapPopup(true);
+  };
+
   const handleMapSelect = (location: string) => {
     onSelect(location);
     setShowMapPopup(false);
@@ -82,6 +91,7 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
                 placeholder="Search for location"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                ref={inputRef}
                 className="w-full rounded-lg p-3 pl-4 pr-11 text-base text-black outline outline-1 outline-teal-300 placeholder:text-base focus-visible:outline-2 focus-visible:outline-teal-300 dark:bg-dark dark:text-light"
                 id="searchLocation"
               />
@@ -95,7 +105,7 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
                     No results found?{' '}
                     <button
                       type="button"
-                      onClick={() => setShowMapPopup(true)}
+                      onClick={handleChooseOnMap}
                       className="bg-teal-100 font-medium text-teal-500 underline hover:text-teal-600"
                     >
                       Choose on Map
@@ -127,7 +137,7 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
               </button>
               <button
                 type="button"
-                onClick={() => setShowMapPopup(true)}
+                onClick={handleChooseOnMap}
                 className="transition-300 group inline-flex w-full items-start justify-center gap-2 rounded-lg border border-teal-300 bg-teal-300 p-3 text-sm font-semibold text-dark hover:bg-teal-50 hover:text-teal-500 hover:shadow-none md:justify-start md:gap-3"
               >
                 <PiMapPinSimpleAreaBold className="transition-300 text-lg text-dark/60 group-hover:text-teal-500 md:text-xl" />
@@ -178,7 +188,7 @@ const LocationPopup: React.FC<LocationPopupProps> = ({
         <MapPopup
           onClose={() => setShowMapPopup(false)}
           onSelect={handleMapSelect}
-          initialLocation={searchQuery}
+          initialLocation={mapSearchQuery || ''}
         />
       )}
     </>

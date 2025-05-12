@@ -18,6 +18,7 @@ import RideDetails from './pages/RideDetails';
 import Policies from './pages/Policies';
 import FAQPage from './pages/FAQPage';
 import RoleBasedPage from './pages/RoleBasedPage';
+import UserProfile from './pages/UserProfile';
 
 const App: React.FC = () => {
   const theme = useTheme();
@@ -32,6 +33,7 @@ const App: React.FC = () => {
           <Route path="/help" element={<FAQPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<UserProfile />} />
           <Route path="/ride-details" element={<RideDetails />} />
           <Route path="/policies/:policyId" element={<Policies />} />
           <Route path="/role/:roleId" element={<RoleBasedPage />} />

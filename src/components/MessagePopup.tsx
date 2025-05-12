@@ -4,11 +4,13 @@ import { TbSend2, TbX } from 'react-icons/tb';
 import { MessagePopupProps } from '../interfaces/types';
 import { quickMessages } from '../constants/data';
 import useDisableScroll from '../hooks/useDisableScroll';
+import useAutoFocus from '../hooks/useAutoFocus';
 
 const MessagePopup: React.FC<MessagePopupProps> = ({ onSelect, onClose }) => {
   useDisableScroll();
 
   const [customMessage, setCustomMessage] = React.useState('');
+  const textareaRef = useAutoFocus<HTMLTextAreaElement>();
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && customMessage) {
@@ -34,6 +36,7 @@ const MessagePopup: React.FC<MessagePopupProps> = ({ onSelect, onClose }) => {
               placeholder="Write custom message..."
               value={customMessage}
               onChange={(e) => setCustomMessage(e.target.value)}
+              ref={textareaRef}
               className="w-full rounded-lg p-3 pr-10 outline outline-1 outline-teal-200 focus-visible:outline-2 focus-visible:outline-teal-300 dark:bg-dark"
               onKeyDown={handleKeyDown}
               rows={1}

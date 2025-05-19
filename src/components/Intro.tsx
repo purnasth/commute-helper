@@ -32,7 +32,9 @@ const Intro = () => {
   }, []);
 
   return (
-    <main className="relative pb-0">
+    <main className="relative lg:pb-0 overflow-hidden">
+      <div className="absolute left-0 -translate-x-1/2 size-96 bg-teal-300 rounded-full blur-[100px] opacity-40 -z-10"/>
+      <div className="absolute right-0 top-1/4 translate-x-1/2 size-[36rem] bg-teal-300 rounded-full blur-[200px] opacity-80 -z-10"/>
       <Title
         title="Connecting Co-workers & Students sharing the same route"
         description="We are a community of professionals and students who share the same
@@ -51,7 +53,7 @@ const Intro = () => {
             reduce your carbon footprint and step towards a more sustainable
             future.
           </p>
-          <h3 className="bg-white/50 pt-4 text-4xl text-teal-400 md:pt-10 md:text-5xl xl:text-6xl dark:bg-dark/50">
+          <h3 className="bg-white/50 pt-4 text-4xl text-teal-400 dark:bg-dark/50 md:pt-10 md:text-5xl xl:text-6xl">
             Ride. Enjoy. Save.
           </h3>
         </div>

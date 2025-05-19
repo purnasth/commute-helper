@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background map layer -->
+  <rect width="800" height="500" fill="#f2f2f2"/>
+  
+  <!-- Map grid lines -->
+  <g stroke="#e0e0e0" stroke-width="1">
+    <line x1="0" y1="50" x2="800" y2="50"/>
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="250" x2="800" y2="250"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="350" x2="800" y2="350"/>
+    <line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="0" y1="450" x2="800" y2="450"/>
+    
+    <line x1="50" y1="0" x2="50" y2="500"/>
+    <line x1="100" y1="0" x2="100" y2="500"/>
+    <line x1="150" y1="0" x2="150" y2="500"/>
+    <line x1="200" y1="0" x2="200" y2="500"/>
+    <line x1="250" y1="0" x2="250" y2="500"/>
+    <line x1="300" y1="0" x2="300" y2="500"/>
+    <line x1="350" y1="0" x2="350" y2="500"/>
+    <line x1="400" y1="0" x2="400" y2="500"/>
+    <line x1="450" y1="0" x2="450" y2="500"/>
+    <line x1="500" y1="0" x2="500" y2="500"/>
+    <line x1="550" y1="0" x2="550" y2="500"/>
+    <line x1="600" y1="0" x2="600" y2="500"/>
+    <line x1="650" y1="0" x2="650" y2="500"/>
+    <line x1="700" y1="0" x2="700" y2="500"/>
+    <line x1="750" y1="0" x2="750" y2="500"/>
+  </g>
+  
+  <!-- Major roads -->
+  <g>
+    <!-- Kathmandu to Bhaktapur -->
+    <path d="M300,250 Q350,260 400,240 Q450,220 530,230" stroke="#d9d9d9" stroke-width="12" fill="none"/>
+    
+    <!-- Kathmandu to Lalitpur -->
+    <path d="M300,250 Q310,300 350,320" stroke="#d9d9d9" stroke-width="12" fill="none"/>
+    
+    <!-- Bhaktapur to Patan -->
+    <path d="M530,230 Q500,280 450,320" stroke="#d9d9d9" stroke-width="12" fill="none"/>
+    
+    <!-- Ring Road -->
+    <path d="M250,200 Q280,150 350,160 Q420,170 460,210 Q500,250 480,320 Q450,380 380,370 Q310,360 270,320 Q230,280 250,200" stroke="#d9d9d9" stroke-width="8" fill="none"/>
+    
+    <!-- Additional Highways -->
+    <path d="M180,180 Q240,220 300,250" stroke="#d9d9d9" stroke-width="10" fill="none"/>
+    <path d="M530,230 Q590,210 650,220" stroke="#d9d9d9" stroke-width="10" fill="none"/>
+    <path d="M350,320 Q330,380 320,450" stroke="#d9d9d9" stroke-width="10" fill="none"/>
+    <path d="M450,320 Q480,360 500,420" stroke="#d9d9d9" stroke-width="10" fill="none"/>
+  </g>
+  
+  <!-- Secondary roads -->
+  <g stroke="#e6e6e6" stroke-width="4" fill="none">
+    <path d="M300,250 L270,320"/>
+    <path d="M350,320 L450,320"/>
+    <path d="M300,250 L350,160"/>
+    <path d="M300,250 L380,370"/>
+    <path d="M530,230 L480,180"/>
+    <path d="M530,230 L580,280"/>
+    <path d="M350,320 L320,380"/>
+    <path d="M350,320 L400,370"/>
+    <!-- Additional secondary roads -->
+    <path d="M250,230 L290,210"/>
+    <path d="M270,270 L310,290"/>
+    <path d="M340,230 L370,200"/>
+    <path d="M380,240 L410,210"/>
+    <path d="M430,230 L460,200"/>
+    <path d="M470,240 L500,220"/>
+    <path d="M540,250 L570,270"/>
+    <path d="M510,260 L540,290"/>
+    <path d="M370,340 L400,370"/>
+    <path d="M420,340 L450,370"/>
+    <path d="M330,350 L360,380"/>
+  </g>
+  
+  <!-- Minor roads -->
+  <g stroke="#efefef" stroke-width="2" fill="none">
+    <path d="M280,220 L320,230"/>
+    <path d="M340,200 L360,230"/>
+    <path d="M390,220 L410,240"/>
+    <path d="M320,270 L340,290"/>
+    <path d="M370,280 L390,300"/>
+    <path d="M420,260 L440,280"/>
+    <path d="M500,210 L520,230"/>
+    <path d="M490,250 L510,270"/>
+    <path d="M330,330 L350,350"/>
+    <path d="M370,330 L390,350"/>
+    <path d="M410,330 L430,350"/>
+    <path d="M450,280 L470,300"/>
+    <!-- Additional minor roads -->
+    <path d="M260,230 L280,250"/>
+    <path d="M270,260 L290,280"/>
+    <path d="M310,220 L330,240"/>
+    <path d="M330,230 L350,250"/>
+    <path d="M350,220 L370,240"/>
+    <path d="M370,220 L390,240"/>
+    <path d="M390,230 L410,250"/>
+    <path d="M410,230 L430,250"/>
+    <path d="M430,230 L450,250"/>
+    <path d="M450,230 L470,250"/>
+    <path d="M470,230 L490,250"/>
+    <path d="M490,230 L510,250"/>
+    <path d="M510,230 L530,250"/>
+    <path d="M530,240 L550,260"/>
+    <path d="M540,220 L560,240"/>
+    <path d="M550,230 L570,250"/>
+    <path d="M300,270 L320,290"/>
+    <path d="M320,280 L340,300"/>
+    <path d="M340,290 L360,310"/>
+    <path d="M360,300 L380,320"/>
+    <path d="M380,310 L400,330"/>
+    <path d="M400,320 L420,340"/>
+    <path d="M420,330 L440,350"/>
+    <path d="M330,340 L350,360"/>
+    <path d="M350,330 L370,350"/>
+    <path d="M370,340 L390,360"/>
+    <path d="M390,340 L410,360"/>
+    <path d="M410,340 L430,360"/>
+    <path d="M430,340 L450,360"/>
+    <path d="M450,330 L470,350"/>
+    <path d="M470,330 L490,350"/>
+    <path d="M270,310 L290,330"/>
+    <path d="M280,350 L300,370"/>
+    <path d="M460,280 L480,300"/>
+    <path d="M480,270 L500,290"/>
+    <path d="M500,270 L520,290"/>
+    <path d="M520,260 L540,280"/>
+    <!-- Smaller connecting roads -->
+    <path d="M290,245 L295,260"/>
+    <path d="M315,255 L320,270"/>
+    <path d="M335,245 L340,260"/>
+    <path d="M355,235 L360,250"/>
+    <path d="M375,235 L380,250"/>
+    <path d="M395,235 L400,250"/>
+    <path d="M415,235 L420,250"/>
+    <path d="M435,235 L440,250"/>
+    <path d="M455,235 L460,250"/>
+    <path d="M475,235 L480,250"/>
+    <path d="M495,235 L500,250"/>
+    <path d="M515,235 L520,250"/>
+    <path d="M535,235 L540,250"/>
+    <path d="M335,325 L340,340"/>
+    <path d="M355,325 L360,340"/>
+    <path d="M375,325 L380,340"/>
+    <path d="M395,325 L400,340"/>
+    <path d="M415,325 L420,340"/>
+    <path d="M435,325 L440,340"/>
+    <path d="M455,325 L460,340"/>
+  </g>
+
+  <!-- City locations with glowing effect -->
+  <!-- Kathmandu -->
+  <g transform="translate(300,250)">
+    <circle r="20" fill="#FF651B" opacity="0.3">
+      <animate attributeName="r" values="15;25;15" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="15" fill="#FF651B" opacity="0.4"/>
+    <circle r="8" fill="#FF651B"/>
+    <text x="0" y="35" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Kathmandu</text>
+  </g>
+  
+  <!-- Bhaktapur -->
+  <g transform="translate(530,230)">
+    <circle r="20" fill="#FF651B" opacity="0.3">
+      <animate attributeName="r" values="12;20;12" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="12" fill="#FF651B" opacity="0.4"/>
+    <circle r="6" fill="#FF651B"/>
+    <text x="0" y="30" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Bhaktapur</text>
+  </g>
+  
+  <!-- Lalitpur -->
+  <g transform="translate(350,320)">
+    <circle r="20" fill="#FF651B" opacity="0.3">
+      <animate attributeName="r" values="12;20;12" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="12" fill="#FF651B" opacity="0.4"/>
+    <circle r="6" fill="#FF651B"/>
+    <text x="0" y="30" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Lalitpur</text>
+  </g>
+  
+  <!-- Patan (part of Lalitpur but shown separately) -->
+  <g transform="translate(450,320)">
+    <circle r="16" fill="#FF651B" opacity="0.3">
+      <animate attributeName="r" values="10;16;10" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="10" fill="#FF651B" opacity="0.4"/>
+    <circle r="5" fill="#FF651B"/>
+    <text x="0" y="25" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Patan</text>
+  </g>
+  
+  <!-- Route line -->
+  <path d="M300,250 Q350,260 400,240 Q450,220 530,230" stroke="#FF651B" stroke-width="4" fill="none" stroke-dasharray="1, 0"/>
+  
+
+  <circle cx="300" cy="250" r="8" fill="#FF651B" stroke="#ffffff" stroke-width="2"/>
+  
+
+</svg>

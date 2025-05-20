@@ -303,7 +303,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
           )}
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm dark:text-dark lg:w-fit"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal-300 hover:!bg-teal-300 px-6 py-3 text-sm dark:text-dark lg:w-fit"
           >
             Confirm
           </button>

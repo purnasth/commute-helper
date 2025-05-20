@@ -32,9 +32,9 @@ const Intro = () => {
   }, []);
 
   return (
-    <main className="relative lg:pb-0 overflow-hidden">
-      <div className="absolute left-0 -translate-x-1/2 size-96 bg-teal-300 rounded-full blur-[100px] opacity-40 -z-10"/>
-      <div className="absolute right-0 top-1/4 translate-x-1/2 size-[36rem] bg-teal-300 rounded-full blur-[200px] opacity-80 -z-10"/>
+    <main className="relative overflow-hidden lg:pb-0">
+      <div className="absolute left-0 -z-10 size-96 -translate-x-1/2 rounded-full bg-teal-300 opacity-40 blur-[100px]" />
+      <div className="absolute right-0 top-1/4 -z-10 size-[36rem] translate-x-1/2 rounded-full bg-teal-300 opacity-80 blur-[200px]" />
       <Title
         title="Connecting Co-workers & Students sharing the same route"
         description="We are a community of professionals and students who share the same
@@ -81,7 +81,7 @@ const Intro = () => {
             </video>
             <img
               src={iPhoneMockup}
-              alt="Commute Connect"
+              alt="Commuto"
               className="pointer-events-none absolute inset-0 translate-y-8"
               draggable="false"
               width={750}

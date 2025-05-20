@@ -8,8 +8,8 @@ import branch2 from '../assets/images/about/branch2.svg';
 const AboutInfo = () => {
   return (
     <>
-      <section className="relative z-10 h-auto bg-teal-200 bg-[radial-gradient(circle,_#2dd4bf_10%,_transparent_10%),_radial-gradient(circle,_#f5f5f5_10%,_transparent_10%)] bg-[length:20px_20px] bg-[position:0_0,10px_10px] px-0 py-0 xl:h-screen dark:bg-teal-600 dark:bg-[radial-gradient(circle,_#2dd4bf_10%,_transparent_10%),_radial-gradient(circle,_#001312_10%,_transparent_10%)]">
-        <div className="pointer-events-none absolute inset-0 -z-10 size-full select-none bg-gradient-to-b from-white via-transparent to-teal-300 dark:hidden"></div>
+      <section className="relative z-10 h-auto bg-teal-200 bg-[radial-gradient(circle,_#2dd4bf_10%,_transparent_10%),_radial-gradient(circle,_#f5f5f5_10%,_transparent_10%)] bg-[length:20px_20px] bg-[position:0_0,10px_10px] px-0 py-0 dark:bg-teal-500/50 dark:bg-[radial-gradient(circle,_rgba(94,234,212,0.2)_10%,_transparent_10%),_radial-gradient(circle,_rgba(240,253,250,0.2)_10%,_transparent_10%)] xl:h-screen">
+        <div className="pointer-events-none absolute inset-0 -z-10 size-full select-none bg-gradient-to-b from-white via-transparent to-teal-300 dark:from-dark dark:via-transparent dark:to-dark"></div>
         <div className="flex h-full flex-col justify-between gap-0 sm:gap-16 md:items-center xl:flex-row xl:gap-0">
           <img
             src={branch1}
@@ -29,13 +29,13 @@ const AboutInfo = () => {
               planet.
             </h2>
 
-            <p className="max-w-2xl font-body text-xs sm:text-sm md:text-sm dark:text-shadow-dark">
-              Commute Connect is the platform that connects your co-workers
-              sharing the same route to work. Share resources, reduce your
-              carbon footprint, save money, and step towards a greener planet
-              and sustainable future. We are committed to making a positive
-              impact on the environment and helping you do the same. Join us in
-              our mission to create a more sustainable future for all.
+            <p className="max-w-2xl font-body text-xs dark:text-shadow-dark sm:text-sm md:text-sm">
+              Commuto is the platform that connects your co-workers sharing the
+              same route to work. Share resources, reduce your carbon footprint,
+              save money, and step towards a greener planet and sustainable
+              future. We are committed to making a positive impact on the
+              environment and helping you do the same. Join us in our mission to
+              create a more sustainable future for all.
             </p>
 
             <Link
@@ -47,7 +47,7 @@ const AboutInfo = () => {
                 alt="Logo"
                 className="group-hover:filter-white transition-150 size-4 object-contain sm:size-5"
               />
-              More About Commute Connect
+              More About Commuto
             </Link>
           </div>
           {/* <img

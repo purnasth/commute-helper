@@ -9,10 +9,10 @@ export default defineConfig({
       registerType: 'prompt',
       includeAssets: ['favicon.ico'],
       manifest: {
-        name: 'Commute Connect',
-        short_name: 'Commute Connect',
+        name: 'Commuto',
+        short_name: 'Commuto',
         description:
-          'Commute Connect - Connecting co-workers and students sharing the same route to reduce carbon footprint and promote sustainable commuting.',
+          'Commuto - Connecting co-workers and students sharing the same route to reduce carbon footprint and promote sustainable commuting.',
         theme_color: '#5eead4',
         icons: [
           {

@@ -38,35 +38,28 @@ const SideNav: React.FC<SideNavProps> = ({
       />
 
       <div
-        className={`fixed left-0 top-0 w-64 p-6 transition-all duration-500 ease-in-out ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed left-0 top-0 m-5 sm:m-8 w-fit transition-all duration-500 ease-in-out sm:left-auto sm:right-0 ${
+          isOpen ? 'translate-x-0' : '-translate-x-[200%] sm:translate-x-[200%]'
         } z-50`}
       >
-        <div className="">
-          <div className="flex items-center justify-between">
-            {/* <Link
-              to="/"
-              className="transition-150 inline-flex items-center gap-3 text-sm font-semibold text-teal-950 md:text-xl"
-            >
-              <img
-                src={logo}
-                alt="Logo"
-                className="group-hover:filter-white transition-150 size-6 object-contain sm:size-10"
-              />
-            </Link> */}
+        <div className="flex flex-col gap-6 sm:items-end sm:justify-end">
+          <div className="flex sm:ml-auto sm:items-end sm:justify-end">
             <button
               type="button"
               aria-label="Close Menu"
               onClick={closeNav}
-              className="rounded-full bg-dark/50 p-0.5 text-lg text-teal-50 dark:bg-light/30 dark:text-light"
+              className="transition-100 rounded-full bg-dark/50 p-0.5 text-lg text-teal-50 hover:bg-teal-300 hover:text-dark dark:bg-light/30 dark:text-light dark:hover:bg-teal-500 dark:hover:text-dark"
             >
               <IoClose />
             </button>
           </div>
 
-          <ul className="mt-4 space-y-3">
+          <ul className="space-y-5">
             {routeLinks.map((link) => (
-              <li key={link.id} className="group w-fit">
+              <li
+                key={link.id}
+                className="group w-fit sm:ml-auto sm:text-right"
+              >
                 <NavLink
                   to={link.link}
                   className={({ isActive }) =>
@@ -81,7 +74,7 @@ const SideNav: React.FC<SideNavProps> = ({
 
           {/* <hr className="border-teal-50 lg:hidden" /> */}
 
-          <ul className="flex flex-col gap-4 py-8 lg:hidden">
+          <ul className="flex flex-col gap-3 py-4 lg:hidden">
             {navLinks.map((link) => (
               <li key={link.id} className="group">
                 <NavLink
@@ -110,7 +103,7 @@ const SideNav: React.FC<SideNavProps> = ({
             {userName ? (
               <Link
                 to="/profile"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-teal-100 py-3 pl-4 pr-5 text-sm font-semibold text-teal-600 md:hidden md:text-base"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-teal-100 py-2 pl-4 pr-5 text-sm font-semibold text-teal-600 md:hidden md:text-base"
               >
                 <span className="animate-wave">&#128075;</span>
                 Hi, {userName}!

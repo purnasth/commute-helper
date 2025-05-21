@@ -64,24 +64,25 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`sticky top-0 z-40 w-full transition-all duration-[1s] ${window.scrollY > 0 ? 'bg-white py-3 dark:bg-dark md:py-3' : 'p-3 md:p-6'} ${visible ? '' : '-translate-y-full'}`}
+        className={`sticky top-0 z-40 w-full duration-[1s] ${window.scrollY > 0 ? 'bg-white py-3 dark:bg-dark md:py-3' : 'p-3 md:p-6'} ${visible ? '' : '-translate-y-full'}`}
+        style={{ transitionProperty: 'transform, padding' }}
       >
         <div className={`flex items-center justify-between md:items-start`}>
           <Link
             to="/"
-            className="transition-150 inline-flex items-center gap-3 text-sm font-semibold text-teal-950 dark:text-teal-300 sm:text-xl"
+            className="inline-flex items-center gap-2.5 text-lg font-semibold text-teal-950 dark:text-teal-300 sm:text-3xl"
           >
             <img
               src={logoAlt}
               alt="Logo"
-              className="group-hover:filter-white transition-150 size-6 object-contain dark:hidden sm:size-9"
+              className="size-6 object-contain dark:hidden sm:size-9"
             />
             <img
               src={logo}
               alt="Logo"
-              className="group-hover:filter-white transition-150 hidden size-6 object-contain dark:block sm:size-9"
+              className="hidden size-6 object-contain dark:block sm:size-9"
             />
-            Commute Connect
+            Commuto
           </Link>
 
           <div className="flex items-center justify-end gap-8">

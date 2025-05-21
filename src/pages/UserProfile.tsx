@@ -26,6 +26,9 @@ const UserProfile: React.FC<UserDetails> = () => {
       {user ? (
         // <div className="mx-auto max-w-xl border">
         <div className="relative mx-auto max-w-xl overflow-hidden border shadow-md dark:border-teal-300/20">
+          <div className="pointer-events-none absolute -left-[20%] top-1/2 -z-10 size-48 rounded-full bg-teal-300 blur-[80px]" />
+          <div className="pointer-events-none absolute -right-10 -top-12 -z-10 size-64 rounded-full bg-teal-300 blur-[50px]" />
+
           <div className="absolute -right-6 top-6 flex w-36 rotate-45 transform flex-col items-center justify-center">
             <span className="inline-block w-full bg-teal-600 py-1 text-center text-sm font-semibold text-light">
               {user.role}
@@ -35,7 +38,7 @@ const UserProfile: React.FC<UserDetails> = () => {
               {'☆'.repeat(5 - (user.ratings ?? 0))}
             </span>
           </div>
-          <div className="flex items-center gap-2 p-4 dark:bg-teal-950 sm:gap-6 sm:p-6">
+          <div className="flex items-center gap-2 p-4 bg-white dark:bg-teal-950 sm:gap-6 sm:p-6">
             <img
               src={user.profilePicture}
               alt={user.fullname}

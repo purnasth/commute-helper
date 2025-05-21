@@ -11,14 +11,16 @@ const Faq: React.FC = () => {
   };
 
   return (
-    <div className="rounded-3xl border border-teal-950/10 p-6 shadow-md dark:border-teal-50/40 dark:bg-teal-950/30 sm:p-8 md:p-10 lg:p-12">
+    <div className="relative overflow-hidden rounded-3xl border border-teal-950/10 p-6 shadow-md dark:border-teal-50/40 dark:bg-teal-950/30 sm:p-8 md:p-10 lg:p-12">
+      <div className="pointer-events-none absolute left-0 -z-10 size-96 -translate-x-1/2 rounded-full bg-teal-300 opacity-40 blur-[100px]" />
+      <div className="pointer-events-none absolute right-0 top-1/4 -z-10 size-[36rem] translate-x-1/2 rounded-full bg-teal-300 opacity-80 blur-[200px]" />
       <div className="space-y-4 sm:space-y-6 md:space-y-6">
         {faqContents.map((faq: FaqItemProps, index: number) => (
           <div
             key={index}
             className={`${
               index !== faqContents.length - 1
-                ? 'border-b border-teal-950/10 dark:border-teal-50/40'
+                ? 'border-b border-teal-950/30 dark:border-teal-50/40'
                 : ''
             }`}
           >

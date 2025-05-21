@@ -612,19 +612,19 @@ export const faqContents = [
       'Yes, you can update your role anytime from your profile or while posting a ride.',
   },
   {
-    question: 'Why was Commute Connect developed?',
+    question: 'Why was Commuto developed?',
     answer:
-      'Commute Connect was developed to make daily commutes easier and more efficient by connecting riders and passengers.',
+      'Commuto was developed to make daily commutes easier and more efficient by connecting riders and passengers.',
   },
   {
-    question: 'What is the vision and mission of Commute Connect?',
+    question: 'What is the vision and mission of Commuto?',
     answer:
       'Our Vision is to live in a world where we all share resources to better preserve our economy and planet. Our Mission is to fill the empty seats in our ride and make our commute more affordable and sustainable.',
   },
   {
-    question: 'Is Commute Connect profit-oriented?',
+    question: 'Is Commuto profit-oriented?',
     answer:
-      "Commute Connect is non profit-oriented and aims to provide a free service to the community and help reduce carbon emissions. It doesn't generate any revenue from the platform.",
+      "Commuto is non profit-oriented and aims to provide a free service to the community and help reduce carbon emissions. It doesn't generate any revenue from the platform.",
   },
 ];
 
@@ -674,7 +674,8 @@ export const userRoles = [
     title: 'Post a ride & Make an Impact',
     description:
       'Share your ride with your co-workers and students sharing the same route and utilize the resources and empty seats of your vehicle. Save money, time and the environment. Your ride can make a difference. Share your ride now & be a hero!',
-    rulesTitle: 'Rules when posting a ride',
+    rulesSpan: 'Rules when posting a ride',
+    rulesTitle: 'Share a ride, Be a hero & Save the Environment',
     heroImage: rider,
     rules: [
       {
@@ -705,7 +706,8 @@ export const userRoles = [
     title: 'Share a ride & Save the Environment',
     description:
       'Search for a hero who is going to the same destination as you and share a ride with them. Save money, time and the environment. Your ride can make an impact for an environment. Share the ride. Share the memories.',
-    rulesTitle: 'Rules when requesting a ride',
+    rulesSpan: 'Rules when requesting a ride',
+    rulesTitle: 'Share a ride, Save the Environment',
     heroImage: passenger,
     rules: [
       {

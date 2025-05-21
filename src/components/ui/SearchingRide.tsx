@@ -3,7 +3,9 @@ import error from '../../assets/vector/passenger.svg';
 const SearchingRide = () => {
   return (
     <>
-      <main className="relative flex size-full flex-col items-center justify-center overflow-hidden bg-white dark:bg-dark p-5 shadow-lg">
+      <main className="relative flex size-full flex-col items-center justify-center overflow-hidden bg-white p-5 shadow-lg dark:bg-dark">
+        <div className="pointer-events-none absolute left-0 -z-10 size-96 -translate-x-1/2 rounded-full bg-teal-300 opacity-40 blur-[100px]" />
+        <div className="pointer-events-none absolute right-0 top-1/4 -z-10 size-[36rem] translate-x-1/2 rounded-full bg-teal-300 opacity-80 blur-[200px]" />
         <img
           src={error}
           alt="Error 404"

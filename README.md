@@ -1,6 +1,6 @@
-# Commute Connect
+# Commuto
 
-Commute Connect is a web application that helps users to find the mutual route to their destination. It is a web app built for the rider and passenger to find the mutual route so that the passenger can get a ride for free of cost and the rider can get a company for the ride. It helps to reduce the traffic and pollution in the city, cost effective and time saving for both rider and passenger.
+Commuto is a web application that helps users to find the mutual route to their destination. It is a web app built for the rider and passenger to find the mutual route so that the passenger can get a ride for free of cost and the rider can get a company for the ride. It helps to reduce the traffic and pollution in the city, cost effective and time saving for both rider and passenger.
 
 ---
 
@@ -145,4 +145,4 @@ pnpm i react-hook-form yup @hookform/resolvers react-toastify
 
 ## License
 
-All the assets, and codes used in this project are the propety of `Commute Connect`. Use of any of the assets, codes, and designs without the permission of the owner is strictly prohibited.
+All the assets, and codes used in this project are the propety of `Commuto`. Use of any of the assets, codes, and designs without the permission of the owner is strictly prohibited.

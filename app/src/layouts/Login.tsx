@@ -6,10 +6,10 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import 'react-toastify/dist/ReactToastify.css';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { LoginFormData } from '../interfaces/types';
+import { LoginFormData, UserDetails } from '../interfaces/types';
 // import { useNavigate } from 'react-router-dom';
-import { authorizedUsers } from '../constants/data';
 import { getFirstNameFromEmail } from '../utils/functions';
+import { apiFetch } from '../utils/api';
 
 // Validation schema
 const schema = yup.object().shape({
@@ -39,21 +39,20 @@ const Login = () => {
       return;
     }
 
-    const user = authorizedUsers.find((user) => user.email === data.email);
-    if (!user) {
-      toast.error('Access denied. Please use an authorized email address.');
-      return;
-    }
-
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const result = await apiFetch<{ message: string; user: UserDetails }>(
+        `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ email: data.email, password: data.password }),
+        },
+      );
 
       const firstName = getFirstNameFromEmail(data.email);
 
       // Store user info in localStorage
       const userWithTimestamp = {
-        ...user,
+        ...result.user,
         loginTimestamp: Date.now(),
       };
       localStorage.setItem('user', JSON.stringify(userWithTimestamp));
@@ -63,13 +62,16 @@ const Login = () => {
       const redirectAfterLogin = localStorage.getItem('redirectAfterLogin');
       if (redirectAfterLogin) {
         localStorage.removeItem('redirectAfterLogin');
-        // navigate(redirectAfterLogin);
         window.location.href = redirectAfterLogin;
       } else {
         window.location.href = '/';
       }
-    } catch {
-      toast.error('Failed to login. Please try again later.');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        toast.error(err.message || 'Failed to login. Please try again later.');
+      } else {
+        toast.error('Failed to login. Please try again later.');
+      }
     }
   };
 

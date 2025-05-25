@@ -38,7 +38,7 @@ const UserProfile: React.FC<UserDetails> = () => {
               {'☆'.repeat(5 - (user.ratings ?? 0))}
             </span>
           </div>
-          <div className="flex items-center gap-2 p-4 bg-white dark:bg-teal-950 sm:gap-6 sm:p-6">
+          <div className="flex items-center gap-2 bg-white p-4 dark:bg-teal-950 sm:gap-6 sm:p-6">
             <img
               src={user.profilePicture}
               alt={user.fullname}
@@ -75,8 +75,10 @@ const UserProfile: React.FC<UserDetails> = () => {
               {Object.entries(user).map(([key, value]) => {
                 // Skip rendering user_id and profilePicture
                 if (
-                  key === 'user_id' ||
+                  key === 'id' ||
                   key === 'profilePicture' ||
+                  key === 'createdAt' ||
+                  key === 'updatedAt' ||
                   key === 'loginTimestamp' ||
                   key === 'ratings' ||
                   key === 'role'

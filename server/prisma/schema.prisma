@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int       @id @default(autoincrement())
+  fullname       String
+  email          String    @unique
+  password       String
+  role           String
+  phone          String?
+  address        String?
+  profilePicture String?
+  ratings        Float?    // average rating
+  rides          Ride[]    @relation("RiderRides")
+  rideRequests   RideRequest[]
+  messages       Message[] @relation("UserMessages")
+  passengerRides Ride[]    @relation("RidePassengers")
+  ratingsGiven   Rating[]  @relation("FromUser")
+  ratingsReceived Rating[] @relation("ToUser")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Ride {
+  id          Int           @id @default(autoincrement())
+  from        String
+  to          String
+  message     String?
+  role        String
+  timestamp   DateTime      @default(now())
+  rider       User          @relation("RiderRides", fields: [riderId], references: [id])
+  riderId     Int
+  requests    RideRequest[]
+  passengers  User[]        @relation("RidePassengers")
+  ratings     Rating[]
+  messages    Message[]
+}
+
+model RideRequest {
+  id         Int      @id @default(autoincrement())
+  ride       Ride     @relation(fields: [rideId], references: [id])
+  rideId     Int
+  passenger  User     @relation(fields: [passengerId], references: [id])
+  passengerId Int
+  status     String   // pending, accepted, rejected
+  createdAt  DateTime @default(now())
+}
+
+model Rating {
+  id        Int      @id @default(autoincrement())
+  ride      Ride     @relation(fields: [rideId], references: [id])
+  rideId    Int
+  fromUser  User     @relation("FromUser", fields: [fromUserId], references: [id])
+  fromUserId Int
+  toUser    User     @relation("ToUser", fields: [toUserId], references: [id])
+  toUserId  Int
+  score     Int
+  comment   String?
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  content   String
+  sender    User     @relation("UserMessages", fields: [senderId], references: [id])
+  senderId  Int
+  ride      Ride?    @relation(fields: [rideId], references: [id])
+  rideId    Int?
+  createdAt DateTime @default(now())
+}

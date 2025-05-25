@@ -1,3 +1,7 @@
 # 
 
 .vscode/
+
+#ignore the sql files
+
+*.sql

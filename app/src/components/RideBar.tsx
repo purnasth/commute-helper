@@ -5,9 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { TbUser, TbMapPin, TbBrandHipchat } from 'react-icons/tb';
-
 import { ImEye } from 'react-icons/im';
+import { TbUser, TbMapPin, TbBrandHipchat } from 'react-icons/tb';
 
 import { findRideFormFields } from '../constants/data';
 
@@ -27,14 +26,15 @@ import useRideForm from '../hooks/useRideForm';
 import useScrollVisibility from '../hooks/useScrollVisibility';
 
 import { rideFormSchema } from '../schemas/formSchema';
+import { apiFetch } from '../utils/api';
 
 const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
   const [showLocationPopup, setShowLocationPopup] = useState(false);
   const [showMessagePopup, setShowMessagePopup] = useState(false);
   const [activeInput, setActiveInput] = useState<'from' | 'to' | null>(null);
-  const [isLoading, setIsLoading] = useState(false); // Loading state
-  const [ridesFound, setRidesFound] = useState<RideFormData[]>([]); // Tracks found rides
-  const [showModal, setShowModal] = useState(false); // Modal visibility state
+  const [isLoading, setIsLoading] = useState(false);
+  const [ridesFound, setRidesFound] = useState<RideFormData[]>([]);
+  const [showModal, setShowModal] = useState(false);
   const [showAvailableRidesBtn, setShowAvailableRidesBtn] = useState(false);
   const navigate = useNavigate();
   const showRideBar = useScrollVisibility(100);
@@ -55,7 +55,6 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     resolver: yupResolver(rideFormSchema),
   });
 
-  // Set the role to the provided role prop if it exists
   useEffect(() => {
     if (role) {
       setValue('role', role);
@@ -86,48 +85,52 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     setShowMessagePopup(false);
   };
 
-  const onSubmit = (data: RideFormData) => {
-    // Check if the user is logged in
-    const user = localStorage.getItem('user');
-    if (!user) {
+  const fetchAvailableRides = async (role: string) => {
+    try {
+      const result = await apiFetch<{ rides: RideFormData[] }>(
+        `${import.meta.env.VITE_API_BASE_URL}/rides?role=${role === 'rider' ? 'passenger' : 'rider'}`,
+      );
+      return result.rides;
+    } catch {
+      return [];
+    }
+  };
+
+  const onSubmit = async (data: RideFormData) => {
+    const userStr = localStorage.getItem('user');
+    if (!userStr) {
       localStorage.setItem('rideFormData', JSON.stringify(data));
       localStorage.setItem('redirectAfterLogin', window.location.pathname);
-
       toast.error('Please log in to confirm your ride route.');
       navigate('/login');
       return;
     }
-
+    const user = JSON.parse(userStr);
     const rideWithTimestamp = {
       ...data,
       timestamp: new Date().toISOString(),
+      riderId: user.id,
     };
 
-    const existingRides = JSON.parse(localStorage.getItem('rides') || '[]');
-    localStorage.setItem(
-      'rides',
-      JSON.stringify([...existingRides, rideWithTimestamp]),
-    );
-
     const loadingToastId = toast.loading('Submitting your ride route...');
-    setTimeout(() => {
-      toast.dismiss(loadingToastId);
+    
+    try {
+      await apiFetch(`${import.meta.env.VITE_API_BASE_URL}/rides`, {
+        method: 'POST',
+        body: JSON.stringify(rideWithTimestamp),
+      });
 
+      toast.dismiss(loadingToastId);
       setIsLoading(true);
-      setTimeout(() => {
-        const availableRides = existingRides.filter(
-          (ride: RideFormData) => ride.role !== data.role,
-        );
+      setTimeout(async () => {
+        const availableRides = await fetchAvailableRides(data.role);
+        setRidesFound(availableRides);
 
         if (availableRides.length > 0) {
-          // Case 1: Rides found
-          setRidesFound(availableRides);
           toast.success(
             `Your ride route has been submitted! It will be visible to ${role === 'rider' ? 'passengers' : 'riders'} sharing the same route.`,
           );
         } else {
-          // Case 2: No rides found
-          setRidesFound([]);
           toast.info(
             `Your ride route has been submitted! Currently, no ${role === 'rider' ? 'passengers' : 'riders'} are sharing the same route.`,
           );
@@ -135,7 +138,6 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
 
         setIsLoading(false);
         setShowModal(true);
-
         reset({
           from: '',
           to: '',
@@ -143,8 +145,10 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
           role: role || '',
         });
       }, 2000);
-    }, 2000);
-    console.log('Form Data:', rideWithTimestamp);
+    } catch (err) {
+      toast.dismiss(loadingToastId);
+      toast.error((err as Error).message || 'Failed to submit ride.');
+    }
   };
 
   useEffect(() => {
@@ -170,57 +174,8 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
       .map((error) => error?.message)
       .filter(Boolean)
       .join(', ');
-
     if (errorMessages) {
-      // toast.error(`Please fill out the following fields: ${errorMessages}`);
       toast.error(`Please fill out all the fields:`);
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <Modal onClose={() => setIsLoading(false)}>
-        <SearchingRide />
-      </Modal>
-    );
-  }
-
-  const handleReject = (ride: RideFormData) => {
-    if (window.confirm('Are you sure you want to reject this ride?')) {
-      // Remove the ride from local storage
-      const existingRides = JSON.parse(localStorage.getItem('rides') || '[]');
-      const updatedRides = existingRides.filter(
-        (storedRide: RideFormData) => storedRide.timestamp !== ride.timestamp,
-      );
-      localStorage.setItem('rides', JSON.stringify(updatedRides));
-
-      // Update the ridesFound state
-      setRidesFound((prevRides) =>
-        prevRides.filter((foundRide) => foundRide.timestamp !== ride.timestamp),
-      );
-
-      toast.info('Ride has been rejected.');
-    }
-  };
-
-  const handleConfirm = (ride: RideFormData) => {
-    if (window.confirm('Are you sure you want to confirm this ride?')) {
-      // Remove the ride from local storage
-      const existingRides = JSON.parse(localStorage.getItem('rides') || '[]');
-      const updatedRides = existingRides.filter(
-        (storedRide: RideFormData) => storedRide.timestamp !== ride.timestamp,
-      );
-      localStorage.setItem('rides', JSON.stringify(updatedRides));
-
-      toast.success('Congratulations! Your ride has been confirmed!');
-
-      navigate(
-        `/ride-details?from=${encodeURIComponent(ride.from)}&to=${encodeURIComponent(
-          ride.to,
-        )}&message=${encodeURIComponent(ride.message)}&role=${encodeURIComponent(
-          ride.role,
-        )}&timestamp=${encodeURIComponent(ride.timestamp ?? '')}`,
-      );
     }
   };
 
@@ -235,6 +190,55 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     setShowModal(true);
     setShowAvailableRidesBtn(false);
   };
+
+  const handleConfirm = async (ride: RideFormData) => {
+    try {
+      await apiFetch(
+        `${import.meta.env.VITE_API_BASE_URL}/rides/${ride.id}/confirm`,
+        {
+          method: 'POST',
+        },
+      );
+      setRidesFound((prev) => prev.filter((r) => r.id !== ride.id));
+      toast.success('Congratulations! Your ride has been confirmed!');
+      setShowModal(false);
+      navigate(
+        `/ride-details?from=${encodeURIComponent(ride.from)}&to=${encodeURIComponent(
+          ride.to,
+        )}&message=${encodeURIComponent(ride.message)}&role=${encodeURIComponent(
+          ride.role,
+        )}&timestamp=${encodeURIComponent(ride.timestamp ?? '')}`,
+      );
+    } catch {
+      toast.error('Failed to confirm ride.');
+    }
+  };
+
+  const handleReject = async (ride: RideFormData) => {
+    try {
+      const userStr = localStorage.getItem('user');
+      const user = userStr ? JSON.parse(userStr) : null;
+      await apiFetch(
+        `${import.meta.env.VITE_API_BASE_URL}/rides/${ride.id}/reject`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ userId: user?.id }),
+        },
+      );
+      setRidesFound((prev) => prev.filter((r) => r.id !== ride.id));
+      toast.info('Ride has been rejected.');
+    } catch {
+      toast.error('Failed to reject ride.');
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <Modal onClose={() => setIsLoading(false)}>
+        <SearchingRide />
+      </Modal>
+    );
+  }
 
   return (
     <>

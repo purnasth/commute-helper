@@ -1,4 +1,5 @@
 export interface RideFormData {
+  id?: number;
   from: string;
   to: string;
   message: string;

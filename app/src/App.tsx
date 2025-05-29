@@ -19,6 +19,7 @@ import Policies from './pages/Policies';
 import FAQPage from './pages/FAQPage';
 import RoleBasedPage from './pages/RoleBasedPage';
 import UserProfile from './pages/UserProfile';
+import Brand from './pages/Brand';
 
 const App: React.FC = () => {
   const theme = useTheme();
@@ -37,6 +38,7 @@ const App: React.FC = () => {
           <Route path="/ride-details" element={<RideDetails />} />
           <Route path="/policies/:policyId" element={<Policies />} />
           <Route path="/role/:roleId" element={<RoleBasedPage />} />
+          <Route path="/brand" element={<Brand />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
         <Footer />

@@ -1,25 +1,25 @@
 import { Link } from 'react-router-dom';
 import { policies } from '../constants/data';
 import { PWAInstallButton } from '../components/ui/PWAInstallButton';
-import logo from '../assets/logo.svg';
+import commutoIcon from '../assets/logo/commuto-icon.svg';
+import commutoIconAlt from '../assets/logo/commuto-icon-alt.svg';
+import { useTheme } from '../contexts/ThemeProvider';
+import { getCurrentYear } from '../utils/functions';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  const { theme } = useTheme();
 
   return (
     <>
       <footer className="z-20 flex flex-col justify-between gap-8 bg-teal-300 py-16 text-base text-dark hover:!bg-teal-300 dark:bg-dark dark:text-teal-100 dark:hover:!bg-dark md:text-lg lg:flex-row lg:items-center lg:gap-10">
         {/* <div className="absolute inset-0 h-px w-full bg-gradient-to-r from-transparent from-15% via-white/80 to-transparent to-85%"></div> */}
         <div className="space-y-10">
-          <div className="space-y-2">
+          <div className="space-y-4">
             <img
-              src={logo}
+              src={theme === 'dark' ? commutoIconAlt : commutoIcon}
               alt="Logo"
               className="group-hover:filter-white transition-150 size-24 object-contain"
             />
-            <h3 className="text-xl font-bold text-teal-950 dark:text-teal-300">
-              Commuto
-            </h3>
             <p className="max-w-2xl text-xs">
               Commuto is a web-based platform that connects your co-workers
               sharing the same route to work and share resources, reduce your
@@ -33,7 +33,7 @@ const Footer = () => {
         <div className="flex flex-col items-start gap-4 lg:items-end">
           <div className="max-w-xl space-y-3 text-left lg:text-right">
             <p className="text-base">
-              © Commuto {currentYear} | All rights reserved |
+              © Commuto {getCurrentYear()} | All rights reserved |
             </p>
             <p className="text-xs font-extralight">
               All logos, trademarks, and contents used in this website are for

@@ -19,6 +19,10 @@ module.exports = {
         // 'teal-900': '#134e4a',
         // 'teal-950': '#042f2e',
       },
+      fontSize: {
+        xxs: '0.625rem', // 10px
+        inherit: 'inherit',
+      },
       fontFamily: {
         body: [
           // 'purna_shrestha',
@@ -36,9 +40,6 @@ module.exports = {
         'light-glow':
           '1px 1px 2px #F8F8FF,  0 0 1em #F8F8FF, 0 0 0.2em #F8F8FF',
         'dark-glow': '1px 1px 2px #000111,  0 0 1em #000111, 0 0 0.2em #000111',
-      },
-      fontSize: {
-        inherit: 'inherit',
       },
       screens: {
         sm: '640px',

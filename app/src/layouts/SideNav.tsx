@@ -17,6 +17,11 @@ const routeLinks = [
   },
   {
     id: 3,
+    title: 'Brand',
+    link: '/brand',
+  },
+  {
+    id: 4,
     title: 'FAQ',
     link: '/help',
   },
@@ -38,7 +43,7 @@ const SideNav: React.FC<SideNavProps> = ({
       />
 
       <div
-        className={`fixed left-0 top-0 m-5 sm:m-8 w-fit transition-all duration-500 ease-in-out sm:left-auto sm:right-0 ${
+        className={`fixed left-0 top-0 m-5 w-fit transition-all duration-500 ease-in-out sm:left-auto sm:right-0 sm:m-8 ${
           isOpen ? 'translate-x-0' : '-translate-x-[200%] sm:translate-x-[200%]'
         } z-50`}
       >

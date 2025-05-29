@@ -63,7 +63,7 @@ const LogoBrand = () => {
           <img
             src={toggleIcon ? commutoIconAlt : commutoIcon}
             alt={toggleIcon ? 'Commuto Icon Alt' : 'Commuto Icon'}
-            className="h-auto max-w-full"
+            className={`size-auto rounded-3xl object-contain ${toggleIcon ? 'shadow-lg' : 'shadow-none'}`}
           />
         </div>
       </div>

@@ -1,8 +1,6 @@
 <svg width="164" height="164" viewBox="0 0 164 164" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_136_464)">
-<g filter="url(#filter0_d_136_464)">
 <rect width="164" height="164" rx="28" fill="#F5F5F5"/>
-</g>
 <path d="M137.945 78.4629C137.945 90.0029 134.388 101.262 127.759 110.708C121.129 120.154 111.75 127.327 100.897 131.25C90.0444 135.173 78.2462 135.656 67.1093 132.633C55.9723 129.61 46.0379 123.227 38.6587 114.355L56.8631 99.2145C61.1295 104.344 66.8733 108.034 73.3124 109.782C79.7514 111.53 86.5727 111.251 92.8474 108.983C99.1221 106.715 104.545 102.567 108.378 97.1062C112.211 91.6449 114.267 85.1349 114.267 78.4629H137.945Z" fill="#5EEAD4"/>
 <path d="M126.107 89.9496C132.645 89.9496 137.946 84.6491 137.946 78.1106C137.946 71.572 132.645 66.2715 126.107 66.2715C119.568 66.2715 114.268 71.572 114.268 78.1106C114.268 84.6491 119.568 89.9496 126.107 89.9496Z" fill="#5EEAD4"/>
 <path d="M113.191 54.265C120.71 54.265 126.806 48.1694 126.806 40.6501C126.806 33.1308 120.71 27.0352 113.191 27.0352C105.671 27.0352 99.5757 33.1308 99.5757 40.6501C99.5757 48.1694 105.671 54.265 113.191 54.265Z" fill="#5EEAD4"/>
@@ -21,16 +19,6 @@
 <path d="M56.8863 113.818C57.5317 114.429 58.5501 114.401 59.1609 113.756C59.7718 113.11 59.7437 112.092 59.0983 111.481C58.4529 110.87 57.4345 110.898 56.8237 111.544C56.2128 112.189 56.2409 113.207 56.8863 113.818Z" fill="#5EEAD4"/>
 </g>
 <defs>
-<filter id="filter0_d_136_464" x="-20" y="-16" width="204" height="204" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="10"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_136_464"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_136_464" result="shape"/>
-</filter>
 <clipPath id="clip0_136_464">
 <rect width="164" height="164" fill="white"/>
 </clipPath>

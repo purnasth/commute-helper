@@ -2,6 +2,7 @@
 module.exports = {
   darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  safelist: ['font-regular'],
   theme: {
     extend: {
       colors: {
@@ -32,6 +33,9 @@ module.exports = {
           'system-ui',
           'sans-serif',
         ],
+      },
+      fontWeight: {
+        regular: 400,
       },
       textShadow: {
         dark: '0px 0px 2px rgba(0, 0, 0, 1)',

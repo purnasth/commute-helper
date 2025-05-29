@@ -17,11 +17,6 @@ const routeLinks = [
   },
   {
     id: 3,
-    title: 'Brand',
-    link: '/brand',
-  },
-  {
-    id: 4,
     title: 'FAQ',
     link: '/help',
   },

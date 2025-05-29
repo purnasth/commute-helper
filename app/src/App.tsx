@@ -15,11 +15,12 @@ import AboutPage from './pages/AboutPage';
 import Error404 from './pages/Error404';
 import Login from './layouts/Login';
 import RideDetails from './pages/RideDetails';
-import Policies from './pages/Policies';
 import FAQPage from './pages/FAQPage';
 import RoleBasedPage from './pages/RoleBasedPage';
 import UserProfile from './pages/UserProfile';
 import Brand from './pages/Brand';
+import CopyrightPage from './pages/CopyrightPage';
+import PolicyPage from './pages/PolicyPage';
 
 const App: React.FC = () => {
   const theme = useTheme();
@@ -36,9 +37,10 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/ride-details" element={<RideDetails />} />
-          <Route path="/policies/:policyId" element={<Policies />} />
           <Route path="/role/:roleId" element={<RoleBasedPage />} />
           <Route path="/brand" element={<Brand />} />
+          <Route path="/copyright" element={<CopyrightPage />} />
+          <Route path="/policies" element={<PolicyPage />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
         <Footer />

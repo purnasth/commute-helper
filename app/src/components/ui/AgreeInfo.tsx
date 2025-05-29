@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { policies } from '../../constants/data';
+import { footerLinks } from '../../constants/data';
 
 const AgreeInfo = () => {
   return (
     <>
       <p className="mt-3 text-center text-xs leading-normal sm:text-sm">
         By confirming, I agree to the{' '}
-        {policies.map((policy, index) => (
+        {footerLinks.slice(0, 1).map((policy, index) => (
           <span key={index}>
             <Link
               to={policy.link}
@@ -14,7 +14,7 @@ const AgreeInfo = () => {
             >
               {policy.title}
             </Link>
-            {index < policies.length - 1 ? ', ' : ' '}
+            {index < footerLinks.slice(0, 1).length - 1 ? ', ' : ' '}
           </span>
         ))}
         and{' '}

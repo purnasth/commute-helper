@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
-import { policies } from '../constants/data';
+
+import { footerLinks } from '../constants/data';
+import { getCurrentYear } from '../utils/functions';
+import { useTheme } from '../contexts/ThemeProvider';
 import { PWAInstallButton } from '../components/ui/PWAInstallButton';
+
 import commutoIcon from '../assets/logo/commuto-icon.svg';
 import commutoIconAlt from '../assets/logo/commuto-icon-alt.svg';
-import { useTheme } from '../contexts/ThemeProvider';
-import { getCurrentYear } from '../utils/functions';
 
 const Footer = () => {
   const { theme } = useTheme();
@@ -42,15 +44,15 @@ const Footer = () => {
               action.
             </p>
             <ul className="policies flex flex-wrap gap-8 gap-x-6 gap-y-0 lg:justify-end">
-              {policies.map((policy, index) => (
+              {footerLinks.map((links, index) => (
                 <li key={index}>
                   <Link
                     className="text-xs underline hover:no-underline"
-                    to={policy.link}
+                    to={links.link}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {policy.title}
+                    {links.title}
                   </Link>
                 </li>
               ))}

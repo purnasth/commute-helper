@@ -44,7 +44,11 @@ const Login = () => {
         `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
         {
           method: 'POST',
-          body: JSON.stringify({ email: data.email, password: data.password }),
+          body: JSON.stringify({
+            email: data.email,
+            password: data.password,
+            recaptchaToken,
+          }),
         },
       );
 
@@ -129,7 +133,7 @@ const Login = () => {
 
           <div className="my-6">
             <ReCAPTCHA
-              sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
               onChange={handleRecaptchaChange}
             />
           </div>

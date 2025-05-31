@@ -232,7 +232,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     }
   };
 
-  // Determine if the user's role atches the RideBar's role (case-insensitive)m
+  // Determine if the user's role matches the RideBar's role (case-insensitive)m
   let userRole: string | null = null;
   if (typeof window !== 'undefined') {
     const userStr = localStorage.getItem('user');

@@ -35,13 +35,8 @@ export class RideController {
       where: { id: body.riderId },
     });
     if (!user) {
-      throw new BadRequestException('User not found');
+      throw new NotFoundException('User not found');
     }
-    // if (user.role !== body.role) {
-    //   throw new BadRequestException(
-    //     `Role mismatch: You can't post a ride as '${body.role}' with a '${user.role}' account.`,
-    //   );
-    // }
 
     // Case-insensitive role check
     if (user.role.toLowerCase() !== body.role.toLowerCase()) {

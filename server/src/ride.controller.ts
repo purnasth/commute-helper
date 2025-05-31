@@ -86,11 +86,44 @@ export class RideController {
     return { rides };
   }
 
+  // Get all ride history for a user (as rider or passenger)
+  @Get('history')
+  async getRideHistory(@Query('userId') userId: string) {
+    const id = Number(userId);
+    if (!userId || isNaN(id)) {
+      throw new BadRequestException('Valid userId is required');
+    }
+    const rides = await this.prisma.ride.findMany({
+      where: {
+        OR: [{ riderId: id }, { passengers: { some: { id: id } } }],
+      },
+      include: {
+        rider: true,
+        passengers: true,
+        requests: true,
+        ratings: true,
+        messages: true,
+      },
+      orderBy: { timestamp: 'desc' },
+    });
+    return { rides };
+  }
+
   @Get(':id')
   async getRide(@Param('id') id: string) {
+    const rideId = Number(id);
+    if (!id || isNaN(rideId)) {
+      throw new BadRequestException('Valid ride id is required');
+    }
     const ride = await this.prisma.ride.findUnique({
-      where: { id: Number(id) },
-      include: { rider: true },
+      where: { id: rideId },
+      include: {
+        rider: true,
+        passengers: true,
+        requests: true,
+        ratings: true,
+        messages: true,
+      },
     });
     if (!ride) throw new NotFoundException('Ride not found');
     return { ride };
@@ -137,22 +170,4 @@ export class RideController {
       ride,
     };
   }
-
-  // (Commented) Auto-expire rides after 5 minutes
-  // @Get()
-  // async getRides(@Query('role') role?: string) {
-  //   const now = new Date();
-  //   const rides = await this.prisma.ride.findMany({
-  //     where: {
-  //       ...(role ? { role } : {}),
-  //       timestamp: {
-  //         gte: new Date(now.getTime() - 5 * 60 * 1000), // Only show rides from last 5 minutes
-  //       },
-  //     },
-  //     include: { rider: true },
-  //     orderBy: { timestamp: 'desc' },
-  //   });
-  //   return { rides };
-  // }
-  // For local testing, do not auto-expire rides
 }

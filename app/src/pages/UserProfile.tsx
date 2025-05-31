@@ -76,6 +76,7 @@ const UserProfile: React.FC<UserDetails> = () => {
                 // Skip rendering user_id and profilePicture
                 if (
                   key === 'id' ||
+                  key === 'user_id' ||
                   key === 'profilePicture' ||
                   key === 'createdAt' ||
                   key === 'updatedAt' ||

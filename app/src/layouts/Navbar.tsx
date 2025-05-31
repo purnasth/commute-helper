@@ -3,9 +3,10 @@ import SideNav from './SideNav';
 import { Link, useLocation } from 'react-router-dom';
 import { TbMenu2, TbPlus, TbSearch } from 'react-icons/tb';
 import { getUserGreeting } from '../utils/functions';
-import logo from '../assets/logo.svg';
-import logoAlt from '../assets/logo-alt.svg';
+import logo from '../assets/logo/commuto.svg';
+import logoAlt from '../assets/logo/commuto-alt.svg';
 import ThemeToggle from '../components/ui/ThemeToggle';
+import { useTheme } from '../contexts/ThemeProvider';
 
 const navLinks = [
   {
@@ -28,6 +29,7 @@ const Navbar = () => {
   const [visible, setVisible] = useState(true);
   const [userName, setUserName] = useState<string | null>(null);
   const location = useLocation();
+  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,16 +75,10 @@ const Navbar = () => {
             className="inline-flex items-center gap-2.5 text-lg font-semibold text-teal-950 dark:text-teal-300 sm:text-3xl"
           >
             <img
-              src={logoAlt}
+              src={theme === 'dark' ? logo : logoAlt}
               alt="Logo"
-              className="size-6 object-contain dark:hidden sm:size-9"
+              className="h-6 object-contain sm:h-9"
             />
-            <img
-              src={logo}
-              alt="Logo"
-              className="hidden size-6 object-contain dark:block sm:size-9"
-            />
-            Commuto
           </Link>
 
           <div className="flex items-center justify-end gap-8">

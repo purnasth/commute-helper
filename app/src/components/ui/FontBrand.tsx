@@ -78,7 +78,7 @@ const fontScale = [
 
 const FontBrand = () => {
   return (
-    <section id="font" className="space-y-16 py-20">
+    <section id="font" className="space-y-10 py-10 md:space-y-16 md:py-20">
       <div>
         <p className="text-sm">
           The typography used in Commuto is a blend of historical sources,
@@ -105,12 +105,15 @@ const FontBrand = () => {
           marketing materials, and other communications.
         </p>
       </div>
-      <div className="space-y-8 divide-y dark:divide-y-[0.5px]">
+      <div className="space-y-4 divide-y dark:divide-y-[0.5px] md:space-y-8">
         <h2 className="mb-6 text-base font-medium">{fontName}</h2>
         {fontWeights.map(({ label, weight }) => (
-          <div key={weight} className="grid grid-cols-7 items-center pt-8">
+          <div
+            key={weight}
+            className="grid items-center gap-4 pt-4 md:grid-cols-7 md:gap-0 md:pt-8"
+          >
             <p className={`col-span-1 text-6xl font-${label}`}>Aa</p>
-            <div className="col-span-3 space-y-2">
+            <div className="col-span-3 space-y-0 md:space-y-2">
               <span className={`block text-xs capitalize font-${label}`}>
                 {label} {weight}
               </span>
@@ -118,7 +121,7 @@ const FontBrand = () => {
                 {fontName} {label}
               </h3>
             </div>
-            <div className="col-span-3 space-y-1">
+            <div className="col-span-3 space-y-0 md:space-y-1">
               {letters.map(({ label: letterLabel, value }) => (
                 <p key={letterLabel} className={`font-${label}`}>
                   {value}
@@ -129,12 +132,16 @@ const FontBrand = () => {
         ))}
       </div>
       {/* Font Scale Section */}
-      <div className="mt-16 space-y-3 divide-y">
+      <div className="mt-16 space-y-1.5 divide-y md:space-y-3">
         <h3 className="mb-6 text-base font-medium">The Font Scale</h3>
         {fontScale.map(
           ({ label, className, px, rem, lineHeight, fontWeight }) => (
-            <div key={label} className="flex flex-col py-2">
-              <span className={className}>Commuto</span>
+            <div key={label} className="flex flex-col py-1 md:py-2">
+              <span
+                className={`${className} origin-left scale-[0.8] md:scale-100`}
+              >
+                Commuto
+              </span>
               <div className="text-xxs space-x-2">
                 <span>
                   {px}px ({rem} rem)
@@ -146,6 +153,12 @@ const FontBrand = () => {
           ),
         )}
       </div>
+      <p className="text-muted-foreground text-xs">
+        NOTE: <span className="font-medium">{fontName}</span> is our one and
+        only font. Every headline, every detail, every word: unified by this
+        singular, spirited typeface, ensuring Commuto's voice is always
+        unmistakably its own.
+      </p>
     </section>
   );
 };

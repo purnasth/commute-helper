@@ -639,17 +639,17 @@ export const quickMessages = [
 export const footerLinks = [
   {
     id: 'policies',
-    title: 'Terms, Policies & Legal',
-    link: '/policies',
+    title: 'Terms & Policies',
+    link: '/legal/policies',
   },
   {
     id: 'copyright',
     title: 'Trademark & Copyright',
-    link: '/copyright',
+    link: '/legal/copyright',
   },
   {
     id: 'brand',
-    title: 'Commuto Brand Guidelines',
+    title: 'Brand Guidelines',
     link: '/brand',
   },
 ];
@@ -731,6 +731,73 @@ export const policies = [
     description:
       'The information provided on this page is for general guidance only and does not constitute legal advice. For specific legal concerns, please consult a qualified attorney.',
     list: [],
+  },
+];
+
+export const copyrightSections = [
+  {
+    id: 'trademark',
+    title: 'Commuto Trademark',
+    description:
+      'The name Commuto, its logo, and all related brand assets are trademarks of Commuto. These trademarks are protected by applicable intellectual property laws and may not be used, reproduced, or distributed without explicit written permission from the Commuto team.',
+    list: [
+      'Do not use the Commuto name or logo in a way that suggests endorsement or partnership without permission.',
+      'Do not modify, distort, or alter the Commuto logo or brand assets in any way.',
+      'Do not use Commuto trademarks as part of your own product, service, or company name.',
+    ],
+  },
+  {
+    id: 'copyright',
+    title: 'Copyright Notice',
+    description:
+      '© ' +
+      getCurrentYear() +
+      ' Commuto. All rights reserved. All content, including but not limited to text, graphics, logos, icons, images, and software, is the property of Commuto or its content suppliers and is protected by international copyright laws.',
+    list: [
+      'You may not copy, reproduce, republish, upload, post, transmit, or distribute any material from this website without prior written consent from Commuto.',
+      'Content may be used for personal, non-commercial reference only, provided that all copyright and proprietary notices remain intact.',
+      'Any unauthorized use of the content may violate copyright, trademark, and other laws.',
+    ],
+  },
+  {
+    id: 'thirdparty',
+    title: 'Third-Party Content & Attribution',
+    description:
+      'Some images, icons, or other assets used on this website may be the property of third parties and are used under license or with permission. All such content is credited to its respective owners where required.',
+    list: [
+      'If you believe your copyrighted work has been used in a way that constitutes copyright infringement, please contact us with details for prompt resolution.',
+    ],
+  },
+  {
+    id: 'reporting',
+    title: 'Reporting Violations',
+    description:
+      'If you notice any misuse of Commuto trademarks or copyrighted materials, or have questions about proper use, please contact us at hello@commuto.app.',
+    list: [],
+  },
+  {
+    id: 'disclaimer',
+    title: 'Disclaimer',
+    description:
+      'The information provided on this page is for general guidance only and does not constitute legal advice. For specific legal concerns, please consult a qualified attorney.',
+    list: [],
+  },
+];
+
+export const legalPages = [
+  {
+    id: 'policies',
+    title: 'Terms, Policies & Legal',
+    intro:
+      'This page outlines the key policies, terms, and legal information for using Commuto. Please read carefully to understand your rights, responsibilities, and our commitment to your privacy, safety, and a positive community experience.',
+    sections: policies,
+  },
+  {
+    id: 'copyright',
+    title: 'Trademark and Copyright Notice',
+    intro:
+      "This page outlines the trademark and copyright policies for Commuto. Unauthorized use of our trademarks or copyrighted materials may result in legal action. Please read carefully to understand your rights and responsibilities regarding the use of Commuto's intellectual property.",
+    sections: copyrightSections,
   },
 ];
 
@@ -819,39 +886,6 @@ export const navLinks = [
   },
 ];
 
-export const authorizedUsers = [
-  {
-    user_id: 1,
-    fullname: 'Purna Shrestha',
-    email: 'purna@kbc.edu.np',
-    role: 'Rider',
-    phone: '+9779808021753',
-    address: 'Kathmandu, Nepal',
-    profilePicture: 'https://www.purnashrestha.com.np/assets/hero-vz7SbapX.png',
-    ratings: 4,
-  },
-  {
-    user_id: 2,
-    fullname: 'Mridani Pandey',
-    email: 'mridani@kbc.edu.np',
-    role: 'User',
-    phone: '9847654321',
-    address: 'Lalitpur, Nepal',
-    profilePicture: '/assets/images/mridani.jpg',
-    ratings: 5,
-  },
-  {
-    user_id: 3,
-    fullname: 'Priyanka Luitel',
-    email: 'priyanka@kbc.edu.np',
-    role: 'User',
-    phone: '9801234567',
-    address: 'Bhaktapur, Nepal',
-    profilePicture: '/assets/images/priyanka.jpg',
-    ratings: 5,
-  },
-];
-
 export const findRideFormFields: Array<{
   name: 'from' | 'to' | 'message' | 'role';
   label: string;
@@ -882,55 +916,5 @@ export const findRideFormFields: Array<{
     label: "I'm a",
     type: 'select',
     options: ['Rider', 'Passenger'],
-  },
-];
-
-export const copyrightSections = [
-  {
-    id: 'trademark',
-    title: 'Commuto Trademark',
-    description:
-      'The name Commuto, its logo, and all related brand assets are trademarks of Commuto. These trademarks are protected by applicable intellectual property laws and may not be used, reproduced, or distributed without explicit written permission from the Commuto team.',
-    list: [
-      'Do not use the Commuto name or logo in a way that suggests endorsement or partnership without permission.',
-      'Do not modify, distort, or alter the Commuto logo or brand assets in any way.',
-      'Do not use Commuto trademarks as part of your own product, service, or company name.',
-    ],
-  },
-  {
-    id: 'copyright',
-    title: 'Copyright Notice',
-    description:
-      '© ' +
-      getCurrentYear() +
-      ' Commuto. All rights reserved. All content, including but not limited to text, graphics, logos, icons, images, and software, is the property of Commuto or its content suppliers and is protected by international copyright laws.',
-    list: [
-      'You may not copy, reproduce, republish, upload, post, transmit, or distribute any material from this website without prior written consent from Commuto.',
-      'Content may be used for personal, non-commercial reference only, provided that all copyright and proprietary notices remain intact.',
-      'Any unauthorized use of the content may violate copyright, trademark, and other laws.',
-    ],
-  },
-  {
-    id: 'thirdparty',
-    title: 'Third-Party Content & Attribution',
-    description:
-      'Some images, icons, or other assets used on this website may be the property of third parties and are used under license or with permission. All such content is credited to its respective owners where required.',
-    list: [
-      'If you believe your copyrighted work has been used in a way that constitutes copyright infringement, please contact us with details for prompt resolution.',
-    ],
-  },
-  {
-    id: 'reporting',
-    title: 'Reporting Violations',
-    description:
-      'If you notice any misuse of Commuto trademarks or copyrighted materials, or have questions about proper use, please contact us at hello@commuto.app.',
-    list: [],
-  },
-  {
-    id: 'disclaimer',
-    title: 'Disclaimer',
-    description:
-      'The information provided on this page is for general guidance only and does not constitute legal advice. For specific legal concerns, please consult a qualified attorney.',
-    list: [],
   },
 ];

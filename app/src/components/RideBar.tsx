@@ -232,6 +232,21 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     }
   };
 
+  // Determine if the user's role atches the RideBar's role (case-insensitive)m
+  let userRole: string | null = null;
+  if (typeof window !== 'undefined') {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      try {
+        userRole = JSON.parse(userStr).role;
+      } catch {
+        // Ignore JSON parse errors
+      }
+    }
+  }
+  const roleMismatch =
+    userRole && role && userRole.toLowerCase() !== role.toLowerCase();
+
   if (isLoading) {
     return (
       <Modal onClose={() => setIsLoading(false)}>
@@ -325,7 +340,14 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
           )}
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm hover:!bg-teal-300 dark:text-dark lg:w-fit"
+            className={`inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm hover:!bg-teal-300 dark:text-dark lg:w-fit ${roleMismatch ? 'cursor-not-allowed' : ''}`}
+            // disabled={!!roleMismatch}
+            // aria-disabled={!!roleMismatch}
+            // title={
+            //   roleMismatch
+            //     ? `You are a '${userRole}', not a '${role}'. You cannot post as this role.`
+            //     : 'Confirm your ride route'
+            // }
           >
             Confirm
           </button>

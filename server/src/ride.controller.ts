@@ -11,7 +11,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import { Request } from 'express';
 
 interface RideDto {
   from: string;
@@ -31,6 +30,26 @@ export class RideController {
     if (!body.from || !body.to || !body.role || !body.riderId) {
       throw new BadRequestException('Missing required fields');
     }
+    // Fetch user and check role
+    const user = await this.prisma.user.findUnique({
+      where: { id: body.riderId },
+    });
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+    // if (user.role !== body.role) {
+    //   throw new BadRequestException(
+    //     `Role mismatch: You can't post a ride as '${body.role}' with a '${user.role}' account.`,
+    //   );
+    // }
+
+    // Case-insensitive role check
+    if (user.role.toLowerCase() !== body.role.toLowerCase()) {
+      throw new BadRequestException(
+        `Role mismatch: You're a '${user.role}', not a '${body.role}'.`,
+      );
+    }
+
     const ride = await this.prisma.ride.create({
       data: {
         from: body.from,

@@ -113,7 +113,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     };
 
     const loadingToastId = toast.loading('Submitting your ride route...');
-    
+
     try {
       await apiFetch(`${import.meta.env.VITE_API_BASE_URL}/rides`, {
         method: 'POST',
@@ -147,7 +147,13 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
       }, 2000);
     } catch (err) {
       toast.dismiss(loadingToastId);
-      toast.error((err as Error).message || 'Failed to submit ride.');
+      // Show backend validation error for duplicate ride
+      const msg = (err as Error).message;
+      if (msg) {
+        toast.error(msg);
+      } else {
+        toast.error(msg || 'Failed to submit ride.');
+      }
     }
   };
 

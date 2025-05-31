@@ -37,14 +37,27 @@ export class RideController {
     if (!user) {
       throw new NotFoundException('User not found');
     }
-
     // Case-insensitive role check
     if (user.role.toLowerCase() !== body.role.toLowerCase()) {
       throw new BadRequestException(
         `Role mismatch: You're a '${user.role}', not a '${body.role}'.`,
       );
     }
-
+    // Prevent posting if user has an active ride in last 5 minutes
+    const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000);
+    const existingActiveRide = await this.prisma.ride.findFirst({
+      where: {
+        riderId: body.riderId,
+        status: 'ACTIVE',
+        timestamp: { gte: fiveMinAgo },
+      },
+    });
+    if (existingActiveRide) {
+      throw new BadRequestException(
+        // 'You already have an active ride. You can only post a new ride after your previous ride is confirmed, rejected, or 5 minutes have passed.',
+        'You already have an active ride and cannot post another at this time.',
+      );
+    }
     const ride = await this.prisma.ride.create({
       data: {
         from: body.from,
@@ -53,6 +66,7 @@ export class RideController {
         role: body.role,
         riderId: body.riderId,
         timestamp: body.timestamp ? new Date(body.timestamp) : undefined,
+        status: 'ACTIVE',
       },
     });
     return { message: 'Ride created', ride };
@@ -60,9 +74,12 @@ export class RideController {
 
   @Get()
   async getRides(@Query('role') role?: string) {
-    // Optionally filter by role (rider/passenger)
+    // Only show active rides
     const rides = await this.prisma.ride.findMany({
-      where: role ? { role } : {},
+      where: {
+        ...(role ? { role } : {}),
+        status: 'ACTIVE',
+      },
       include: { rider: true },
       orderBy: { timestamp: 'desc' },
     });
@@ -94,20 +111,30 @@ export class RideController {
     return { message: 'Ride deleted' };
   }
 
-  // Confirm a ride (delete it from DB)
+  // Confirm a ride (mark as completed)
   @Post(':id/confirm')
   async confirmRide(@Param('id') id: string) {
-    await this.prisma.ride.delete({ where: { id: Number(id) } });
-    return { message: 'Ride confirmed and removed from database' };
+    // Mark ride as completed
+    const ride = await this.prisma.ride.update({
+      where: { id: Number(id) },
+      data: { status: 'COMPLETED' },
+    });
+    return { message: 'Ride confirmed and completed', ride };
   }
 
-  // Reject a ride (mark as rejected for the user)
+  // Reject a ride (mark as rejected)
   @Post(':id/reject')
-  rejectRide(@Param('id') id: string, @Body() body: { userId: number }) {
+  async rejectRide(@Param('id') id: string, @Body() body: { userId: number }) {
+    // Mark ride as rejected
+    const ride = await this.prisma.ride.update({
+      where: { id: Number(id) },
+      data: { status: 'REJECTED' },
+    });
     return {
-      message: 'Ride rejected for user',
+      message: 'Ride rejected. You can now post a new ride.',
       rideId: id,
       userId: body.userId,
+      ride,
     };
   }
 

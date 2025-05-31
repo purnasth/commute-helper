@@ -47,6 +47,13 @@ model Ride {
   passengers  User[]        @relation("RidePassengers")
   ratings     Rating[]
   messages    Message[]
+  status      RideStatus    @default(ACTIVE)
+}
+
+enum RideStatus {
+  ACTIVE
+  COMPLETED
+  REJECTED
 }
 
 model RideRequest {

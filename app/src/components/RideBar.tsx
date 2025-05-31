@@ -113,7 +113,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     };
 
     const loadingToastId = toast.loading('Submitting your ride route...');
-    
+
     try {
       await apiFetch(`${import.meta.env.VITE_API_BASE_URL}/rides`, {
         method: 'POST',
@@ -147,7 +147,13 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
       }, 2000);
     } catch (err) {
       toast.dismiss(loadingToastId);
-      toast.error((err as Error).message || 'Failed to submit ride.');
+      // Show backend validation error for duplicate ride
+      const msg = (err as Error).message;
+      if (msg) {
+        toast.error(msg);
+      } else {
+        toast.error(msg || 'Failed to submit ride.');
+      }
     }
   };
 
@@ -231,6 +237,21 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
       toast.error('Failed to reject ride.');
     }
   };
+
+  // Determine if the user's role matches the RideBar's role (case-insensitive)m
+  let userRole: string | null = null;
+  if (typeof window !== 'undefined') {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      try {
+        userRole = JSON.parse(userStr).role;
+      } catch {
+        // Ignore JSON parse errors
+      }
+    }
+  }
+  const roleMismatch =
+    userRole && role && userRole.toLowerCase() !== role.toLowerCase();
 
   if (isLoading) {
     return (
@@ -325,7 +346,14 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
           )}
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm hover:!bg-teal-300 dark:text-dark lg:w-fit"
+            className={`inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal-300 px-6 py-3 text-sm hover:!bg-teal-300 dark:text-dark lg:w-fit ${roleMismatch ? 'cursor-not-allowed' : ''}`}
+            // disabled={!!roleMismatch}
+            // aria-disabled={!!roleMismatch}
+            // title={
+            //   roleMismatch
+            //     ? `You are a '${userRole}', not a '${role}'. You cannot post as this role.`
+            //     : 'Confirm your ride route'
+            // }
           >
             Confirm
           </button>

@@ -64,6 +64,10 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
   // Use the custom hook for pre-filling form data
   useRideForm(setValue);
 
+  // Add state for coordinates
+  const [fromCoords, setFromCoords] = useState<[number, number] | null>(null);
+  const [toCoords, setToCoords] = useState<[number, number] | null>(null);
+
   const handleInputClick = (fieldName: string) => {
     if (fieldName === 'from' || fieldName === 'to') {
       setActiveInput(fieldName as 'from' | 'to');
@@ -75,8 +79,10 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     }
   };
 
-  const handleLocationSelect = (location: string) => {
+  const handleLocationSelect = (location: string, coordinates?: [number, number]) => {
     setValue(activeInput!, location);
+    if (activeInput === 'from') setFromCoords(coordinates || null);
+    if (activeInput === 'to') setToCoords(coordinates || null);
     setShowLocationPopup(false);
   };
 
@@ -85,10 +91,11 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     setShowMessagePopup(false);
   };
 
-  const fetchAvailableRides = async (role: string) => {
+  const fetchAvailableRides = async (role: string, fromLat?: number, fromLng?: number, timestamp?: string) => {
+    if (!fromLat || !fromLng || !timestamp) return [];
     try {
       const result = await apiFetch<{ rides: RideFormData[] }>(
-        `${import.meta.env.VITE_API_BASE_URL}/rides?role=${role === 'rider' ? 'passenger' : 'rider'}`,
+        `${import.meta.env.VITE_API_BASE_URL}/rides/match?fromLat=${fromLat}&fromLng=${fromLng}&timestamp=${encodeURIComponent(timestamp)}&role=${role === 'rider' ? 'passenger' : 'rider'}`,
       );
       return result.rides;
     } catch {
@@ -108,6 +115,10 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
     const user = JSON.parse(userStr);
     const rideWithTimestamp = {
       ...data,
+      fromLat: fromCoords ? fromCoords[1] : undefined,
+      fromLng: fromCoords ? fromCoords[0] : undefined,
+      toLat: toCoords ? toCoords[1] : undefined,
+      toLng: toCoords ? toCoords[0] : undefined,
       timestamp: new Date().toISOString(),
       riderId: user.id,
     };
@@ -123,7 +134,7 @@ const RideBar: React.FC<RideBarProps> = ({ fromHome = false, role }) => {
       toast.dismiss(loadingToastId);
       setIsLoading(true);
       setTimeout(async () => {
-        const availableRides = await fetchAvailableRides(data.role);
+        const availableRides = await fetchAvailableRides(data.role, rideWithTimestamp.fromLat, rideWithTimestamp.fromLng, rideWithTimestamp.timestamp);
         setRidesFound(availableRides);
 
         if (availableRides.length > 0) {

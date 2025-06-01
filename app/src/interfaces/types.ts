@@ -1,7 +1,11 @@
 export interface RideFormData {
   id?: number;
   from: string;
+  fromLat?: number;
+  fromLng?: number;
   to: string;
+  toLat?: number;
+  toLng?: number;
   message: string;
   role: string;
   timestamp?: string;
@@ -21,7 +25,7 @@ export interface FaqItemProps {
 export interface LocationPopupProps {
   activeInput?: 'from' | 'to' | null;
   onClose: () => void;
-  onSelect: (location: string) => void;
+  onSelect: (location: string, coordinates?: [number, number]) => void;
   initialSearchQuery: string;
 }
 

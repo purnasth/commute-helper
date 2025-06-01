@@ -14,7 +14,11 @@ import { PrismaService } from './prisma.service';
 
 interface RideDto {
   from: string;
+  fromLat?: number;
+  fromLng?: number;
   to: string;
+  toLat?: number;
+  toLng?: number;
   message?: string;
   role: string;
   riderId: number; // user id of the poster
@@ -24,6 +28,79 @@ interface RideDto {
 @Controller('rides')
 export class RideController {
   constructor(private prisma: PrismaService) {}
+
+  // Haversine function as a private method
+  private haversineDistance(
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number,
+  ): number {
+    const toRad = (value: number) => (value * Math.PI) / 180;
+    const R = 6371; // Radius of Earth in kilometers
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) *
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  @Get('match')
+  async matchRides(
+    @Query('fromLat') fromLat: string,
+    @Query('fromLng') fromLng: string,
+    @Query('timestamp') timestamp: string,
+    @Query('role') role: string,
+  ) {
+    if (!fromLat || !fromLng || !timestamp || !role) {
+      throw new BadRequestException(
+        'fromLat, fromLng, timestamp, and role are required',
+      );
+    }
+    const fromLatNum = Number(fromLat);
+    const fromLngNum = Number(fromLng);
+    const timeWindowMinutes = 30; // +/- 30 minutes
+    const requestedTime = new Date(timestamp);
+    const minTime = new Date(
+      requestedTime.getTime() - timeWindowMinutes * 60000,
+    );
+    const maxTime = new Date(
+      requestedTime.getTime() + timeWindowMinutes * 60000,
+    );
+
+    // Find rides with matching role and time window
+    const rides = await this.prisma.ride.findMany({
+      where: {
+        role,
+        status: 'ACTIVE',
+        timestamp: { gte: minTime, lte: maxTime },
+        fromLat: { not: null },
+        fromLng: { not: null },
+      },
+      include: { rider: true, passengers: true },
+    });
+
+    // Filter by proximity (within 2km)
+    const matchedRides = rides.filter((ride) => {
+      if (!Number.isFinite(ride.fromLat) || !Number.isFinite(ride.fromLng)) {
+        return false;
+      }
+      const dist = this.haversineDistance(
+        fromLatNum,
+        fromLngNum,
+        ride.fromLat as number,
+        ride.fromLng as number,
+      );
+      return dist <= 2;
+    });
+
+    return { rides: matchedRides };
+  }
 
   @Post()
   async createRide(@Body() body: RideDto) {
@@ -61,7 +138,11 @@ export class RideController {
     const ride = await this.prisma.ride.create({
       data: {
         from: body.from,
+        fromLat: body.fromLat,
+        fromLng: body.fromLng,
         to: body.to,
+        toLat: body.toLat,
+        toLng: body.toLng,
         message: body.message,
         role: body.role,
         riderId: body.riderId,

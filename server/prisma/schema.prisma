@@ -37,7 +37,11 @@ model User {
 model Ride {
   id          Int           @id @default(autoincrement())
   from        String
+  fromLat     Float?
+  fromLng     Float?
   to          String
+  toLat       Float?
+  toLng       Float?
   message     String?
   role        String
   timestamp   DateTime      @default(now())

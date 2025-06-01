@@ -1,16 +1,19 @@
 import {
-  Controller,
-  Post,
-  Body,
-  UnauthorizedException,
-  BadRequestException,
   Get,
   Put,
+  Post,
+  Body,
   Delete,
+  Controller,
+  BadRequestException,
+  UnauthorizedException,
   Query,
+  Logger,
 } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
+import axios from 'axios';
 import * as bcrypt from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
+import { PrismaService } from './prisma.service';
 
 interface LoginDto {
   email: string;
@@ -30,10 +33,47 @@ interface SignupDto {
 
 @Controller('auth')
 export class AuthController {
-  constructor(private prisma: PrismaService) {}
+  private readonly logger = new Logger(AuthController.name);
+  constructor(
+    private prisma: PrismaService,
+    private configService: ConfigService,
+  ) {}
 
   @Post('login')
-  async login(@Body() body: LoginDto) {
+  async login(@Body() body: LoginDto & { recaptchaToken?: string }) {
+    // Verify reCAPTCHA v2
+    const recaptchaSecret = this.configService.get<string>(
+      'RECAPTCHA_SECRET_KEY',
+    );
+    if (!body.recaptchaToken) {
+      throw new BadRequestException('Missing reCAPTCHA token');
+    }
+    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify`;
+    let response: any;
+    try {
+      response = await axios.post(
+        verifyUrl,
+        new URLSearchParams({
+          secret: recaptchaSecret || '',
+          response: body.recaptchaToken,
+        }),
+      );
+    } catch {
+      throw new UnauthorizedException('Failed to verify reCAPTCHA');
+    }
+    // Safely extract response.data
+    let data: Record<string, any> | undefined = undefined;
+    if (response && typeof response === 'object' && 'data' in response) {
+      data = (response as { data: Record<string, any> }).data;
+    }
+    if (!data || !data.success) {
+      this.logger.error(
+        'reCAPTCHA verification failed: ' + JSON.stringify(data),
+        {},
+      );
+      throw new UnauthorizedException('reCAPTCHA verification failed');
+    }
+
     const user = await this.prisma.user.findUnique({
       where: { email: body.email },
     });
@@ -44,7 +84,7 @@ export class AuthController {
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    const { password, ...userWithoutPassword } = user;
+    const { password: _password, ...userWithoutPassword } = user;
     return { message: 'Login successful', user: userWithoutPassword };
   }
 
@@ -56,6 +96,7 @@ export class AuthController {
     if (existing) {
       throw new BadRequestException('Email already registered');
     }
+    // Use static import for bcrypt for better performance
     const hashedPassword = await bcrypt.hash(body.password, 10);
     const user = await this.prisma.user.create({
       data: {
@@ -86,7 +127,9 @@ export class AuthController {
     if (!user) {
       throw new BadRequestException('User not found');
     }
-    const isPasswordValid = await bcrypt.compare(body.password, user.password);
+    const isPasswordValid = await (
+      await import('bcrypt')
+    ).compare(body.password, user.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid password');
     }
@@ -123,7 +166,9 @@ export class AuthController {
     if (!user) {
       throw new BadRequestException('User not found');
     }
-    const isPasswordValid = await bcrypt.compare(body.password, user.password);
+    const isPasswordValid = await (
+      await import('bcrypt')
+    ).compare(body.password, user.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid password');
     }

@@ -12,6 +12,8 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
 
+import { getNow } from './utils/date.util';
+
 interface RideDto {
   from: string;
   fromLat?: number;
@@ -73,10 +75,11 @@ export class RideController {
       requestedTime.getTime() + timeWindowMinutes * 60000,
     );
 
-    // Find rides with matching role and time window
+    // Always match rides with the OPPOSITE role
+    const oppositeRole = role === 'rider' ? 'passenger' : 'rider';
     const rides = await this.prisma.ride.findMany({
       where: {
-        role,
+        role: oppositeRole,
         status: 'ACTIVE',
         timestamp: { gte: minTime, lte: maxTime },
         fromLat: { not: null },
@@ -121,7 +124,7 @@ export class RideController {
       );
     }
     // Prevent posting if user has an active ride in last 5 minutes
-    const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000);
+    const fiveMinAgo = new Date(getNow().getTime() - 5 * 60 * 1000);
     const existingActiveRide = await this.prisma.ride.findFirst({
       where: {
         riderId: body.riderId,
@@ -155,11 +158,21 @@ export class RideController {
 
   @Get()
   async getRides(@Query('role') role?: string) {
-    // Only show active rides
+    const now = getNow();
+    // Expire rides whose timestamp is in the past and still ACTIVE
+    await this.prisma.ride.updateMany({
+      where: {
+        status: 'ACTIVE',
+        timestamp: { lt: now },
+      },
+      data: { status: 'EXPIRED' },
+    });
+    // Only show active and confirmed rides with timestamp in the future
     const rides = await this.prisma.ride.findMany({
       where: {
         ...(role ? { role } : {}),
-        status: 'ACTIVE',
+        status: { in: ['ACTIVE', 'CONFIRMED'] },
+        timestamp: { gte: now },
       },
       include: { rider: true },
       orderBy: { timestamp: 'desc' },
@@ -170,6 +183,15 @@ export class RideController {
   // Get all ride history for a user (as rider or passenger)
   @Get('history')
   async getRideHistory(@Query('userId') userId: string) {
+    const now = getNow();
+    // Expire rides whose timestamp is in the past and still ACTIVE
+    await this.prisma.ride.updateMany({
+      where: {
+        status: 'ACTIVE',
+        timestamp: { lt: now },
+      },
+      data: { status: 'EXPIRED' },
+    });
     const id = Number(userId);
     if (!userId || isNaN(id)) {
       throw new BadRequestException('Valid userId is required');
@@ -228,12 +250,33 @@ export class RideController {
   // Confirm a ride (mark as completed)
   @Post(':id/confirm')
   async confirmRide(@Param('id') id: string) {
-    // Mark ride as completed
-    const ride = await this.prisma.ride.update({
+    // Mark this ride and all matched rides (same timestamp, from, to, and status ACTIVE) as confirmed
+    const ride = await this.prisma.ride.findUnique({
       where: { id: Number(id) },
-      data: { status: 'COMPLETED' },
     });
-    return { message: 'Ride confirmed and completed', ride };
+    if (!ride) throw new NotFoundException('Ride not found');
+    // Find all rides that match this ride (same from, to, timestamp, and status ACTIVE)
+    const matchedRides = await this.prisma.ride.findMany({
+      where: {
+        from: ride.from,
+        to: ride.to,
+        timestamp: ride.timestamp,
+        status: 'ACTIVE',
+      },
+    });
+    const matchedIds = matchedRides.map((r) => r.id);
+    await this.prisma.ride.updateMany({
+      where: { id: { in: matchedIds } },
+      data: { status: 'CONFIRMED' },
+    });
+    // Return updated rides
+    const updatedRides = await this.prisma.ride.findMany({
+      where: { id: { in: matchedIds } },
+    });
+    return {
+      message: 'All matched rides confirmed',
+      rides: updatedRides,
+    };
   }
 
   // Reject a ride (mark as rejected)
@@ -246,6 +289,22 @@ export class RideController {
     });
     return {
       message: 'Ride rejected. You can now post a new ride.',
+      rideId: id,
+      userId: body.userId,
+      ride,
+    };
+  }
+
+  // Cancel a ride (mark as cancelled)
+  @Post(':id/cancel')
+  async cancelRide(@Param('id') id: string, @Body() body: { userId: number }) {
+    // Mark ride as cancelled
+    const ride = await this.prisma.ride.update({
+      where: { id: Number(id) },
+      data: { status: 'CANCELLED' },
+    });
+    return {
+      message: 'Ride cancelled. You can now post a new ride.',
       rideId: id,
       userId: body.userId,
       ride,
